@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../cosmos.dart';
+import '../../../cosmos.dart';
 
 class AddCustomers extends StatefulWidget {
   const AddCustomers({super.key});

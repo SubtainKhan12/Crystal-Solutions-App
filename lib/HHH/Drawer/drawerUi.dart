@@ -1,5 +1,9 @@
-import 'package:crystal_solutions/HHH/DrawerPages/addCustomers.dart';
+import 'package:crystal_solutions/HHH/DrawerPages/Customers/addCustomers.dart';
+import 'package:crystal_solutions/HHH/DrawerPages/Reference/addReference.dart';
+import 'package:crystal_solutions/HHH/DrawerPages/Type/addType.dart';
 import 'package:flutter/material.dart';
+
+import '../DrawerPages/Collectors/addCollectors.dart';
 
 class DrawerUi extends StatefulWidget {
   const DrawerUi({super.key});
@@ -41,7 +45,9 @@ class _DrawerUiState extends State<DrawerUi> {
                       ],
                     )),
                 TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=> AddCollectors()));
+                    },
                     child: Row(
                       children: [
                         SizedBox(
@@ -58,7 +64,10 @@ class _DrawerUiState extends State<DrawerUi> {
                       ],
                     )),
                 TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=> AddReference()));
+
+                    },
                     child: Row(
                       children: [
                         SizedBox(
@@ -75,7 +84,7 @@ class _DrawerUiState extends State<DrawerUi> {
                       ],
                     )),
                 TextButton(
-                    onPressed: () {},
+                    onPressed: () {Navigator.push(context, MaterialPageRoute(builder: (context)=> AddType()));},
                     child: Row(
                       children: [
                         SizedBox(
