@@ -1,5 +1,9 @@
+import 'dart:convert';
+import 'package:http/http.dart'as http;
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
+import '../../../apis.dart';
 import '../../../cosmos.dart';
 
 class AddType extends StatefulWidget {
@@ -71,7 +75,10 @@ class _AddTypeState extends State<AddType> {
               width: double.infinity, // Set the width
               height: 60, // Set the height
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  Cosmos.waitingDialog(context, 'Please Wait          ');
+                  post_addType();
+                },
                 child: const Text(
                   'Submit',
                   style: TextStyle(fontSize: 25),
@@ -83,4 +90,20 @@ class _AddTypeState extends State<AddType> {
       ),
     );
   }
+  Future post_addType()async{
+    var response = await http.post(Uri.parse(addType),body: {
+      'FTypDsc': _descriptionController.text,
+      'FTypSts': status.toString(),
+
+    });
+    var result = jsonDecode(response.body);
+    if(result['error'] == 200){
+      Fluttertoast.showToast(msg: result['message']);
+      Navigator.pop(context);
+    }else{
+      Fluttertoast.showToast(msg: result['message']);
+      Navigator.pop(context);
+    }
+  }
+
 }

@@ -3,7 +3,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 
 
 class Cosmos {
-  // FUNCTION OF LOADING/WAITING ALERT DIALOG BOX
+  // FUNCTION OF LOADING/WAITING ALERT DIALOG BOX...
   static waitingDialog(BuildContext context, String msg) {
     AlertDialog alert = AlertDialog(
       content: Row(

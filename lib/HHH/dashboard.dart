@@ -14,7 +14,10 @@ class _DashboardPageState extends State<DashboardPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Dashboard',style: TextStyle(color: Cosmic.white_color),),
+        title: Text(
+          'Dashboard',
+          style: TextStyle(color: Cosmic.white_color),
+        ),
         centerTitle: true,
         backgroundColor: Cosmic.app_color,
         iconTheme: IconThemeData(color: Cosmic.white_color),

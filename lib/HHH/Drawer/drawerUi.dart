@@ -1,8 +1,9 @@
+import 'package:crystal_solutions/HHH/DrawerPages/City/addCity.dart';
 import 'package:crystal_solutions/HHH/DrawerPages/Customers/addCustomers.dart';
 import 'package:crystal_solutions/HHH/DrawerPages/Reference/addReference.dart';
 import 'package:crystal_solutions/HHH/DrawerPages/Type/addType.dart';
+import 'package:crystal_solutions/HHH/Login/loginScreen.dart';
 import 'package:flutter/material.dart';
-
 import '../DrawerPages/Collectors/addCollectors.dart';
 
 class DrawerUi extends StatefulWidget {
@@ -21,24 +22,26 @@ class _DrawerUiState extends State<DrawerUi> {
           children: [
             DrawerHeader(
                 // decoration: BoxDecoration(color: Colors.blueAccent),
-                child: Image.asset("assets/Crystal-Solutions-logo-removebg-preview.png")),
+                child: Image.asset(
+                    "assets/Crystal-Solutions-logo-removebg-preview.png")),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 TextButton(
                     onPressed: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context)=> AddCustomers()));
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const AddCustomers()));
                     },
-                    child: Row(
+                    child: const Row(
                       children: [
                         SizedBox(
-                            height: 30,
-                            width: 30,
-                            child: Icon(Icons.person)),
-                        const SizedBox(
+                            height: 30, width: 30, child: Icon(Icons.person)),
+                        SizedBox(
                           width: 10,
                         ),
-                        const Text(
+                        Text(
                           "Customers",
                           style: TextStyle(fontSize: 18),
                         ),
@@ -46,18 +49,21 @@ class _DrawerUiState extends State<DrawerUi> {
                     )),
                 TextButton(
                     onPressed: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context)=> AddCollectors()));
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const AddCollectors()));
                     },
-                    child: Row(
+                    child: const Row(
                       children: [
                         SizedBox(
                             height: 30,
                             width: 30,
                             child: Icon(Icons.person_pin)),
-                        const SizedBox(
+                        SizedBox(
                           width: 10,
                         ),
-                        const Text(
+                        Text(
                           "Collectors",
                           style: TextStyle(fontSize: 18),
                         ),
@@ -65,37 +71,66 @@ class _DrawerUiState extends State<DrawerUi> {
                     )),
                 TextButton(
                     onPressed: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context)=> AddReference()));
-
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const AddReference()));
                     },
-                    child: Row(
+                    child: const Row(
                       children: [
                         SizedBox(
                             height: 30,
                             width: 30,
                             child: Icon(Icons.person_add_rounded)),
-                        const SizedBox(
+                        SizedBox(
                           width: 10,
                         ),
-                        const Text(
+                        Text(
                           "Reference",
                           style: TextStyle(fontSize: 18),
                         ),
                       ],
                     )),
                 TextButton(
-                    onPressed: () {Navigator.push(context, MaterialPageRoute(builder: (context)=> AddType()));},
-                    child: Row(
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const AddType()));
+                    },
+                    child: const Row(
                       children: [
                         SizedBox(
                             height: 30,
                             width: 30,
                             child: Icon(Icons.merge_type)),
-                        const SizedBox(
+                        SizedBox(
                           width: 10,
                         ),
-                        const Text(
+                        Text(
                           "Type",
+                          style: TextStyle(fontSize: 18),
+                        ),
+                      ],
+                    )),
+                TextButton(
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const AddCity()));
+                    },
+                    child: const Row(
+                      children: [
+                        SizedBox(
+                            height: 30,
+                            width: 30,
+                            child: Icon(Icons.location_city)),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Text(
+                          "Cities",
                           style: TextStyle(fontSize: 18),
                         ),
                       ],
@@ -139,20 +174,21 @@ class _DrawerUiState extends State<DrawerUi> {
                 //       )),
                 // ),
                 TextButton(
-                    onPressed: () {},
-                    child: Row(
+                    onPressed: () {
+                      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> LoginScreen()));
+                    },
+                    child: const Row(
                       children: [
                         SizedBox(
                             height: 30,
                             width: 30,
                             child: Icon(
                               Icons.logout,
-                              
                             )),
                         SizedBox(
                           width: 10,
                         ),
-                        const Text(
+                        Text(
                           "Logout",
                           style: TextStyle(fontSize: 18),
                         ),

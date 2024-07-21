@@ -1,5 +1,10 @@
+import 'dart:convert';
+import 'package:http/http.dart'as http;
 import 'package:crystal_solutions/cosmos.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+
+import '../../../apis.dart';
 
 class AddCollectors extends StatefulWidget {
   const AddCollectors({super.key});
@@ -12,12 +17,10 @@ class _AddCollectorsState extends State<AddCollectors> {
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   TextEditingController _description = TextEditingController();
-  TextEditingController _nameController = TextEditingController();
   TextEditingController _address1Controller = TextEditingController();
   TextEditingController _address2Controller = TextEditingController();
   TextEditingController _phoneController = TextEditingController();
   TextEditingController _emailController = TextEditingController();
-  TextEditingController _passwordController = TextEditingController();
 
   String? validateMobile(String? value) {
     if (value == null || value.isEmpty) {
@@ -69,18 +72,6 @@ class _AddCollectorsState extends State<AddCollectors> {
                   controller: _description,
                   decoration: InputDecoration(
                     labelText: "Description",
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  height: 15,
-                ),
-                TextField(
-                  controller: _nameController,
-                  decoration: InputDecoration(
-                    labelText: "Name",
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),
@@ -144,19 +135,6 @@ class _AddCollectorsState extends State<AddCollectors> {
                 const SizedBox(
                   height: 15,
                 ),
-                TextField(
-                  controller: _passwordController,
-                  decoration: InputDecoration(
-                    labelText: "Password",
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  height: 15,
-                ),
-
                 DropdownButtonFormField<String>(
                   value: status,
                   onChanged: (newValue) {
@@ -191,9 +169,8 @@ class _AddCollectorsState extends State<AddCollectors> {
                     onPressed: () {
 
                       if (_formKey.currentState!.validate()) {
-                        // Cosmos.waitingDialog(context, "       Please Wait");
-
-
+                        Cosmos.waitingDialog(context, "       Please Wait");
+                        post_addCol();
                       }
                     },
                     child: const Text(
@@ -209,4 +186,23 @@ class _AddCollectorsState extends State<AddCollectors> {
       ),
     );
   }
+  Future post_addCol()async{
+    var response = await http.post(Uri.parse(addCol),body: {
+      'FColDsc': _description.text,
+      'FColSts': status.toString(),
+      'FAdd001': _address1Controller.text,
+      'FAdd002': _address2Controller.text,
+      'FMobNum': _phoneController.text,
+      'FEmlAdd': _emailController.text,
+    });
+    var result = jsonDecode(response.body);
+    if(result['error'] == 200){
+      Fluttertoast.showToast(msg: result['message']);
+      Navigator.pop(context);
+    }else{
+      Fluttertoast.showToast(msg: result['message']);
+      Navigator.pop(context);
+    }
+  }
+
 }

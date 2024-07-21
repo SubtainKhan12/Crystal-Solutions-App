@@ -1,3 +1,4 @@
+import 'package:crystal_solutions/HHH/Login/loginScreen.dart';
 import 'package:crystal_solutions/HHH/dashboard.dart';
 import 'package:flutter/material.dart';
 
@@ -17,9 +18,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xff111441)),
         useMaterial3: true,
       ),
-      home: const DashboardPage(),
+      home: const LoginScreen(),
     );
   }
 }
-
-

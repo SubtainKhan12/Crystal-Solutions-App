@@ -1,4 +1,8 @@
+import 'dart:convert';
+import 'dart:io';
+import 'package:http/http.dart'as http;
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../../../cosmos.dart';
 
@@ -10,7 +14,6 @@ class AddCustomers extends StatefulWidget {
 }
 
 class _AddCustomersState extends State<AddCustomers> {
-
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   TextEditingController _description = TextEditingController();
   TextEditingController _nameController = TextEditingController();
@@ -27,8 +30,7 @@ class _AddCustomersState extends State<AddCustomers> {
   TextEditingController _shopController = TextEditingController();
 
   String? reference;
-
-
+  File? _image;
 
   // String? dropDown_selectArea;
   // String? dropDown_collector;
@@ -82,6 +84,49 @@ class _AddCustomersState extends State<AddCustomers> {
                 const SizedBox(
                   height: 10,
                 ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                        height: 100,
+                        width: 100,
+                        decoration: BoxDecoration(
+                            border: Border.all(color: Colors.black),
+                            borderRadius: BorderRadius.circular(8)),
+                        // child: _image == null
+                        //     ? Image.network(
+                        //   "https://crystalsolutions.com.pk/khan_j/itemimage//${widget.itemModel.tItmPic.toString()}",
+                        //   fit: BoxFit.fill,
+                        // )
+                        //     : Image.file(
+                        //   _image!,
+                        //   fit: BoxFit.cover,
+                        // )
+                      ),
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    InkWell(
+                      onTap: _takePicture,
+                      child: Container(
+                        height: 100,
+                        width: 100,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8),
+                          border: Border.all(color: Colors.black),
+                        ),
+                        child: const Icon(
+                          Icons.add,
+                          color: Colors.red,
+                          size: 45,
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+                SizedBox(
+                  height: 10,
+                ),
                 TextField(
                   controller: _description,
                   decoration: InputDecoration(
@@ -115,7 +160,6 @@ class _AddCustomersState extends State<AddCustomers> {
                     counterText: '',
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
-
                     ),
                   ),
                   validator: validateMobile,
@@ -202,33 +246,34 @@ class _AddCustomersState extends State<AddCustomers> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                  Container(
-                    width: 170,
-                    child: TextField(
-                      controller: _latitudeController,
-                      keyboardType: TextInputType.number,
-                      decoration: InputDecoration(
-                        labelText: "Latitude",
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
+                    SizedBox(
+                      width: 170,
+                      child: TextField(
+                        controller: _latitudeController,
+                        keyboardType: TextInputType.number,
+                        decoration: InputDecoration(
+                          labelText: "Latitude",
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                  Container(
-                    width: 170,
-                    child: TextField(
-                      controller: _longitudeController,
-                      keyboardType: TextInputType.number,
-                      decoration: InputDecoration(
-                        labelText: "Longitude",
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
+                    SizedBox(
+                      width: 170,
+                      child: TextField(
+                        controller: _longitudeController,
+                        keyboardType: TextInputType.number,
+                        decoration: InputDecoration(
+                          labelText: "Longitude",
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                ],),
+                  ],
+                ),
                 const SizedBox(
                   height: 15,
                 ),
@@ -341,20 +386,13 @@ class _AddCustomersState extends State<AddCustomers> {
                 const SizedBox(
                   height: 15,
                 ),
-
-
-
-
                 SizedBox(
                   width: double.infinity, // Set the width
                   height: 60, // Set the height
                   child: ElevatedButton(
                     onPressed: () {
-
                       if (_formKey.currentState!.validate()) {
                         // Cosmos.waitingDialog(context, "       Please Wait");
-
-
                       }
                     },
                     child: const Text(
@@ -370,4 +408,54 @@ class _AddCustomersState extends State<AddCustomers> {
       ),
     );
   }
+
+  ///-------------------> Image Picker Function <------------------///
+  void _takePicture() async {
+    final picker = ImagePicker();
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+
+    if (pickedFile != null) {
+      setState(() {
+        _image = File(pickedFile.path);
+      });
+    }
+  }
+
+  // Future updateItemData() async {
+  //   var request = http.MultipartRequest('POST',
+  //       Uri.parse('https://crystalsolutions.com.pk/khan_j/update_item.php'));
+  //   request.fields['itemDsc'] = _description.text.toString();
+  //   request.fields['itmremarks'] = _remarks.text.toString();
+  //
+  //   request.fields['uom'] = dropDown_uom.toString();
+  //
+  //   request.fields['name'] = widget.itemModel.tItmPic.toString();
+  //
+  //   request.fields['itemSts'] = dropDown_uStatus.toString();
+  //   request.fields['itmId'] = widget.itemModel.tItmId.toString();
+  //
+  //   request.fields['purRate'] = _purchaseRate.text.toString();
+  //   request.fields['saleRate'] = _saleRate.text.toString();
+  //   request.fields['categoryId'] = dropDown_selectCategory.toString();
+  //
+  //   if (_image != null) {
+  //     var picture = await http.MultipartFile.fromPath('pic', _image!.path);
+  //     request.files.add(picture);
+  //   }
+  //
+  //   final response = await http.Response.fromStream(await request.send());
+  //
+  //   var result = jsonDecode(response.body.toString());
+  //
+  //
+  //   if (result["error"] == 200) {
+  //     print(result["message"]);
+  //     Cosmos.snackBarToast(context, result["message"], 'ok', 2);
+  //     Navigator.pop(context);
+  //     Navigator.pop(context);
+  //   } else {
+  //     print(result["error"]);
+  //     Cosmos.snackBarToast(context, result["message"], 'ok', 2);
+  //   }
+  // }
 }
