@@ -1,27 +1,35 @@
 import 'dart:convert';
 import 'package:http/http.dart'as http;
+import 'package:crystal_solutions/Model/Type/GetType.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 import '../../../apis.dart';
 import '../../../cosmos.dart';
 
-class AddType extends StatefulWidget {
-  const AddType({super.key});
+class UpdateTypeScreen extends StatefulWidget {
+  GetType getTypeList;
+   UpdateTypeScreen({super.key, required this.getTypeList});
 
   @override
-  State<AddType> createState() => _AddTypeState();
+  State<UpdateTypeScreen> createState() => _UpdateTypeScreenState();
 }
 
-class _AddTypeState extends State<AddType> {
+class _UpdateTypeScreenState extends State<UpdateTypeScreen> {
   TextEditingController _descriptionController = TextEditingController();
   String? status;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    setTypeData();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Add Type',
+          'Update Type',
           style: TextStyle(color: Cosmic.white_color),
         ),
         centerTitle: true,
@@ -77,7 +85,7 @@ class _AddTypeState extends State<AddType> {
               child: ElevatedButton(
                 onPressed: () {
                   Cosmos.waitingDialog(context, 'Please Wait          ');
-                  post_addType();
+                  post_updateType();
                 },
                 child: const Text(
                   'Submit',
@@ -90,8 +98,13 @@ class _AddTypeState extends State<AddType> {
       ),
     );
   }
-  Future post_addType()async{
-    var response = await http.post(Uri.parse(addType),body: {
+  setTypeData(){
+    _descriptionController.text = widget.getTypeList.ttypdsc.toString() ??'';
+    status = widget.getTypeList.ttypsts.toString() ??'';
+  }
+  Future post_updateType()async{
+    var response = await http.post(Uri.parse(updateType),body: {
+      'FTypId': widget.getTypeList.ttypid.toString(),
       'FTypDsc': _descriptionController.text,
       'FTypSts': status.toString(),
 
@@ -100,7 +113,7 @@ class _AddTypeState extends State<AddType> {
     if(result['error'] == 200){
       Fluttertoast.showToast(msg: result['message']);
       Navigator.pop(context);
-      Navigator.pop(context); 
+      Navigator.pop(context);
     }else{
       Fluttertoast.showToast(msg: result['message']);
       Navigator.pop(context);
@@ -108,3 +121,4 @@ class _AddTypeState extends State<AddType> {
   }
 
 }
+

@@ -92,7 +92,7 @@ class _AddReferenceState extends State<AddReference> {
               child: ElevatedButton(
                 onPressed: () {
                   Cosmos.waitingDialog(context, 'Please Wait        ');
-                  post_addCity();
+                  post_addReference();
                 },
                 child: const Text(
                   'Submit',
@@ -105,7 +105,8 @@ class _AddReferenceState extends State<AddReference> {
       ),
     );
   }
-  Future post_addCity()async{
+
+  Future post_addReference()async{
     var response = await http.post(Uri.parse(addRef),body: {
       'FRefDsc': _descriptionController.text,
       'FRefSts': status.toString(),
@@ -114,6 +115,7 @@ class _AddReferenceState extends State<AddReference> {
     var result = jsonDecode(response.body);
     if(result['error'] == 200){
       Fluttertoast.showToast(msg: result['message']);
+      Navigator.pop(context);
       Navigator.pop(context);
     }else{
       Fluttertoast.showToast(msg: result['message']);

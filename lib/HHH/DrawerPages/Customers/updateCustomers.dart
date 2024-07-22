@@ -1,21 +1,24 @@
 import 'dart:convert';
 import 'dart:io';
-import 'package:fluttertoast/fluttertoast.dart';
-import 'package:http/http.dart' as http;
+import 'package:http/http.dart'as http;
+import 'package:crystal_solutions/Model/Customers/GetCustomersModel.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../../../apis.dart';
 import '../../../cosmos.dart';
 
-class AddCustomers extends StatefulWidget {
-  const AddCustomers({super.key});
+class UpdateCustomersScreen extends StatefulWidget {
+  GetCustomersModel getCustomersModel;
+
+  UpdateCustomersScreen({super.key, required this.getCustomersModel});
 
   @override
-  State<AddCustomers> createState() => _AddCustomersState();
+  State<UpdateCustomersScreen> createState() => _UpdateCustomersScreenState();
 }
 
-class _AddCustomersState extends State<AddCustomers> {
+class _UpdateCustomersScreenState extends State<UpdateCustomersScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   TextEditingController _description = TextEditingController();
   TextEditingController _cntPersonController = TextEditingController();
@@ -60,13 +63,18 @@ class _AddCustomersState extends State<AddCustomers> {
     }
     return null;
   }
-
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    setCustomerData();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Add Customer',
+          'Update Customer',
           style: TextStyle(color: Cosmic.white_color),
         ),
         centerTitle: true,
@@ -225,7 +233,18 @@ class _AddCustomersState extends State<AddCustomers> {
                 const SizedBox(
                   height: 15,
                 ),
-
+                // TextField(
+                //   controller: _passwordController,
+                //   decoration: InputDecoration(
+                //     labelText: "Password",
+                //     border: OutlineInputBorder(
+                //       borderRadius: BorderRadius.circular(10),
+                //     ),
+                //   ),
+                // ),
+                // const SizedBox(
+                //   height: 15,
+                // ),
                 TextField(
                   controller: _shopController,
                   keyboardType: TextInputType.number,
@@ -369,30 +388,30 @@ class _AddCustomersState extends State<AddCustomers> {
                 const SizedBox(
                   height: 15,
                 ),
-                // DropdownButtonFormField<String>(
-                //   value: status,
-                //   onChanged: (newValue) {
-                //     setState(() {
-                //       status = newValue;
-                //     });
-                //   },
-                //   items: <String>['Yes', 'No']
-                //       .map<DropdownMenuItem<String>>((String value) {
-                //     return DropdownMenuItem<String>(
-                //       value: value,
-                //       child: Text(value),
-                //     );
-                //   }).toList(),
-                //   decoration: InputDecoration(
-                //     labelText: "Status",
-                //     border: OutlineInputBorder(
-                //       borderRadius: BorderRadius.circular(10),
-                //       borderSide: const BorderSide(
-                //         color: Colors.black,
-                //       ),
-                //     ),
-                //   ),
-                // ),
+                DropdownButtonFormField<String>(
+                  value: status,
+                  onChanged: (newValue) {
+                    setState(() {
+                      status = newValue;
+                    });
+                  },
+                  items: <String>['Yes', 'No']
+                      .map<DropdownMenuItem<String>>((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value),
+                    );
+                  }).toList(),
+                  decoration: InputDecoration(
+                    labelText: "Status",
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: const BorderSide(
+                        color: Colors.black,
+                      ),
+                    ),
+                  ),
+                ),
                 const SizedBox(
                   height: 15,
                 ),
@@ -455,7 +474,7 @@ class _AddCustomersState extends State<AddCustomers> {
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
                         Cosmos.waitingDialog(context, "       Please Wait");
-                        post_addCust();
+                        post_updateCust();
                       }
                     },
                     child: const Text(
@@ -525,27 +544,47 @@ class _AddCustomersState extends State<AddCustomers> {
   //     Cosmos.snackBarToast(context, result["message"], 'ok', 2);
   //   }
   // }
-  Future post_addCust() async {
-    var response = await http.post(Uri.parse(addCust),
+  setCustomerData(){
+    _description.text = widget.getCustomersModel.tCstDsc ?? '';
+    _cntPersonController.text = widget.getCustomersModel.tCntPer ?? '';
+    _mobileController.text = widget.getCustomersModel.tMobNUm ?? '';
+    _phoneController.text = widget.getCustomersModel.tPhnNum ?? '';
+    _address1Controller.text = widget.getCustomersModel.tAdd001 ?? '';
+    _address2Controller.text = widget.getCustomersModel.tAdd002 ?? '';
+    _emailController.text = widget.getCustomersModel.tEmlAdd ?? '';
+    _shopController.text = widget.getCustomersModel.tShpNum ?? '';
+    _monthlyChargesController.text = widget.getCustomersModel.tMthChg ?? '';
+    _latitudeController.text = widget.getCustomersModel.tLatVal ?? '';
+    _longitudeController.text = widget.getCustomersModel.tLngVal ?? '';
+    reference = widget.getCustomersModel.tRefId ?? '';
+    status = widget.getCustomersModel.tCstSts ?? '';
+    _typeController.text = widget.getCustomersModel.tTypId ?? '';
+    _collectorController.text = widget.getCustomersModel.tColId ?? '';
+    _cityController.text = widget.getCustomersModel.tctyid ?? '';
+    _ipController.text = widget.getCustomersModel.tSrvIp ?? '';
+  }
+  Future post_updateCust() async {
+    var response = await http.post(Uri.parse(updateCust),
         body: {
-      'FColId': _collectorController.text.toString(),
-      'FCstDsc': _description.text.toString(),
-      'FCstSts': 'Yes',
-      'FCntPer': _cntPersonController.text.toString(),
-      'FPhnNum': _phoneController.text.toString(),
-      'FMobNum': _mobileController.text.toString(),
-      'FAdd001': _address1Controller.text.toString(),
-      'FAdd002': _address2Controller.text.toString(),
-      'FEmlAdd': _emailController.text.toString(),
-      'FShpNum': _shopController.text.toString(),
-      'FMthChg': _monthlyChargesController.text.toString(),
-      'FRefId':  reference.toString(),
-      'FTypId': _typeController.text.toString(),
-      'FCtyId': _cityController.text.toString(),
-      'FLatVal': _latitudeController.text.toString(),
-      'FLngVal': _longitudeController.text.toString(),
-      'FSrvIp': _ipController.text.toString(),
-    });
+          'FColId': _collectorController.text.toString(),
+          'FCstDsc': _description.text.toString(),
+          'FCstSts': status.toString(),
+          'FCntPer': _cntPersonController.text.toString(),
+          'FPhnNum': _phoneController.text.toString(),
+          'FMobNum': _mobileController.text.toString(),
+          'FAdd001': _address1Controller.text.toString(),
+          'FAdd002': _address2Controller.text.toString(),
+          'FEmlAdd': _emailController.text.toString(),
+          'FShpNum': _shopController.text.toString(),
+          'FMthChg': _monthlyChargesController.text.toString(),
+          'FRefId':  reference.toString(),
+          'FTypId': _typeController.text.toString(),
+          'FCtyId': _cityController.text.toString(),
+          'FLatVal': _latitudeController.text.toString(),
+          'FLngVal': _longitudeController.text.toString(),
+          'FSrvIp': _ipController.text.toString(),
+          'FCstId': widget.getCustomersModel.tcstid.toString(),
+        });
     var result = jsonDecode(response.body);
     if(result['error'] == 200){
       Fluttertoast.showToast(msg: result['message']);

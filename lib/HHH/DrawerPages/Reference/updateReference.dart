@@ -1,27 +1,37 @@
 import 'dart:convert';
-import 'package:http/http.dart'as http;
+
+import 'package:crystal_solutions/Model/Reference/GetReferenceModel.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-
+import 'package:http/http.dart'as http;
 import '../../../apis.dart';
 import '../../../cosmos.dart';
 
-class AddType extends StatefulWidget {
-  const AddType({super.key});
+class UpdateReferenceScreen extends StatefulWidget {
+  GetReferenceModel getReferenceList;
+   UpdateReferenceScreen({super.key, required this.getReferenceList});
 
   @override
-  State<AddType> createState() => _AddTypeState();
+  State<UpdateReferenceScreen> createState() => _UpdateReferenceScreenState();
 }
 
-class _AddTypeState extends State<AddType> {
+class _UpdateReferenceScreenState extends State<UpdateReferenceScreen> {
   TextEditingController _descriptionController = TextEditingController();
+  TextEditingController _emailController = TextEditingController();
   String? status;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    setRefData();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Add Type',
+          'Add Reference',
           style: TextStyle(color: Cosmic.white_color),
         ),
         centerTitle: true,
@@ -36,6 +46,19 @@ class _AddTypeState extends State<AddType> {
               controller: _descriptionController,
               decoration: InputDecoration(
                 labelText: "Description",
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+              ),
+            ),
+            const SizedBox(
+              height: 15,
+            ),
+            TextField(
+              keyboardType: TextInputType.emailAddress,
+              controller: _emailController,
+              decoration: InputDecoration(
+                labelText: "Email",
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),
@@ -76,8 +99,8 @@ class _AddTypeState extends State<AddType> {
               height: 60, // Set the height
               child: ElevatedButton(
                 onPressed: () {
-                  Cosmos.waitingDialog(context, 'Please Wait          ');
-                  post_addType();
+                  Cosmos.waitingDialog(context, 'Please Wait        ');
+                  post_updateReference();
                 },
                 child: const Text(
                   'Submit',
@@ -90,17 +113,23 @@ class _AddTypeState extends State<AddType> {
       ),
     );
   }
-  Future post_addType()async{
-    var response = await http.post(Uri.parse(addType),body: {
-      'FTypDsc': _descriptionController.text,
-      'FTypSts': status.toString(),
-
+  setRefData(){
+    _descriptionController.text = widget.getReferenceList.trefdsc.toString() ?? '';
+    _emailController.text = widget.getReferenceList.temladd.toString() ?? '';
+    status = widget.getReferenceList.trefsts.toString() ?? '';
+  }
+  Future post_updateReference()async{
+    var response = await http.post(Uri.parse(updateRef),body: {
+      'FRefId': widget.getReferenceList.trefid.toString(),
+      'FRefDsc': _descriptionController.text,
+      'FRefSts': status.toString(),
+      'FEmlAdd': _emailController.text,
     });
     var result = jsonDecode(response.body);
     if(result['error'] == 200){
       Fluttertoast.showToast(msg: result['message']);
       Navigator.pop(context);
-      Navigator.pop(context); 
+      Navigator.pop(context);
     }else{
       Fluttertoast.showToast(msg: result['message']);
       Navigator.pop(context);
@@ -108,3 +137,4 @@ class _AddTypeState extends State<AddType> {
   }
 
 }
+

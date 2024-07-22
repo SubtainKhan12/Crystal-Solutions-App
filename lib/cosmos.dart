@@ -118,3 +118,7 @@ class Cosmic {
   static var app_color = Color(0xff111441);
   static var white_color = Colors.white;
 }
+
+class FontSizeAndWeight{
+  static var Heading1 = TextStyle(fontSize: 16,fontWeight: FontWeight.w600);
+}
