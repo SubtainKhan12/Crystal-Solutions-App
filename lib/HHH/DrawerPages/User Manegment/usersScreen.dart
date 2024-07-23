@@ -41,7 +41,7 @@ class _GetUsersScreenState extends State<GetUsersScreen> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => AddUserScreen()))
+                  MaterialPageRoute(builder: (context) => const AddUserScreen()))
               .then((value) => get_Users());
         },
         child: const Icon(Icons.add),
@@ -98,7 +98,7 @@ class _GetUsersScreenState extends State<GetUsersScreen> {
                                         children: [
                                           RichText(
                                               text: TextSpan(children: [
-                                            TextSpan(
+                                            const TextSpan(
                                                 text: 'Login Id: ',
                                                 style: TextStyle(
                                                     color: Colors.black,
@@ -108,13 +108,13 @@ class _GetUsersScreenState extends State<GetUsersScreen> {
                                                 text: filterUsersList[index]
                                                     .tusrId
                                                     .toString(),
-                                                style: TextStyle(
+                                                style: const TextStyle(
                                                   color: Colors.black,
                                                 )),
                                           ])),
                                           RichText(
                                               text: TextSpan(children: [
-                                            TextSpan(
+                                            const TextSpan(
                                                 text: 'Password: ',
                                                 style: TextStyle(
                                                     color: Colors.black,
@@ -124,7 +124,7 @@ class _GetUsersScreenState extends State<GetUsersScreen> {
                                                 text: filterUsersList[index]
                                                     .tUsrPwd
                                                     .toString(),
-                                                style: TextStyle(
+                                                style: const TextStyle(
                                                   color: Colors.black,
                                                 )),
                                           ])),
@@ -133,7 +133,7 @@ class _GetUsersScreenState extends State<GetUsersScreen> {
                                             children: [
                                               RichText(
                                                   text: TextSpan(children: [
-                                                TextSpan(
+                                                const TextSpan(
                                                     text: 'Email: ',
                                                     style: TextStyle(
                                                         color: Colors.black,
@@ -143,7 +143,7 @@ class _GetUsersScreenState extends State<GetUsersScreen> {
                                                     text: filterUsersList[index]
                                                         .tUsrEml
                                                         .toString(),
-                                                    style: TextStyle(
+                                                    style: const TextStyle(
                                                       color: Colors.black,
                                                     )),
                                               ])),
@@ -169,7 +169,7 @@ class _GetUsersScreenState extends State<GetUsersScreen> {
 
                                           RichText(
                                               text: TextSpan(children: [
-                                            TextSpan(
+                                            const TextSpan(
                                                 text: 'Mobile: ',
                                                 style: TextStyle(
                                                     color: Colors.black,
@@ -179,13 +179,13 @@ class _GetUsersScreenState extends State<GetUsersScreen> {
                                                 text: filterUsersList[index]
                                                     .tMobNum
                                                     .toString(),
-                                                style: TextStyle(
+                                                style: const TextStyle(
                                                   color: Colors.black,
                                                 )),
                                           ])),
                                           RichText(
                                               text: TextSpan(children: [
-                                            TextSpan(
+                                            const TextSpan(
                                                 text: 'Status: ',
                                                 style: TextStyle(
                                                     color: Colors.black,
@@ -195,7 +195,7 @@ class _GetUsersScreenState extends State<GetUsersScreen> {
                                                 text: filterUsersList[index]
                                                     .tUsrSts
                                                     .toString(),
-                                                style: TextStyle(
+                                                style: const TextStyle(
                                                   color: Colors.black,
                                                 )),
                                           ])),
