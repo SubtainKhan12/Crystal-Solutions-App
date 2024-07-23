@@ -49,7 +49,7 @@ class _GetUsersScreenState extends State<GetUsersScreen> {
       body: RefreshIndicator(
         onRefresh: get_Users,
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 10),
+          padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 7),
           child: Column(
             children: [
               TextField(
@@ -72,8 +72,12 @@ class _GetUsersScreenState extends State<GetUsersScreen> {
                         itemCount: filterUsersList.length,
                         itemBuilder: (context, index) {
                           return Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 5.0),
+                            padding: const EdgeInsets.symmetric(vertical: 1),
                             child: Card(
+                              elevation: 2,
+                              shadowColor: Cosmic.app_color,
+                              borderOnForeground: true,
+                              surfaceTintColor: Colors.blue,
                               child: Theme(
                                 data: Theme.of(context)
                                     .copyWith(dividerColor: Colors.transparent),
@@ -82,12 +86,15 @@ class _GetUsersScreenState extends State<GetUsersScreen> {
                                     filterUsersList[index]
                                         .tUsrNam
                                         .toString(),
-                                    style: FontSizeAndWeight.Heading1,
+                                    style: const TextStyle(fontSize: 14),
                                   ),
+                                  subtitle: Text(filterUsersList[index].tusrTyp.toString(), style: const TextStyle(fontSize: 12),),
                                   children: [
                                     Divider(
                                       thickness: 1,
                                       color: Cosmic.app_color,
+                                      endIndent: 25,
+                                      indent: 25,
                                     ),
                                     Padding(
                                       padding: const EdgeInsets.symmetric(

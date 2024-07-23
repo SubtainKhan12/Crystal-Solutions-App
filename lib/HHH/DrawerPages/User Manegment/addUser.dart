@@ -76,6 +76,7 @@ class _AddUserScreenState extends State<AddUserScreen> {
                 ),
                 TextFormField(
                   controller: _mobileController,
+                  keyboardType: TextInputType.number,
                   maxLength: 11,
                   decoration: InputDecoration(
                     labelText: "Mobile No",

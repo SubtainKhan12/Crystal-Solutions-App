@@ -22,7 +22,8 @@ class _UpdateUserScreenState extends State<UpdateUserScreen> {
   TextEditingController _passwordController = TextEditingController();
   TextEditingController _mobileController = TextEditingController();
   TextEditingController _nameController = TextEditingController();
-  String? status, type;
+  String? type;
+  String? status = 'Yes';
 
   String? validateMobile(String? value) {
     if (value == null || value.isEmpty) {
@@ -84,6 +85,7 @@ class _UpdateUserScreenState extends State<UpdateUserScreen> {
                 ),
                 TextFormField(
                   controller: _mobileController,
+                  keyboardType: TextInputType.number,
                   maxLength: 11,
                   decoration: InputDecoration(
                     labelText: "Mobile No",
@@ -161,33 +163,47 @@ class _UpdateUserScreenState extends State<UpdateUserScreen> {
                   ),
                 ),
                 SizedBox(
-                  height: 15,
+                  height: 5,
                 ),
-                DropdownButtonFormField<String>(
-                  value: status,
-                  onChanged: (newValue) {
-                    setState(() {
-                      status = newValue;
-                    });
-                  },
-                  items: <String>['Yes', 'No']
-                      .map<DropdownMenuItem<String>>((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(value),
-                    );
-                  }).toList(),
-                  decoration: InputDecoration(
-                    labelText: "Status",
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                      borderSide: const BorderSide(
-                        color: Colors.black,
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                  child: Row(
+                    children: [
+                      const Text(
+                        'Status:',
+                        style: TextStyle(fontSize: 16),
                       ),
-                    ),
+                      Expanded(
+                        child: RadioListTile<String>(
+                          title: const Text('Yes'),
+                          value: 'Yes',
+                          groupValue: status,
+                          contentPadding: EdgeInsets.symmetric(horizontal: 20), // Adjust padding here
+                          onChanged: (String? value) {
+                            setState(() {
+                              status = value;
+                            });
+                          },
+                        ),
+                      ),
+                      Expanded(
+                        child: RadioListTile<String>(
+                          title: const Text('No'),
+                          value: 'No',
+                          groupValue: status,
+                          contentPadding: EdgeInsets.symmetric(horizontal: -20), // Adjust padding here
+                          onChanged: (String? value) {
+                            setState(() {
+                              status = value;
+                            });
+                          },
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-                const SizedBox(
+
+                SizedBox(
                   height: 15,
                 ),
                 SizedBox(

@@ -60,8 +60,9 @@ class _DrawerUiState extends State<DrawerUi> {
                   data: Theme.of(context)
                       .copyWith(dividerColor: Colors.transparent),
                   child: ExpansionTile(
-                    leading:  Icon(Icons.person,),
-                    title:  Text('Customers',),
+                    leading:  Icon(Icons.person,color: Cosmic.app_color,),
+                    title:  Text('Customers',selectionColor: Color(0xff111441),
+                    ),
                     children: [
                       SizedBox(
                         height: 39,
