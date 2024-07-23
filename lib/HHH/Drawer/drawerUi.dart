@@ -5,6 +5,7 @@ import 'package:crystal_solutions/HHH/DrawerPages/Reference/getReference.dart';
 import 'package:crystal_solutions/HHH/DrawerPages/Type/addType.dart';
 import 'package:crystal_solutions/HHH/DrawerPages/Type/getType.dart';
 import 'package:crystal_solutions/HHH/Login/loginScreen.dart';
+import 'package:crystal_solutions/cosmos.dart';
 import 'package:flutter/material.dart';
 import '../DrawerPages/Collectors/addCollectors.dart';
 import '../DrawerPages/Customers/customersScreen.dart';
@@ -55,133 +56,141 @@ class _DrawerUiState extends State<DrawerUi> {
                         ],
                       )),
                 ),
-                ExpansionTile(
-                  leading: const Icon(Icons.person),
-                  title: const Text('Customers'),
-                  children: [
-                    SizedBox(
-                      height: 39,
-                      child: TextButton(
+                Theme(
+                  data: Theme.of(context)
+                      .copyWith(dividerColor: Colors.transparent),
+                  child: ExpansionTile(
+                    leading:  Icon(Icons.person,),
+                    title:  Text('Customers',),
+                    children: [
+                      SizedBox(
+                        height: 39,
+                        child: TextButton(
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          const AddCollectors()));
+                            },
+                            child: const Row(
+                              children: [
+                                SizedBox(
+                                    height: 30,
+                                    width: 30,
+                                    child: Icon(Icons.person_pin)),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                Text(
+                                  "Collectors",
+                                  style: TextStyle(fontSize: 18),
+                                ),
+                              ],
+                            )),
+                      ),
+                      SizedBox(
+                        height: 39,
+                        child: TextButton(
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          const GetReferenceScreen()));
+                            },
+                            child: const Row(
+                              children: [
+                                SizedBox(
+                                    height: 30,
+                                    width: 30,
+                                    child: Icon(Icons.person_add_rounded)),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                Text(
+                                  "Reference",
+                                  style: TextStyle(fontSize: 18),
+                                ),
+                              ],
+                            )),
+                      ),
+                      SizedBox(
+                        height: 39,
+                        child: TextButton(
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          const GetTypeScreen()));
+                            },
+                            child: const Row(
+                              children: [
+                                SizedBox(
+                                    height: 30,
+                                    width: 30,
+                                    child: Icon(Icons.merge_type)),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                Text(
+                                  "Type",
+                                  style: TextStyle(fontSize: 18),
+                                ),
+                              ],
+                            )),
+                      ),
+                      SizedBox(
+                        height: 39,
+                        child: TextButton(
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => const AddCity()));
+                            },
+                            child: const Row(
+                              children: [
+                                SizedBox(
+                                    height: 30,
+                                    width: 30,
+                                    child: Icon(Icons.location_city)),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                Text(
+                                  "Cities",
+                                  style: TextStyle(fontSize: 18),
+                                ),
+                              ],
+                            )),
+                      ),
+                      TextButton(
                           onPressed: () {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => const AddCollectors()));
+                                    builder: (context) =>
+                                        const GetCustomersScreen()));
                           },
                           child: const Row(
                             children: [
                               SizedBox(
                                   height: 30,
                                   width: 30,
-                                  child: Icon(Icons.person_pin)),
+                                  child: Icon(Icons.person)),
                               SizedBox(
                                 width: 10,
                               ),
                               Text(
-                                "Collectors",
+                                "Customers",
                                 style: TextStyle(fontSize: 18),
                               ),
                             ],
                           )),
-                    ),
-                    SizedBox(
-                      height: 39,
-                      child: TextButton(
-                          onPressed: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => const GetReferenceScreen()));
-                          },
-                          child: const Row(
-                            children: [
-                              SizedBox(
-                                  height: 30,
-                                  width: 30,
-                                  child: Icon(Icons.person_add_rounded)),
-                              SizedBox(
-                                width: 10,
-                              ),
-                              Text(
-                                "Reference",
-                                style: TextStyle(fontSize: 18),
-                              ),
-                            ],
-                          )),
-                    ),
-                    SizedBox(
-                      height: 39,
-                      child: TextButton(
-                          onPressed: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => const GetTypeScreen()));
-                          },
-                          child: const Row(
-                            children: [
-                              SizedBox(
-                                  height: 30,
-                                  width: 30,
-                                  child: Icon(Icons.merge_type)),
-                              SizedBox(
-                                width: 10,
-                              ),
-                              Text(
-                                "Type",
-                                style: TextStyle(fontSize: 18),
-                              ),
-                            ],
-                          )),
-                    ),
-                    SizedBox(
-                      height: 39,
-                      child: TextButton(
-                          onPressed: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => const AddCity()));
-                          },
-                          child: const Row(
-                            children: [
-                              SizedBox(
-                                  height: 30,
-                                  width: 30,
-                                  child: Icon(Icons.location_city)),
-                              SizedBox(
-                                width: 10,
-                              ),
-                              Text(
-                                "Cities",
-                                style: TextStyle(fontSize: 18),
-                              ),
-                            ],
-                          )),
-                    ),
-                    TextButton(
-                        onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                  const GetCustomersScreen()));
-                        },
-                        child: const Row(
-                          children: [
-                            SizedBox(
-                                height: 30, width: 30, child: Icon(Icons.person)),
-                            SizedBox(
-                              width: 10,
-                            ),
-                            Text(
-                              "Customers",
-                              style: TextStyle(fontSize: 18),
-                            ),
-                          ],
-                        )),
-
-                  ],
+                    ],
+                  ),
                 ),
 
                 SizedBox(

@@ -106,7 +106,7 @@ class _AddReferenceState extends State<AddReference> {
     );
   }
 
-  Future post_addReference()async{
+  Future post_addReference() async {
     var response = await http.post(Uri.parse(addRef),body: {
       'FRefDsc': _descriptionController.text,
       'FRefSts': status.toString(),
@@ -122,5 +122,4 @@ class _AddReferenceState extends State<AddReference> {
       Navigator.pop(context);
     }
   }
-
 }

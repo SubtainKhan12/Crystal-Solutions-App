@@ -61,7 +61,7 @@ class _GetReferenceScreenState extends State<GetReferenceScreen> {
               ),
               Expanded(
                 child: _getReferenceList.isEmpty
-                    ? const Center(
+                    ? const Center( 
                   child: CircularProgressIndicator(),
                 )
                     : ListView.builder(

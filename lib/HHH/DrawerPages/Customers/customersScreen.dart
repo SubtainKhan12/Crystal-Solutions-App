@@ -4,7 +4,7 @@ import 'package:crystal_solutions/HHH/DrawerPages/Customers/addCustomers.dart';
 import 'package:crystal_solutions/HHH/DrawerPages/Customers/updateCustomers.dart';
 import 'package:crystal_solutions/apis.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart'as http;
+import 'package:http/http.dart' as http;
 import '../../../Model/Customers/GetCustomersModel.dart';
 import '../../../cosmos.dart';
 
@@ -17,6 +17,8 @@ class GetCustomersScreen extends StatefulWidget {
 
 class _GetCustomersScreenState extends State<GetCustomersScreen> {
   List<GetCustomersModel> _getCustomerListModel = [];
+  List<GetCustomersModel> filterCustomerList = [];
+
 
   @override
   void initState() {
@@ -24,6 +26,7 @@ class _GetCustomersScreenState extends State<GetCustomersScreen> {
     super.initState();
     get_Customers();
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +43,7 @@ class _GetCustomersScreenState extends State<GetCustomersScreen> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.push(context,
-              MaterialPageRoute(builder: (context) => AddCustomers()))
+                  MaterialPageRoute(builder: (context) => const AddCustomers()))
               .then((value) => get_Customers());
         },
         child: const Icon(Icons.add),
@@ -52,6 +55,9 @@ class _GetCustomersScreenState extends State<GetCustomersScreen> {
           child: Column(
             children: [
               TextField(
+                onChanged: (value){
+                  filterCustomers(value);
+                },
                 decoration: InputDecoration(
                   labelText: "Search",
                   border: OutlineInputBorder(
@@ -59,65 +65,190 @@ class _GetCustomersScreenState extends State<GetCustomersScreen> {
                   ),
                 ),
               ),
-              Expanded(
-                child: _getCustomerListModel.isEmpty
-                    ? const Center(
-                  child: CircularProgressIndicator(),
-                )
-                    : ListView.builder(
-                    itemCount: _getCustomerListModel.length,
-                    itemBuilder: (context, index) {
-                      return Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 5.0),
-                        child: Card(
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 15, vertical: 10),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  _getCustomerListModel[index]
-                                      .tCstDsc
-                                      .toString(),
-                                  style: FontSizeAndWeight.Heading1,
-                                ),
-                                Row(
-                                  mainAxisAlignment:
-                                  MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text('Phone: ${_getCustomerListModel[index]
-                                        .tMobNUm
-                                        .toString()}'),
-                                    InkWell(
-                                        onTap: () {
-                                          Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      UpdateCustomersScreen(
-                                                        getCustomersModel:
-                                                        _getCustomerListModel[
-                                                        index],
-                                                      )))
-                                              .then((value) => get_Customers());
-                                        },
-                                        child: Icon(
-                                          Icons.edit,
-                                          color: Cosmic.app_color,
-                                        )),
-                                  ],
-                                ),
-                                Text('${_getCustomerListModel[index]
-                                    .tMthChg
-                                    .toString()} RS'),
-                              ],
-                            ),
+        Expanded(
+          child: filterCustomerList.isEmpty
+              ? const Center(
+            child: CircularProgressIndicator(),
+          )
+              : ListView.builder(
+            itemCount: filterCustomerList.length,
+            itemBuilder: (context, index) {
+              return Padding(
+                padding: const EdgeInsets.symmetric(vertical: 5.0),
+                child: Card(
+                  elevation: 12,
+                  child: Theme(
+                    data: Theme.of(context)
+                        .copyWith(dividerColor: Colors.transparent),
+                    child: ExpansionTile(
+                      title: Text(
+                        filterCustomerList[index].tCstDsc.toString(),
+                        style: FontSizeAndWeight.Heading1,
+                      ),
+                      children: [
+                        Divider(
+                          color: Cosmic.app_color,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 15, vertical: 10),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              RichText(
+                                  text: TextSpan(children: [
+                                    const TextSpan(
+                                      text: 'Mobile: ',
+                                      style: TextStyle(
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    TextSpan(
+                                      text: filterCustomerList[index]
+                                          .tMobNUm
+                                          .toString(),
+                                      style: const TextStyle(
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                  ])),
+                              RichText(
+                                  text: TextSpan(children: [
+                                    const TextSpan(
+                                      text: 'Monthly Charges: ',
+                                      style: TextStyle(
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    TextSpan(
+                                      text: filterCustomerList[index]
+                                          .tMthChg
+                                          .toString(),
+                                      style: const TextStyle(
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                  ])),
+                              RichText(
+                                  text: TextSpan(children: [
+                                    const TextSpan(
+                                      text: 'Address1: ',
+                                      style: TextStyle(
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    TextSpan(
+                                      text: filterCustomerList[index]
+                                          .tAdd001
+                                          .toString(),
+                                      style: const TextStyle(
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                  ])),
+                              Row(
+                                mainAxisAlignment:
+                                MainAxisAlignment.spaceBetween,
+                                children: [
+                                  RichText(
+                                      text: TextSpan(children: [
+                                        const TextSpan(
+                                          text: 'Email: ',
+                                          style: TextStyle(
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                        TextSpan(
+                                          text: filterCustomerList[index]
+                                              .tEmlAdd
+                                              .toString(),
+                                          style: const TextStyle(
+                                            color: Colors.black,
+                                          ),
+                                        ),
+                                      ])),
+                                  InkWell(
+                                    onTap: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  UpdateCustomersScreen(
+                                                    getCustomersModel:
+                                                    filterCustomerList[
+                                                    index],
+                                                  ))).then(
+                                              (value) => get_Customers());
+                                    },
+                                    child: Icon(Icons.edit,
+                                      size: 20,
+                                      color: Cosmic.app_color,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              RichText(
+                                  text: TextSpan(children: [
+                                    const TextSpan(
+                                      text: 'IP: ',
+                                      style: TextStyle(
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    TextSpan(
+                                      text: filterCustomerList[index]
+                                          .tSrvIp
+                                          .toString(),
+                                      style: const TextStyle(
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                  ])),
+                              RichText(
+                                  text: TextSpan(children: [
+                                    const TextSpan(
+                                      text: 'Shops: ',
+                                      style: TextStyle(
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    TextSpan(
+                                      text: filterCustomerList[index]
+                                          .tShpNum
+                                          .toString(),
+                                      style: const TextStyle(
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                  ])),
+                              RichText(
+                                  text: TextSpan(children: [
+                                    const TextSpan(
+                                      text: 'Status: ',
+                                      style: TextStyle(
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    TextSpan(
+                                      text: filterCustomerList[index]
+                                          .tCstSts
+                                          .toString(),
+                                      style: const TextStyle(
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                  ])),
+                            ],
                           ),
                         ),
-                      );
-                    }),
-              ),
+                      ],
+                    ),
+                  ),
+                ),
+              );
+            },
+          ),
+        ),
             ],
           ),
         ),
@@ -133,8 +264,17 @@ class _GetCustomersScreenState extends State<GetCustomersScreen> {
       for (Map i in result) {
         _getCustomerListModel.add(GetCustomersModel.fromJson(i));
       }
-      setState(() {});
+      setState(() {
+        filterCustomerList = List.from(_getCustomerListModel);
+      });
     }
   }
+  filterCustomers(String query) {
+    setState(() {
+      filterCustomerList = _getCustomerListModel
+          .where((element) =>
+          element.tCstDsc!.toLowerCase().contains(query.toLowerCase()))
+          .toList();
+    });
+  }
 }
-

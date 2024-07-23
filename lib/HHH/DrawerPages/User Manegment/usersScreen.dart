@@ -17,6 +17,7 @@ class GetUsersScreen extends StatefulWidget {
 
 class _GetUsersScreenState extends State<GetUsersScreen> {
   List<GetUsersModel> _getUsersListModel = [];
+  List<GetUsersModel> filterUsersList = [];
 
   @override
   void initState() {
@@ -52,6 +53,9 @@ class _GetUsersScreenState extends State<GetUsersScreen> {
           child: Column(
             children: [
               TextField(
+                onChanged: (value){
+                  filterUsers(value);
+                },
                 decoration: InputDecoration(
                   labelText: "Search",
                   border: OutlineInputBorder(
@@ -60,64 +64,156 @@ class _GetUsersScreenState extends State<GetUsersScreen> {
                 ),
               ),
               Expanded(
-                child: _getUsersListModel.isEmpty
+                child: filterUsersList.isEmpty
                     ? const Center(
                         child: CircularProgressIndicator(),
                       )
                     : ListView.builder(
-                        itemCount: _getUsersListModel.length,
+                        itemCount: filterUsersList.length,
                         itemBuilder: (context, index) {
                           return Padding(
                             padding: const EdgeInsets.symmetric(vertical: 5.0),
                             child: Card(
-                              child: Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 15, vertical: 10),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
+                              child: Theme(
+                                data: Theme.of(context)
+                                    .copyWith(dividerColor: Colors.transparent),
+                                child: ExpansionTile(
+                                  title: Text(
+                                    filterUsersList[index]
+                                        .tUsrNam
+                                        .toString(),
+                                    style: FontSizeAndWeight.Heading1,
+                                  ),
                                   children: [
-                                    Text(
-                                      _getUsersListModel[index]
-                                          .tUsrNam
-                                          .toString(),
-                                      style: FontSizeAndWeight.Heading1,
+                                    Divider(
+                                      thickness: 1,
+                                      color: Cosmic.app_color,
                                     ),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text(_getUsersListModel[index]
-                                            .tusrTyp
-                                            .toString()),
-                                        InkWell(
-                                            onTap: () {
-                                              Navigator.push(
-                                                      context,
-                                                      MaterialPageRoute(
-                                                          builder: (context) =>
-                                                              UpdateUserScreen(
-                                                                getUsersModel:
-                                                                    _getUsersListModel[
-                                                                        index],
-                                                              )))
-                                                  .then((value) => get_Users());
-                                            },
-                                            child: Icon(
-                                              Icons.edit,
-                                              color: Cosmic.app_color,
-                                            )),
-                                      ],
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 15, vertical: 10),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          RichText(
+                                              text: TextSpan(children: [
+                                            TextSpan(
+                                                text: 'Login Id: ',
+                                                style: TextStyle(
+                                                    color: Colors.black,
+                                                    fontWeight:
+                                                        FontWeight.bold)),
+                                            TextSpan(
+                                                text: filterUsersList[index]
+                                                    .tusrId
+                                                    .toString(),
+                                                style: TextStyle(
+                                                  color: Colors.black,
+                                                )),
+                                          ])),
+                                          RichText(
+                                              text: TextSpan(children: [
+                                            TextSpan(
+                                                text: 'Password: ',
+                                                style: TextStyle(
+                                                    color: Colors.black,
+                                                    fontWeight:
+                                                        FontWeight.bold)),
+                                            TextSpan(
+                                                text: filterUsersList[index]
+                                                    .tUsrPwd
+                                                    .toString(),
+                                                style: TextStyle(
+                                                  color: Colors.black,
+                                                )),
+                                          ])),
+                                          Row(
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              RichText(
+                                                  text: TextSpan(children: [
+                                                TextSpan(
+                                                    text: 'Email: ',
+                                                    style: TextStyle(
+                                                        color: Colors.black,
+                                                        fontWeight:
+                                                            FontWeight.bold)),
+                                                TextSpan(
+                                                    text: filterUsersList[index]
+                                                        .tUsrEml
+                                                        .toString(),
+                                                    style: TextStyle(
+                                                      color: Colors.black,
+                                                    )),
+                                              ])),
+                                              InkWell(
+                                                onTap: () {
+                                                  Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                      builder: (context) => UpdateUserScreen(
+                                                        getUsersModel: filterUsersList[index],
+                                                      ),
+                                                    ),
+                                                  ).then((value) => get_Users());
+                                                },
+                                                child: Icon(
+                                                  Icons.edit,
+                                                  size: 20,
+                                                  color: Cosmic.app_color,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+
+                                          RichText(
+                                              text: TextSpan(children: [
+                                            TextSpan(
+                                                text: 'Mobile: ',
+                                                style: TextStyle(
+                                                    color: Colors.black,
+                                                    fontWeight:
+                                                        FontWeight.bold)),
+                                            TextSpan(
+                                                text: filterUsersList[index]
+                                                    .tMobNum
+                                                    .toString(),
+                                                style: TextStyle(
+                                                  color: Colors.black,
+                                                )),
+                                          ])),
+                                          RichText(
+                                              text: TextSpan(children: [
+                                            TextSpan(
+                                                text: 'Status: ',
+                                                style: TextStyle(
+                                                    color: Colors.black,
+                                                    fontWeight:
+                                                        FontWeight.bold)),
+                                            TextSpan(
+                                                text: filterUsersList[index]
+                                                    .tUsrSts
+                                                    .toString(),
+                                                style: TextStyle(
+                                                  color: Colors.black,
+                                                )),
+                                          ])),
+                                          // Text(_getUsersListModel[index].tMobNum.toString()),
+                                          // Text(_getUsersListModel[index].tUsrPwd.toString()),
+                                          // Text(_getUsersListModel[index].tUsrEml.toString()),
+                                          // Text(_getUsersListModel[index].tUsrSts.toString()),
+                                        ],
+                                      ),
                                     ),
-                                    Text(_getUsersListModel[index]
-                                        .tMobNum
-                                        .toString()),
                                   ],
                                 ),
                               ),
                             ),
                           );
-                        }),
-              ),
+                        },
+                      ),
+              )
             ],
           ),
         ),
@@ -133,7 +229,17 @@ class _GetUsersScreenState extends State<GetUsersScreen> {
       for (Map i in result) {
         _getUsersListModel.add(GetUsersModel.fromJson(i));
       }
-      setState(() {});
+      setState(() {
+        filterUsersList = List.from(_getUsersListModel);
+      });
     }
+  }
+  filterUsers(String query) {
+    setState(() {
+      filterUsersList = _getUsersListModel
+          .where((element) =>
+          element.tUsrNam!.toLowerCase().contains(query.toLowerCase()))
+          .toList();
+    });
   }
 }
