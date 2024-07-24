@@ -1,29 +1,28 @@
 import 'dart:convert';
-import 'package:crystal_solutions/Model/Users/GetUsersModel.dart';
-import 'package:http/http.dart'as http;
-import 'package:crystal_solutions/apis.dart';
+import 'package:http/http.dart' as http;
+import 'package:crystal_solutions/Model/Collectors/GetCollectorsModel.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
+import '../../../apis.dart';
 import '../../../cosmos.dart';
 
-class UpdateUserScreen extends StatefulWidget {
-   GetUsersModel getUsersModel ;
-   UpdateUserScreen({super.key, required this.getUsersModel});
+class UpdateCollector extends StatefulWidget {
+  GetCollectorsModel getCollectorsModel;
+
+  UpdateCollector({super.key, required this.getCollectorsModel});
 
   @override
-  State<UpdateUserScreen> createState() => _UpdateUserScreenState();
+  State<UpdateCollector> createState() => _UpdateCollectorState();
 }
 
-class _UpdateUserScreenState extends State<UpdateUserScreen> {
+class _UpdateCollectorState extends State<UpdateCollector> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  TextEditingController _loginIdController = TextEditingController();
+  TextEditingController _description = TextEditingController();
+  TextEditingController _address1Controller = TextEditingController();
+  TextEditingController _address2Controller = TextEditingController();
+  TextEditingController _phoneController = TextEditingController();
   TextEditingController _emailController = TextEditingController();
-  TextEditingController _passwordController = TextEditingController();
-  TextEditingController _mobileController = TextEditingController();
-  TextEditingController _nameController = TextEditingController();
-  String? type;
-  String? status;
 
   String? validateMobile(String? value) {
     if (value == null || value.isEmpty) {
@@ -45,11 +44,13 @@ class _UpdateUserScreenState extends State<UpdateUserScreen> {
     }
     return null;
   }
+
+  String? status;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    setUserData();
+    setCollectorData();
   }
 
   @override
@@ -57,12 +58,12 @@ class _UpdateUserScreenState extends State<UpdateUserScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Update User',
+          'Update Collectors',
           style: TextStyle(color: Cosmic.white_color),
         ),
         centerTitle: true,
-        backgroundColor: Cosmic.app_color,
         iconTheme: IconThemeData(color: Cosmic.white_color),
+        backgroundColor: Cosmic.app_color,
       ),
       body: SingleChildScrollView(
         child: Stack(
@@ -82,17 +83,19 @@ class _UpdateUserScreenState extends State<UpdateUserScreen> {
                 key: _formKey,
                 child: Center(
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
+                    // crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // Text('Fill out the form bellow to Update    \n the user',style: TextStyle(fontWeight: FontWeight.w500,fontSize: 16),),
-                      SizedBox(height: 15,),
+                      // Text('Fill out the form bellow to Update\n the  collector',style: TextStyle(fontWeight: FontWeight.w500,fontSize: 16),),
+                      const SizedBox(
+                        height: 10,
+                      ),
                       Container(
                         width: MediaQuery.of(context).size.width / 1.5,
                         height: MediaQuery.of(context).size.height / 17,
                         child: TextField(
-                          controller: _nameController,
+                          controller: _description,
                           decoration: InputDecoration(
-                            labelText: "Name",
+                            labelText: "Description",
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(3),
                             ),
@@ -106,11 +109,11 @@ class _UpdateUserScreenState extends State<UpdateUserScreen> {
                         constraints: BoxConstraints.tightFor(width: MediaQuery.of(context).size.width / 1.5,
                           height: MediaQuery.of(context).size.height / 12,),
                         child: TextFormField(
-                          controller: _mobileController,
-                          keyboardType: TextInputType.number,
                           maxLength: 11,
+                          controller: _phoneController,
+                          keyboardType: TextInputType.number,
                           decoration: InputDecoration(
-                            labelText: "Mobile No",
+                            labelText: "Mobile",
                             counterText: '',
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(3),
@@ -119,12 +122,44 @@ class _UpdateUserScreenState extends State<UpdateUserScreen> {
                           validator: validateMobile,
                         ),
                       ),
+                      Container(
+                        width: MediaQuery.of(context).size.width / 1.5,
+                        height: MediaQuery.of(context).size.height / 17,
+                        child: TextField(
+                          controller: _address1Controller,
+                          decoration: InputDecoration(
+                            labelText: "Address 1",
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(3),
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      Container(
+                        width: MediaQuery.of(context).size.width / 1.5,
+                        height: MediaQuery.of(context).size.height / 17,
+                        child: TextField(
+                          controller: _address2Controller,
+                          decoration: InputDecoration(
+                            labelText: "Address 2",
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(3),
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 15,
+                      ),
                       ConstrainedBox(
                         constraints: BoxConstraints.tightFor(width: MediaQuery.of(context).size.width / 1.5,
                           height: MediaQuery.of(context).size.height / 12,),
                         child: TextFormField(
-                          keyboardType: TextInputType.emailAddress,
                           controller: _emailController,
+                          keyboardType: TextInputType.emailAddress,
                           decoration: InputDecoration(
                             labelText: "Email",
                             border: OutlineInputBorder(
@@ -134,69 +169,7 @@ class _UpdateUserScreenState extends State<UpdateUserScreen> {
                           validator: validateEmail,
                         ),
                       ),
-                      Container(
-                        width: MediaQuery.of(context).size.width / 1.5,
-                        height: MediaQuery.of(context).size.height / 17,
-                        child: TextField(
-                          controller: _loginIdController,
-                          decoration: InputDecoration(
-                            labelText: "Login Id",
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(3),
-                            ),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 15,
-                      ),
-                      Container(
-                        width: MediaQuery.of(context).size.width / 1.5,
-                        height: MediaQuery.of(context).size.height / 17,
-                        child: TextField(
-                          controller: _passwordController,
-                          decoration: InputDecoration(
-                            labelText: "Password",
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(3),
-                            ),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 15,
-                      ),
-                      Container(
-                        width: MediaQuery.of(context).size.width / 1.5,
-                        height: MediaQuery.of(context).size.height / 17,
-                        child: DropdownButtonFormField<String>(
-                          value: type,
-                          onChanged: (newValue) {
-                            setState(() {
-                              type = newValue;
-                            });
-                          },
-                          items: <String>['Admin', 'Office', 'Collector', 'User']
-                              .map<DropdownMenuItem<String>>((String value) {
-                            return DropdownMenuItem<String>(
-                              value: value,
-                              child: Text(value),
-                            );
-                          }).toList(),
-                          decoration: InputDecoration(
-                            labelText: "Type",
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(3),
-                              borderSide: const BorderSide(
-                                color: Colors.black,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 15,
-                      ),
+
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 50.0),
                         child: Row(
@@ -223,7 +196,7 @@ class _UpdateUserScreenState extends State<UpdateUserScreen> {
                                 title: const Text('No',),
                                 value: 'No',
                                 groupValue: status,
-                                contentPadding: EdgeInsets.symmetric(horizontal: -20), // Adjust padding here
+                                contentPadding: const EdgeInsets.symmetric(horizontal: -20), // Adjust padding here
                                 onChanged: (String? value) {
                                   setState(() {
                                     status = value;
@@ -234,82 +207,56 @@ class _UpdateUserScreenState extends State<UpdateUserScreen> {
                           ],
                         ),
                       ),
-                      // DropdownButtonFormField<String>(
-                      //   value: status,
-                      //   onChanged: (newValue) {
-                      //     setState(() {
-                      //       status = newValue;
-                      //     });
-                      //   },
-                      //   items: <String>['Yes', 'No']
-                      //       .map<DropdownMenuItem<String>>((String value) {
-                      //     return DropdownMenuItem<String>(
-                      //       value: value,
-                      //       child: Text(value),
-                      //     );
-                      //   }).toList(),
-                      //   decoration: InputDecoration(
-                      //     labelText: "Status",
-                      //     border: OutlineInputBorder(
-                      //       borderRadius: BorderRadius.circular(10),
-                      //       borderSide: const BorderSide(
-                      //         color: Colors.black,
-                      //       ),
-                      //     ),
-                      //   ),
-                      // ),
-                      // const SizedBox(
-                      //   height: 15,
-                      // ),
+                      const SizedBox(
+                        height: 15,
+                      ),
                       SizedBox(
                         width: MediaQuery.of(context).size.width / 1.5,
-                        height: MediaQuery.of(context).size.height / 18, // Set the height
+                        height: MediaQuery.of(context).size.height / 17,
                         child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(20))),
                           onPressed: () {
                             if (_formKey.currentState!.validate()) {
-                              Cosmos.waitingDialog(context, 'Please Wait        ');
-                              post_UpdateUser();
+                              Cosmos.waitingDialog(context, "       Please Wait");
+                              post_updateCol();
                             }
                           },
                           child: const Text(
                             'Submit',
-                            style: TextStyle(fontSize: 20),
+                            style: TextStyle(fontSize: 25),
                           ),
                         ),
-                      ),
+                      )
                     ],
                   ),
                 ),
               ),
             ),
-
           ],
         ),
       ),
     );
   }
 
-  setUserData(){
-    _nameController.text = widget.getUsersModel.tUsrNam ?? '';
-    _mobileController.text = widget.getUsersModel.tMobNum ?? '';
-    _loginIdController.text = widget.getUsersModel.tusrId ?? '';
-    _passwordController.text = widget.getUsersModel.tUsrPwd ?? '';
-    _emailController.text = widget.getUsersModel.tUsrEml ?? '';
-    status = widget.getUsersModel.tUsrSts ?? '';
-    type = widget.getUsersModel.tusrTyp ?? '';
+  setCollectorData() {
+    _description.text = widget.getCollectorsModel.tcoldsc.toString() ?? '';
+    _phoneController.text = widget.getCollectorsModel.tmobnum.toString() ?? '';
+    _address1Controller.text =
+        widget.getCollectorsModel.tadd002.toString() ?? '';
+    _address2Controller.text =
+        widget.getCollectorsModel.tadd001.toString() ?? '';
+    _emailController.text = widget.getCollectorsModel.temladd.toString() ?? '';
+    status = widget.getCollectorsModel.tcolsts.toString() ?? '';
   }
-  Future post_UpdateUser() async {
-    var response = await http.post(Uri.parse(updateUser), body: {
-      'FUsrId': _loginIdController.text,
-      'FUsrPwd': _passwordController.text,
-      'FUsrSts': status.toString(),
-      'FUsrEml': _emailController.text,
-      'FMobNum': _mobileController.text,
-      'FUsrTyp': type.toString(),
-      'FUsrNam': _nameController.text,
+
+  Future post_updateCol() async {
+    var response = await http.post(Uri.parse(updateCol), body: {
+      'FColId': widget.getCollectorsModel.tcolid.toString(),
+      'FColDsc': _description.text,
+      'FColSts': status.toString(),
+      'FAdd001': _address1Controller.text,
+      'FAdd002': _address2Controller.text,
+      'FMobNum': _phoneController.text,
+      'FEmlAdd': _emailController.text,
     });
     var result = jsonDecode(response.body);
     if (result['error'] == 200) {

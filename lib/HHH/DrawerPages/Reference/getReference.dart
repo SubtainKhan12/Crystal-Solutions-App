@@ -70,6 +70,10 @@ class _GetReferenceScreenState extends State<GetReferenceScreen> {
                       return Padding(
                         padding: const EdgeInsets.symmetric(vertical: 5.0),
                         child: Card(
+                          elevation: 2,
+                          shadowColor: Cosmic.app_color,
+                          borderOnForeground: true,
+                          surfaceTintColor: Colors.blue,
                           child: Padding(
                             padding: const EdgeInsets.symmetric(
                                 horizontal: 15, vertical: 10),

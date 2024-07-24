@@ -16,9 +16,20 @@ class UpdateReferenceScreen extends StatefulWidget {
 }
 
 class _UpdateReferenceScreenState extends State<UpdateReferenceScreen> {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   TextEditingController _descriptionController = TextEditingController();
   TextEditingController _emailController = TextEditingController();
   String? status;
+  String? validateEmail(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Please enter a valid email';
+    }
+    if (!RegExp(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$')
+        .hasMatch(value)) {
+      return 'Invalid email format';
+    }
+    return null;
+  }
   @override
   void initState() {
     // TODO: implement initState
@@ -28,88 +39,156 @@ class _UpdateReferenceScreenState extends State<UpdateReferenceScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var _width = MediaQuery.of(context).size.width;
+    var _height = MediaQuery.of(context).size.height;
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Add Reference',
+          'Update Reference',
           style: TextStyle(color: Cosmic.white_color),
         ),
         centerTitle: true,
         backgroundColor: Cosmic.app_color,
         iconTheme: IconThemeData(color: Cosmic.white_color),
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
-        child: Column(
-          children: [
-            TextField(
-              controller: _descriptionController,
-              decoration: InputDecoration(
-                labelText: "Description",
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
+      body: Stack(
+        children: [
+          SingleChildScrollView(
+            child: Opacity(
+              opacity: 0.3, // Adjust the opacity as needed
+              child: Padding(
+                padding:  EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.1),
+                child: Image.asset('assets/Crystal-Solutions-logo-removebg-preview.png'),
+              ),
+            ),
+          ),
+          Form(
+            key: _formKey,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
+              child: Center(
+                child: Column(
+                  children: [
+                    Container(
+                      height: _height / 17,
+                      width: _width / 1.5,
+                      child: TextField(
+                        controller: _descriptionController,
+                        decoration: InputDecoration(
+                          labelText: "Description",
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(3),
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    ConstrainedBox(
+                      constraints: BoxConstraints.tightFor(height: _height / 12,width: _width / 1.5),
+                      child: TextFormField(
+                        keyboardType: TextInputType.emailAddress,
+                        controller: _emailController,
+                        decoration: InputDecoration(
+                          labelText: "Email",
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(3),
+                          ),
+                        ),
+                        validator: validateEmail,
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 50.0),
+                      child: Row(
+                        children: [
+                          const Text(
+                            'Status:',
+                            style: TextStyle(fontSize: 16),
+                          ),
+                          Expanded(
+                            child: RadioListTile<String>(
+                              title: const Text('Yes'),
+                              value: 'Yes',
+                              groupValue: status,
+                              contentPadding: EdgeInsets.symmetric(horizontal: -20), // Adjust padding here
+                              onChanged: (String? value) {
+                                setState(() {
+                                  status = value;
+                                });
+                              },
+                            ),
+                          ),
+                          Expanded(
+                            child: RadioListTile<String>(
+                              title: const Text('No',),
+                              value: 'No',
+                              groupValue: status,
+                              contentPadding: const EdgeInsets.symmetric(horizontal: -20), // Adjust padding here
+                              onChanged: (String? value) {
+                                setState(() {
+                                  status = value;
+                                });
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    // DropdownButtonFormField<String>(
+                    //   value: status,
+                    //   onChanged: (newValue) {
+                    //     setState(() {
+                    //       status = newValue;
+                    //     });
+                    //   },
+                    //   items: <String>['Yes', 'No']
+                    //       .map<DropdownMenuItem<String>>((String value) {
+                    //     return DropdownMenuItem<String>(
+                    //       value: value,
+                    //       child: Text(value),
+                    //     );
+                    //   }).toList(),
+                    //   decoration: InputDecoration(
+                    //     labelText: "Status",
+                    //     border: OutlineInputBorder(
+                    //       borderRadius: BorderRadius.circular(10),
+                    //       borderSide: const BorderSide(
+                    //         color: Colors.black,
+                    //       ),
+                    //     ),
+                    //   ),
+                    // ),
+                    // const SizedBox(
+                    //   height: 15,
+                    // ),
+                    SizedBox(
+                      width: _width / 1.5, // Set the width
+                      height: _height / 17, // Set the height
+                      child: ElevatedButton(
+                        onPressed: () {
+
+                          if (_formKey.currentState!.validate()) {
+                            Cosmos.waitingDialog(context, 'Please Wait        ');
+                            post_updateReference();
+                          }
+                        },
+                        child: const Text(
+                          'Submit',
+                          style: TextStyle(fontSize: 25),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),
-            const SizedBox(
-              height: 15,
-            ),
-            TextField(
-              keyboardType: TextInputType.emailAddress,
-              controller: _emailController,
-              decoration: InputDecoration(
-                labelText: "Email",
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-              ),
-            ),
-            const SizedBox(
-              height: 15,
-            ),
-            DropdownButtonFormField<String>(
-              value: status,
-              onChanged: (newValue) {
-                setState(() {
-                  status = newValue;
-                });
-              },
-              items: <String>['Yes', 'No']
-                  .map<DropdownMenuItem<String>>((String value) {
-                return DropdownMenuItem<String>(
-                  value: value,
-                  child: Text(value),
-                );
-              }).toList(),
-              decoration: InputDecoration(
-                labelText: "Status",
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
-                  borderSide: const BorderSide(
-                    color: Colors.black,
-                  ),
-                ),
-              ),
-            ),
-            const SizedBox(
-              height: 15,
-            ),
-            SizedBox(
-              width: double.infinity, // Set the width
-              height: 60, // Set the height
-              child: ElevatedButton(
-                onPressed: () {
-                  Cosmos.waitingDialog(context, 'Please Wait        ');
-                  post_updateReference();
-                },
-                child: const Text(
-                  'Submit',
-                  style: TextStyle(fontSize: 25),
-                ),
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

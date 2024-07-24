@@ -63,6 +63,8 @@ class _AddCustomersState extends State<AddCustomers> {
 
   @override
   Widget build(BuildContext context) {
+    var _width = MediaQuery.of(context).size.width;
+    var _height = MediaQuery.of(context).size.height;
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -73,401 +75,475 @@ class _AddCustomersState extends State<AddCustomers> {
         backgroundColor: Cosmic.app_color,
         iconTheme: IconThemeData(color: Cosmic.white_color),
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
-        child: SingleChildScrollView(
-          child: Form(
-            key: _formKey,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text(
-                  "Fill the Fields",
-                  style: TextStyle(fontSize: 25),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                // Row(
-                //   mainAxisAlignment: MainAxisAlignment.center,
-                //   children: [
-                //     Container(
-                //       height: 100,
-                //       width: 100,
-                //       decoration: BoxDecoration(
-                //           border: Border.all(color: Colors.black),
-                //           borderRadius: BorderRadius.circular(8)),
-                //       // child: _image == null
-                //       //     ? Image.network(
-                //       //   "https://crystalsolutions.com.pk/khan_j/itemimage//${widget.itemModel.tItmPic.toString()}",
-                //       //   fit: BoxFit.fill,
-                //       // )
-                //       //     : Image.file(
-                //       //   _image!,
-                //       //   fit: BoxFit.cover,
-                //       // )
-                //     ),
-                //     const SizedBox(
-                //       width: 10,
-                //     ),
-                //     InkWell(
-                //       onTap: _takePicture,
-                //       child: Container(
-                //         height: 100,
-                //         width: 100,
-                //         decoration: BoxDecoration(
-                //           borderRadius: BorderRadius.circular(8),
-                //           border: Border.all(color: Colors.black),
-                //         ),
-                //         child: const Icon(
-                //           Icons.add,
-                //           color: Colors.red,
-                //           size: 45,
-                //         ),
-                //       ),
-                //     )
-                //   ],
-                // ),
-                SizedBox(
-                  height: 10,
-                ),
-                TextField(
-                  controller: _description,
-                  decoration: InputDecoration(
-                    labelText: "Description",
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  height: 15,
-                ),
-                TextField(
-                  controller: _cntPersonController,
-                  decoration: InputDecoration(
-                    labelText: "Contact Person",
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  height: 15,
-                ),
-                TextFormField(
-                  maxLength: 11,
-                  controller: _mobileController,
-                  keyboardType: TextInputType.number,
-                  decoration: InputDecoration(
-                    labelText: "Mobile",
-                    counterText: '',
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                  ),
-                  validator: validateMobile,
-                ),
-                const SizedBox(
-                  height: 15,
-                ),
-                TextFormField(
-                  maxLength: 11,
-                  controller: _phoneController,
-                  keyboardType: TextInputType.number,
-                  decoration: InputDecoration(
-                    labelText: "Phone",
-                    counterText: '',
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                  ),
-                  validator: validateMobile,
-                ),
-                const SizedBox(
-                  height: 15,
-                ),
-                TextField(
-                  controller: _address1Controller,
-                  decoration: InputDecoration(
-                    labelText: "Address 1",
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  height: 15,
-                ),
-                TextField(
-                  controller: _address2Controller,
-                  decoration: InputDecoration(
-                    labelText: "Address 2",
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  height: 15,
-                ),
-                TextFormField(
-                  controller: _emailController,
-                  keyboardType: TextInputType.emailAddress,
-                  decoration: InputDecoration(
-                    labelText: "Email",
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                  ),
-                  validator: validateEmail,
-                ),
-                const SizedBox(
-                  height: 15,
-                ),
-
-                TextField(
-                  controller: _shopController,
-                  keyboardType: TextInputType.number,
-                  decoration: InputDecoration(
-                    labelText: "Shops",
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  height: 15,
-                ),
-                TextField(
-                  controller: _monthlyChargesController,
-                  keyboardType: TextInputType.number,
-                  decoration: InputDecoration(
-                    labelText: "Monthly Charges",
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  height: 15,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    SizedBox(
-                      width: 170,
-                      child: TextField(
-                        controller: _latitudeController,
-                        keyboardType: TextInputType.number,
-                        decoration: InputDecoration(
-                          labelText: "Latitude",
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      width: 170,
-                      child: TextField(
-                        controller: _longitudeController,
-                        keyboardType: TextInputType.number,
-                        decoration: InputDecoration(
-                          labelText: "Longitude",
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(
-                  height: 15,
-                ),
-                // Row(
-                //   crossAxisAlignment: CrossAxisAlignment.start,
-                //   children: [
-                //     Container(
-                //       height: 60,
-                //       decoration: BoxDecoration(
-                //           borderRadius: BorderRadius.circular(10),
-                //           border: Border.all(color: Colors.black54)
-                //       ),
-                //       child: Padding(
-                //         padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                //         child: DropdownButton<String>(
-                //           value: dropDown_package,
-                //           onChanged: (String? newValue) {
-                //             setState(() {
-                //               dropDown_package = newValue;
-                //               if (newValue != null) {
-                //                 updatePackageDetails(newValue);
-                //               }
-                //             });
-                //           },
-                //           items: [
-                //             const DropdownMenuItem<String>(
-                //               value: null,
-                //               child: Text('Select Package'),
-                //             ),
-                //             ...allPackagesList
-                //                 .map<DropdownMenuItem<String>>((category) {
-                //               return DropdownMenuItem<String>(
-                //                 value: category.id ?? '',
-                //                 child: Text(category.pkDsc ?? ''),
-                //               );
-                //             }).toList(),
-                //           ],
-                //         ),
-                //       ),
-                //     ),
-                //     const SizedBox(
-                //       width: 12,
-                //     ),
-                //     SizedBox(
-                //       width: 155,
-                //       child: TextField(
-                //         maxLength: 4,
-                //         controller: _speedController,
-                //         keyboardType: TextInputType.number,
-                //         decoration: InputDecoration(
-                //           labelText: "Mbps",
-                //           border: OutlineInputBorder(
-                //             borderRadius: BorderRadius.circular(10),
-                //           ),
-                //         ),
-                //       ),
-                //     ),
-                //   ],
-                // ),
-                DropdownButtonFormField<String>(
-                  value: reference,
-                  onChanged: (newValue) {
-                    setState(() {
-                      reference = newValue;
-                    });
-                  },
-                  items: <String>['1', '2']
-                      .map<DropdownMenuItem<String>>((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(value),
-                    );
-                  }).toList(),
-                  decoration: InputDecoration(
-                    labelText: "Reference",
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                      borderSide: const BorderSide(
-                        color: Colors.black,
-                      ),
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  height: 15,
-                ),
-                // DropdownButtonFormField<String>(
-                //   value: status,
-                //   onChanged: (newValue) {
-                //     setState(() {
-                //       status = newValue;
-                //     });
-                //   },
-                //   items: <String>['Yes', 'No']
-                //       .map<DropdownMenuItem<String>>((String value) {
-                //     return DropdownMenuItem<String>(
-                //       value: value,
-                //       child: Text(value),
-                //     );
-                //   }).toList(),
-                //   decoration: InputDecoration(
-                //     labelText: "Status",
-                //     border: OutlineInputBorder(
-                //       borderRadius: BorderRadius.circular(10),
-                //       borderSide: const BorderSide(
-                //         color: Colors.black,
-                //       ),
-                //     ),
-                //   ),
-                // ),
-                const SizedBox(
-                  height: 15,
-                ),
-                TextField(
-                  controller: _typeController,
-                  keyboardType: TextInputType.number,
-                  decoration: InputDecoration(
-                    labelText: "Type",
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  height: 15,
-                ),
-                TextField(
-                  controller: _collectorController,
-                  keyboardType: TextInputType.number,
-                  decoration: InputDecoration(
-                    labelText: "Collector",
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  height: 15,
-                ),
-                TextField(
-                  controller: _cityController,
-                  keyboardType: TextInputType.number,
-                  decoration: InputDecoration(
-                    labelText: "City",
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  height: 15,
-                ),
-                TextField(
-                  controller: _ipController,
-                  keyboardType: TextInputType.number,
-                  decoration: InputDecoration(
-                    labelText: "IP",
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  height: 15,
-                ),
-                SizedBox(
-                  width: double.infinity, // Set the width
-                  height: 60, // Set the height
-                  child: ElevatedButton(
-                    onPressed: () {
-                      if (_formKey.currentState!.validate()) {
-                        Cosmos.waitingDialog(context, "       Please Wait");
-                        post_addCust();
-                      }
-                    },
-                    child: const Text(
-                      'Submit',
-                      style: TextStyle(fontSize: 25),
-                    ),
-                  ),
-                )
-              ],
+      body: Stack(
+        children: [
+          SingleChildScrollView(
+            child: Opacity(
+              opacity: 0.3, // Adjust the opacity as needed
+              child: Padding(
+                padding:  EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.1),
+                child: Image.asset('assets/Crystal-Solutions-logo-removebg-preview.png'),
+              ),
             ),
           ),
-        ),
+
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
+            child: SingleChildScrollView(
+              child: Form(
+                key: _formKey,
+                child: Center(
+                  child: Column(
+                    // crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // const Text(
+                      //   "Fill the Fields",
+                      //   style: TextStyle(fontSize: 25),
+                      // ),
+                      // const SizedBox(
+                      //   height: 10,
+                      // ),
+                      // Row(
+                      //   mainAxisAlignment: MainAxisAlignment.center,
+                      //   children: [
+                      //     Container(
+                      //       height: 100,
+                      //       width: 100,
+                      //       decoration: BoxDecoration(
+                      //           border: Border.all(color: Colors.black),
+                      //           borderRadius: BorderRadius.circular(8)),
+                      //       // child: _image == null
+                      //       //     ? Image.network(
+                      //       //   "https://crystalsolutions.com.pk/khan_j/itemimage//${widget.itemModel.tItmPic.toString()}",
+                      //       //   fit: BoxFit.fill,
+                      //       // )
+                      //       //     : Image.file(
+                      //       //   _image!,
+                      //       //   fit: BoxFit.cover,
+                      //       // )
+                      //     ),
+                      //     const SizedBox(
+                      //       width: 10,
+                      //     ),
+                      //     InkWell(
+                      //       onTap: _takePicture,
+                      //       child: Container(
+                      //         height: 100,
+                      //         width: 100,
+                      //         decoration: BoxDecoration(
+                      //           borderRadius: BorderRadius.circular(8),
+                      //           border: Border.all(color: Colors.black),
+                      //         ),
+                      //         child: const Icon(
+                      //           Icons.add,
+                      //           color: Colors.red,
+                      //           size: 45,
+                      //         ),
+                      //       ),
+                      //     )
+                      //   ],
+                      // ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Container(
+                        height: _height / 17,
+                        width: _width / 1.5,
+                        child: TextField(
+                          controller: _description,
+                          decoration: InputDecoration(
+                            labelText: "Description",
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(3),
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      Container(
+                        height: _height / 17,
+                        width: _width / 1.5,
+                        child: TextField(
+                          controller: _cntPersonController,
+                          decoration: InputDecoration(
+                            labelText: "Contact Person",
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(3),
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      ConstrainedBox(
+                        constraints: BoxConstraints.tightFor(height: _height / 12,
+                          width: _width / 1.5,),
+                        child: TextFormField(
+                          maxLength: 11,
+                          controller: _mobileController,
+                          keyboardType: TextInputType.number,
+                          decoration: InputDecoration(
+                            labelText: "Mobile",
+                            counterText: '',
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(3),
+                            ),
+                          ),
+                          validator: validateMobile,
+                        ),
+                      ),
+                      // const SizedBox(
+                      //   height: 15,
+                      // ),
+                      ConstrainedBox(
+                        constraints: BoxConstraints.tightFor(height: _height / 12,
+                          width: _width / 1.5,),
+                        child: TextFormField(
+                          maxLength: 11,
+                          controller: _phoneController,
+                          keyboardType: TextInputType.number,
+                          decoration: InputDecoration(
+                            labelText: "Phone",
+                            counterText: '',
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(3),
+                            ),
+                          ),
+                          validator: validateMobile,
+                        ),
+                      ),
+
+                      Container(
+                        height: _height / 17,
+                        width: _width / 1.5,
+                        child: TextField(
+                          controller: _address1Controller,
+                          decoration: InputDecoration(
+                            labelText: "Address 1",
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(3),
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      Container(
+                        height: _height / 17,
+                        width: _width / 1.5,
+                        child: TextField(
+                          controller: _address2Controller,
+                          decoration: InputDecoration(
+                            labelText: "Address 2",
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(3),
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      ConstrainedBox(
+                        constraints: BoxConstraints.tightFor(height: _height / 12,
+                          width: _width / 1.5,),
+                        child: TextFormField(
+                          controller: _emailController,
+                          keyboardType: TextInputType.emailAddress,
+                          decoration: InputDecoration(
+                            labelText: "Email",
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(3),
+                            ),
+                          ),
+                          validator: validateEmail,
+                        ),
+                      ),
+                      // const SizedBox(
+                      //   height: 15,
+                      // ),
+
+                      Container(
+                        height: _height / 17,
+                        width: _width / 1.5,
+                        child: TextField(
+                          controller: _shopController,
+                          keyboardType: TextInputType.number,
+                          decoration: InputDecoration(
+                            labelText: "Shops",
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(3),
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      Container(
+                        height: _height / 17,
+                        width: _width / 1.5,
+                        child: TextField(
+                          controller: _monthlyChargesController,
+                          keyboardType: TextInputType.number,
+                          decoration: InputDecoration(
+                            labelText: "Monthly Charges",
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(3),
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      Container(
+                        height: _height / 17,
+                        width: _width / 1.5,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            SizedBox(
+                              width: _width * 0.3,
+                              child: TextField(
+                                controller: _latitudeController,
+                                keyboardType: TextInputType.number,
+                                decoration: InputDecoration(
+                                  labelText: "Latitude",
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(3),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              width: _width * 0.3,
+                              child: TextField(
+                                controller: _longitudeController,
+                                keyboardType: TextInputType.number,
+                                decoration: InputDecoration(
+                                  labelText: "Longitude",
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(3),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      // Row(
+                      //   crossAxisAlignment: CrossAxisAlignment.start,
+                      //   children: [
+                      //     Container(
+                      //       height: 60,
+                      //       decoration: BoxDecoration(
+                      //           borderRadius: BorderRadius.circular(10),
+                      //           border: Border.all(color: Colors.black54)
+                      //       ),
+                      //       child: Padding(
+                      //         padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                      //         child: DropdownButton<String>(
+                      //           value: dropDown_package,
+                      //           onChanged: (String? newValue) {
+                      //             setState(() {
+                      //               dropDown_package = newValue;
+                      //               if (newValue != null) {
+                      //                 updatePackageDetails(newValue);
+                      //               }
+                      //             });
+                      //           },
+                      //           items: [
+                      //             const DropdownMenuItem<String>(
+                      //               value: null,
+                      //               child: Text('Select Package'),
+                      //             ),
+                      //             ...allPackagesList
+                      //                 .map<DropdownMenuItem<String>>((category) {
+                      //               return DropdownMenuItem<String>(
+                      //                 value: category.id ?? '',
+                      //                 child: Text(category.pkDsc ?? ''),
+                      //               );
+                      //             }).toList(),
+                      //           ],
+                      //         ),
+                      //       ),
+                      //     ),
+                      //     const SizedBox(
+                      //       width: 12,
+                      //     ),
+                      //     SizedBox(
+                      //       width: 155,
+                      //       child: TextField(
+                      //         maxLength: 4,
+                      //         controller: _speedController,
+                      //         keyboardType: TextInputType.number,
+                      //         decoration: InputDecoration(
+                      //           labelText: "Mbps",
+                      //           border: OutlineInputBorder(
+                      //             borderRadius: BorderRadius.circular(10),
+                      //           ),
+                      //         ),
+                      //       ),
+                      //     ),
+                      //   ],
+                      // ),
+                      Container(
+                        height: _height / 17,
+                        width: _width / 1.5,
+                        child: DropdownButtonFormField<String>(
+                          value: reference,
+                          onChanged: (newValue) {
+                            setState(() {
+                              reference = newValue;
+                            });
+                          },
+                          items: <String>['1', '2']
+                              .map<DropdownMenuItem<String>>((String value) {
+                            return DropdownMenuItem<String>(
+                              value: value,
+                              child: Text(value),
+                            );
+                          }).toList(),
+                          decoration: InputDecoration(
+                            labelText: "Reference",
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(3),
+                              borderSide: const BorderSide(
+                                color: Colors.black,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      // DropdownButtonFormField<String>(
+                      //   value: status,
+                      //   onChanged: (newValue) {
+                      //     setState(() {
+                      //       status = newValue;
+                      //     });
+                      //   },
+                      //   items: <String>['Yes', 'No']
+                      //       .map<DropdownMenuItem<String>>((String value) {
+                      //     return DropdownMenuItem<String>(
+                      //       value: value,
+                      //       child: Text(value),
+                      //     );
+                      //   }).toList(),
+                      //   decoration: InputDecoration(
+                      //     labelText: "Status",
+                      //     border: OutlineInputBorder(
+                      //       borderRadius: BorderRadius.circular(10),
+                      //       borderSide: const BorderSide(
+                      //         color: Colors.black,
+                      //       ),
+                      //     ),
+                      //   ),
+                      // ),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      Container(
+                        height: _height / 17,
+                        width: _width / 1.5,
+                        child: TextField(
+                          controller: _typeController,
+                          keyboardType: TextInputType.number,
+                          decoration: InputDecoration(
+                            labelText: "Type",
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(3),
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      Container(
+                        height: _height / 17,
+                        width: _width / 1.5,
+                        child: TextField(
+                          controller: _collectorController,
+                          keyboardType: TextInputType.number,
+                          decoration: InputDecoration(
+                            labelText: "Collector",
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(3),
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      Container(
+                        height: _height / 17,
+                        width: _width / 1.5,
+                        child: TextField(
+                          controller: _cityController,
+                          keyboardType: TextInputType.number,
+                          decoration: InputDecoration(
+                            labelText: "City",
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(3),
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      Container(
+                        height: _height / 17,
+                        width: _width / 1.5,
+                        child: TextField(
+                          controller: _ipController,
+                          keyboardType: TextInputType.number,
+                          decoration: InputDecoration(
+                            labelText: "IP",
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(3),
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      SizedBox(
+                        height: _height / 17,
+                        width: _width / 1.5, // Set the height
+                        child: ElevatedButton(
+                          onPressed: () {
+                            if (_formKey.currentState!.validate()) {
+                              Cosmos.waitingDialog(context, "       Please Wait");
+                              post_addCust();
+                            }
+                          },
+                          child: const Text(
+                            'Submit',
+                            style: TextStyle(fontSize: 25),
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

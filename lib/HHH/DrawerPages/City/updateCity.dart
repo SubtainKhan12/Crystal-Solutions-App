@@ -1,28 +1,28 @@
 import 'dart:convert';
-import 'package:http/http.dart'as http;
-import 'package:crystal_solutions/Model/Type/GetType.dart';
+
+import 'package:crystal_solutions/Model/City/GetCityModel.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-
 import '../../../apis.dart';
 import '../../../cosmos.dart';
+import 'package:http/http.dart'as http;
 
-class UpdateTypeScreen extends StatefulWidget {
-  GetType getTypeList;
-   UpdateTypeScreen({super.key, required this.getTypeList});
+class UpdateCityScreen extends StatefulWidget {
+  GetCityModel getCityList;
+   UpdateCityScreen({super.key, required this.getCityList});
 
   @override
-  State<UpdateTypeScreen> createState() => _UpdateTypeScreenState();
+  State<UpdateCityScreen> createState() => _UpdateCityScreenState();
 }
 
-class _UpdateTypeScreenState extends State<UpdateTypeScreen> {
+class _UpdateCityScreenState extends State<UpdateCityScreen> {
   TextEditingController _descriptionController = TextEditingController();
   String? status;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    setTypeData();
+    setCityData();
   }
   @override
   Widget build(BuildContext context) {
@@ -31,7 +31,7 @@ class _UpdateTypeScreenState extends State<UpdateTypeScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Update Type',
+          'Add City',
           style: TextStyle(color: Cosmic.white_color),
         ),
         centerTitle: true,
@@ -107,6 +107,33 @@ class _UpdateTypeScreenState extends State<UpdateTypeScreen> {
                       ],
                     ),
                   ),
+                  // DropdownButtonFormField<String>(
+                  //   value: status,
+                  //   onChanged: (newValue) {
+                  //     setState(() {
+                  //       status = newValue;
+                  //     });
+                  //   },
+                  //   items: <String>['Yes', 'No']
+                  //       .map<DropdownMenuItem<String>>((String value) {
+                  //     return DropdownMenuItem<String>(
+                  //       value: value,
+                  //       child: Text(value),
+                  //     );
+                  //   }).toList(),
+                  //   decoration: InputDecoration(
+                  //     labelText: "Status",
+                  //     border: OutlineInputBorder(
+                  //       borderRadius: BorderRadius.circular(10),
+                  //       borderSide: const BorderSide(
+                  //         color: Colors.black,
+                  //       ),
+                  //     ),
+                  //   ),
+                  // ),
+                  // const SizedBox(
+                  //   height: 15,
+                  // ),
                   SizedBox(
                     width: _width / 1.5, // Set the width
                     height: _height / 17, // Set the height
@@ -115,7 +142,7 @@ class _UpdateTypeScreenState extends State<UpdateTypeScreen> {
                       onPressed: () {
 
                         Cosmos.waitingDialog(context, 'Please Wait        ');
-                        post_updateType();
+                        post_UpdateCity();
 
                       },
                       child: const Text(
@@ -132,16 +159,15 @@ class _UpdateTypeScreenState extends State<UpdateTypeScreen> {
       ),
     );
   }
-  setTypeData(){
-    _descriptionController.text = widget.getTypeList.ttypdsc.toString() ??'';
-    status = widget.getTypeList.ttypsts.toString() ??'';
+  setCityData(){
+    _descriptionController.text = widget.getCityList.tctydsc.toString() ?? '';
+    status = widget.getCityList.tctysts.toString() ?? '';
   }
-  Future post_updateType()async{
-    var response = await http.post(Uri.parse(updateType),body: {
-      'FTypId': widget.getTypeList.ttypid.toString(),
-      'FTypDsc': _descriptionController.text,
-      'FTypSts': status.toString(),
-
+  Future post_UpdateCity()async{
+    var response = await http.post(Uri.parse(updateCity),body: {
+      'FCtyId': widget.getCityList.tctyid.toString(),
+      'FCtyDsc': _descriptionController.text,
+      'FCtySts': status.toString(),
     });
     var result = jsonDecode(response.body);
     if(result['error'] == 200){
@@ -153,6 +179,4 @@ class _UpdateTypeScreenState extends State<UpdateTypeScreen> {
       Navigator.pop(context);
     }
   }
-
 }
-

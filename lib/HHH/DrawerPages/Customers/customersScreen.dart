@@ -5,6 +5,7 @@ import 'package:crystal_solutions/HHH/DrawerPages/Customers/updateCustomers.dart
 import 'package:crystal_solutions/apis.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import '../../../Model/City/GetCityModel.dart';
 import '../../../Model/Customers/GetCustomersModel.dart';
 import '../../../cosmos.dart';
 
@@ -18,13 +19,14 @@ class GetCustomersScreen extends StatefulWidget {
 class _GetCustomersScreenState extends State<GetCustomersScreen> {
   List<GetCustomersModel> _getCustomerListModel = [];
   List<GetCustomersModel> filterCustomerList = [];
-
+  List<GetCityModel> _getCityList = [];
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     get_Customers();
+    get_City();
   }
 
 
@@ -76,7 +78,10 @@ class _GetCustomersScreenState extends State<GetCustomersScreen> {
               return Padding(
                 padding: const EdgeInsets.symmetric(vertical: 5.0),
                 child: Card(
-                  elevation: 12,
+                  elevation: 2,
+                  shadowColor: Cosmic.app_color,
+                  borderOnForeground: true,
+                  surfaceTintColor: Colors.blue,
                   child: Theme(
                     data: Theme.of(context)
                         .copyWith(dividerColor: Colors.transparent),
@@ -174,9 +179,8 @@ class _GetCustomersScreenState extends State<GetCustomersScreen> {
                                           MaterialPageRoute(
                                               builder: (context) =>
                                                   UpdateCustomersScreen(
-                                                    getCustomersModel:
-                                                    filterCustomerList[
-                                                    index],
+                                                    getCustomersModel: filterCustomerList[index],
+                                                    getCityList: _getCityList[index],
                                                   ))).then(
                                               (value) => get_Customers());
                                     },
@@ -267,6 +271,17 @@ class _GetCustomersScreenState extends State<GetCustomersScreen> {
       setState(() {
         filterCustomerList = List.from(_getCustomerListModel);
       });
+    }
+  }
+  Future get_City() async {
+    var response = await http.post(Uri.parse(getCity));
+    var result = jsonDecode(response.body);
+    if (response.statusCode == 200) {
+      _getCityList.clear();
+      for (Map i in result) {
+        _getCityList.add(GetCityModel.fromJson(i));
+      }
+      setState(() {});
     }
   }
   filterCustomers(String query) {

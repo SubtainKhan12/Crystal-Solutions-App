@@ -1,10 +1,13 @@
 import 'package:crystal_solutions/HHH/DrawerPages/Bank/getBankScreen.dart';
 import 'package:crystal_solutions/HHH/DrawerPages/City/addCity.dart';
+import 'package:crystal_solutions/HHH/DrawerPages/City/getCity.dart';
+import 'package:crystal_solutions/HHH/DrawerPages/Collectors/getCollectors.dart';
 import 'package:crystal_solutions/HHH/DrawerPages/Reference/addReference.dart';
 import 'package:crystal_solutions/HHH/DrawerPages/Reference/getReference.dart';
 import 'package:crystal_solutions/HHH/DrawerPages/Type/addType.dart';
 import 'package:crystal_solutions/HHH/DrawerPages/Type/getType.dart';
 import 'package:crystal_solutions/HHH/Login/loginScreen.dart';
+import 'package:crystal_solutions/Model/Collectors/GetCollectorsModel.dart';
 import 'package:crystal_solutions/cosmos.dart';
 import 'package:flutter/material.dart';
 import '../DrawerPages/Collectors/addCollectors.dart';
@@ -72,7 +75,7 @@ class _DrawerUiState extends State<DrawerUi> {
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) =>
-                                          const AddCollectors()));
+                                          const CollectorsScreen()));
                             },
                             child: const Row(
                               children: [
@@ -149,7 +152,7 @@ class _DrawerUiState extends State<DrawerUi> {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => const AddCity()));
+                                      builder: (context) => const CityScreen()));
                             },
                             child: const Row(
                               children: [

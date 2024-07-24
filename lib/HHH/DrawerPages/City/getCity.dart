@@ -1,28 +1,28 @@
 import 'dart:convert';
-import 'package:crystal_solutions/HHH/DrawerPages/Type/addType.dart';
-import 'package:crystal_solutions/HHH/DrawerPages/Type/updateType.dart';
+import 'package:crystal_solutions/HHH/DrawerPages/City/updateCity.dart';
 import 'package:http/http.dart'as http;
-import 'package:crystal_solutions/Model/Type/GetType.dart';
+import 'package:crystal_solutions/HHH/DrawerPages/City/addCity.dart';
+import 'package:crystal_solutions/apis.dart';
 import 'package:flutter/material.dart';
 
-import '../../../apis.dart';
+import '../../../Model/City/GetCityModel.dart';
 import '../../../cosmos.dart';
 
-class GetTypeScreen extends StatefulWidget {
-  const GetTypeScreen({super.key});
+class CityScreen extends StatefulWidget {
+  const CityScreen({super.key});
 
   @override
-  State<GetTypeScreen> createState() => _GetTypeScreenState();
+  State<CityScreen> createState() => _CityScreenState();
 }
 
-class _GetTypeScreenState extends State<GetTypeScreen> {
-  List<GetType> _getTypeList = [];
+class _CityScreenState extends State<CityScreen> {
+  List<GetCityModel> _getCityList = [];
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    get_Type();
+    get_City();
   }
 
   @override
@@ -40,13 +40,13 @@ class _GetTypeScreenState extends State<GetTypeScreen> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.push(context,
-              MaterialPageRoute(builder: (context) => AddType()))
-              .then((value) => get_Type());
+              MaterialPageRoute(builder: (context) => AddCity()))
+              .then((value) => get_City());
         },
         child: const Icon(Icons.add),
       ),
       body: RefreshIndicator(
-        onRefresh: get_Type,
+        onRefresh: get_City,
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 10),
           child: Column(
@@ -60,12 +60,12 @@ class _GetTypeScreenState extends State<GetTypeScreen> {
                 ),
               ),
               Expanded(
-                child: _getTypeList.isEmpty
+                child: _getCityList.isEmpty
                     ? const Center(
                   child: CircularProgressIndicator(),
                 )
                     : ListView.builder(
-                    itemCount: _getTypeList.length,
+                    itemCount: _getCityList.length,
                     itemBuilder: (context, index) {
                       return Padding(
                         padding: const EdgeInsets.symmetric(vertical: 5.0),
@@ -81,8 +81,8 @@ class _GetTypeScreenState extends State<GetTypeScreen> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  _getTypeList[index]
-                                      .ttypdsc
+                                  _getCityList[index]
+                                      .tctydsc
                                       .toString(),
                                   style: FontSizeAndWeight.Heading1,
                                 ),
@@ -90,8 +90,8 @@ class _GetTypeScreenState extends State<GetTypeScreen> {
                                   mainAxisAlignment:
                                   MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Text(_getTypeList[index]
-                                        .ttypsts
+                                    Text(_getCityList[index]
+                                        .tctysts
                                         .toString()),
                                     InkWell(
                                         onTap: () {
@@ -99,12 +99,12 @@ class _GetTypeScreenState extends State<GetTypeScreen> {
                                               context,
                                               MaterialPageRoute(
                                                   builder: (context) =>
-                                                      UpdateTypeScreen(
-                                                        getTypeList:
-                                                        _getTypeList[
+                                                      UpdateCityScreen(
+                                                        getCityList:
+                                                        _getCityList[
                                                         index],
                                                       )))
-                                              .then((value) => get_Type());
+                                              .then((value) => get_City());
                                         },
                                         child: Icon(
                                           Icons.edit,
@@ -126,16 +126,15 @@ class _GetTypeScreenState extends State<GetTypeScreen> {
     );
   }
 
-  Future get_Type() async {
-    var response = await http.post(Uri.parse(getType));
+  Future get_City() async {
+    var response = await http.post(Uri.parse(getCity));
     var result = jsonDecode(response.body);
     if (response.statusCode == 200) {
-      _getTypeList.clear();
+      _getCityList.clear();
       for (Map i in result) {
-        _getTypeList.add(GetType.fromJson(i));
+        _getCityList.add(GetCityModel.fromJson(i));
       }
       setState(() {});
     }
   }
 }
-
