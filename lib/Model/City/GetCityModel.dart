@@ -2,7 +2,9 @@
 /// tctydsc : "Lahore"
 /// tctysts : "Yes"
 
+
 class GetCityModel {
+  List<GetCityModel>? data;
   GetCityModel({
       String? tctyid, 
       String? tctydsc, 

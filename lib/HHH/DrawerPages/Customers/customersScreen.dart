@@ -6,7 +6,10 @@ import 'package:crystal_solutions/apis.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import '../../../Model/City/GetCityModel.dart';
+import '../../../Model/Collectors/GetCollectorsModel.dart';
 import '../../../Model/Customers/GetCustomersModel.dart';
+import '../../../Model/Reference/GetReferenceModel.dart';
+import '../../../Model/Type/GetType.dart';
 import '../../../cosmos.dart';
 
 class GetCustomersScreen extends StatefulWidget {
@@ -20,6 +23,9 @@ class _GetCustomersScreenState extends State<GetCustomersScreen> {
   List<GetCustomersModel> _getCustomerListModel = [];
   List<GetCustomersModel> filterCustomerList = [];
   List<GetCityModel> _getCityList = [];
+  List<GetReferenceModel> _getReferenceList = [];
+  List<GetCollectorsModel> _getCollectorList = [];
+  List<GetType> _getTypeList = [];
 
   @override
   void initState() {
@@ -27,6 +33,9 @@ class _GetCustomersScreenState extends State<GetCustomersScreen> {
     super.initState();
     get_Customers();
     get_City();
+    get_Collectors();
+    get_Reference();
+    get_Type();
   }
 
 
@@ -45,7 +54,10 @@ class _GetCustomersScreenState extends State<GetCustomersScreen> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => const AddCustomers()))
+                  MaterialPageRoute(builder: (context) =>  AddCustomers(getCityList: _getCityList,
+                    getCollectorList: _getCollectorList,
+                    getReferenceList: _getReferenceList,
+                    getTypeList: _getTypeList,)))
               .then((value) => get_Customers());
         },
         child: const Icon(Icons.add),
@@ -76,7 +88,7 @@ class _GetCustomersScreenState extends State<GetCustomersScreen> {
             itemCount: filterCustomerList.length,
             itemBuilder: (context, index) {
               return Padding(
-                padding: const EdgeInsets.symmetric(vertical: 5.0),
+                padding: const EdgeInsets.symmetric(vertical: 1),
                 child: Card(
                   elevation: 2,
                   shadowColor: Cosmic.app_color,
@@ -88,7 +100,7 @@ class _GetCustomersScreenState extends State<GetCustomersScreen> {
                     child: ExpansionTile(
                       title: Text(
                         filterCustomerList[index].tCstDsc.toString(),
-                        style: FontSizeAndWeight.Heading1,
+                           style: const TextStyle(fontSize: 14),
                       ),
                       children: [
                         Divider(
@@ -180,7 +192,10 @@ class _GetCustomersScreenState extends State<GetCustomersScreen> {
                                               builder: (context) =>
                                                   UpdateCustomersScreen(
                                                     getCustomersModel: filterCustomerList[index],
-                                                    getCityList: _getCityList[index],
+                                                    getCityList: _getCityList,
+                                                    getCollectorList: _getCollectorList,
+                                                    getReferenceList: _getReferenceList,
+                                                    getTypeList: _getTypeList,
                                                   ))).then(
                                               (value) => get_Customers());
                                     },
@@ -284,6 +299,42 @@ class _GetCustomersScreenState extends State<GetCustomersScreen> {
       setState(() {});
     }
   }
+  Future get_Reference() async {
+    var response = await http.post(Uri.parse(getRef));
+    var result = jsonDecode(response.body);
+    if (response.statusCode == 200) {
+      _getReferenceList.clear();
+      for (Map i in result) {
+        _getReferenceList.add(GetReferenceModel.fromJson(i));
+      }
+      setState(() {});
+    }
+  }
+  Future get_Collectors() async {
+    var response = await http.get(Uri.parse(getCol));
+    var result = jsonDecode(response.body);
+    if (response.statusCode == 200) {
+      _getCollectorList.clear();
+      for (Map i in result) {
+        _getCollectorList.add(GetCollectorsModel.fromJson(i));
+        print(response.body);
+      }
+      setState(() {
+      });
+    }
+  }
+  Future get_Type() async {
+    var response = await http.post(Uri.parse(getType));
+    var result = jsonDecode(response.body);
+    if (response.statusCode == 200) {
+      _getTypeList.clear();
+      for (Map i in result) {
+        _getTypeList.add(GetType.fromJson(i));
+      }
+      setState(() {});
+    }
+  }
+
   filterCustomers(String query) {
     setState(() {
       filterCustomerList = _getCustomerListModel

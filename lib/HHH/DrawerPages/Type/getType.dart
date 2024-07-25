@@ -17,6 +17,7 @@ class GetTypeScreen extends StatefulWidget {
 
 class _GetTypeScreenState extends State<GetTypeScreen> {
   List<GetType> _getTypeList = [];
+  List<GetType> _filterTypeList = [];
 
   @override
   void initState() {
@@ -52,6 +53,9 @@ class _GetTypeScreenState extends State<GetTypeScreen> {
           child: Column(
             children: [
               TextField(
+                onChanged: (value){
+                  filterType(value);
+                },
                 decoration: InputDecoration(
                   labelText: "Search",
                   border: OutlineInputBorder(
@@ -60,15 +64,15 @@ class _GetTypeScreenState extends State<GetTypeScreen> {
                 ),
               ),
               Expanded(
-                child: _getTypeList.isEmpty
+                child: _filterTypeList.isEmpty
                     ? const Center(
                   child: CircularProgressIndicator(),
                 )
                     : ListView.builder(
-                    itemCount: _getTypeList.length,
+                    itemCount: _filterTypeList.length,
                     itemBuilder: (context, index) {
                       return Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 5.0),
+                        padding: const EdgeInsets.symmetric(vertical: 1),
                         child: Card(
                           elevation: 2,
                           shadowColor: Cosmic.app_color,
@@ -81,18 +85,19 @@ class _GetTypeScreenState extends State<GetTypeScreen> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  _getTypeList[index]
+                                  _filterTypeList[index]
                                       .ttypdsc
                                       .toString(),
-                                  style: FontSizeAndWeight.Heading1,
+                               style: const TextStyle(fontSize: 14),
                                 ),
                                 Row(
                                   mainAxisAlignment:
                                   MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Text(_getTypeList[index]
+                                    Text(_filterTypeList[index]
                                         .ttypsts
-                                        .toString()),
+                                        .toString(), style: const TextStyle(fontSize: 12),),
+
                                     InkWell(
                                         onTap: () {
                                           Navigator.push(
@@ -134,8 +139,18 @@ class _GetTypeScreenState extends State<GetTypeScreen> {
       for (Map i in result) {
         _getTypeList.add(GetType.fromJson(i));
       }
-      setState(() {});
+      setState(() {
+        _filterTypeList = List.from(_getTypeList);
+      });
     }
+  }
+  filterType(String query) {
+    setState(() {
+      _filterTypeList = _getTypeList
+          .where((element) =>
+          element.ttypdsc!.toLowerCase().contains(query.toLowerCase()))
+          .toList();
+    });
   }
 }
 

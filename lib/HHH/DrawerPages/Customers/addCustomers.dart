@@ -5,11 +5,25 @@ import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../../../Model/City/GetCityModel.dart';
+import '../../../Model/Collectors/GetCollectorsModel.dart';
+import '../../../Model/Reference/GetReferenceModel.dart';
+import '../../../Model/Type/GetType.dart';
 import '../../../apis.dart';
 import '../../../cosmos.dart';
 
 class AddCustomers extends StatefulWidget {
-  const AddCustomers({super.key});
+  List<GetCityModel> getCityList = [];
+  List<GetReferenceModel> getReferenceList = [];
+  List<GetCollectorsModel> getCollectorList = [];
+  List<GetType> getTypeList = [];
+
+  AddCustomers(
+      {super.key,
+      required this.getCityList,
+      required this.getReferenceList,
+      required this.getTypeList,
+      required this.getCollectorList});
 
   @override
   State<AddCustomers> createState() => _AddCustomersState();
@@ -33,7 +47,11 @@ class _AddCustomersState extends State<AddCustomers> {
   TextEditingController _cityController = TextEditingController();
   TextEditingController _collectorController = TextEditingController();
 
-  String? reference, status;
+  String?  status;
+  String? selectedCity;
+  String? SelectedCollector;
+  String? SelectedReference;
+  String? SelectedType;
   File? _image;
 
   // String? dropDown_selectArea;
@@ -81,12 +99,13 @@ class _AddCustomersState extends State<AddCustomers> {
             child: Opacity(
               opacity: 0.3, // Adjust the opacity as needed
               child: Padding(
-                padding:  EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.1),
-                child: Image.asset('assets/Crystal-Solutions-logo-removebg-preview.png'),
+                padding: EdgeInsets.only(
+                    top: MediaQuery.of(context).size.height * 0.1),
+                child: Image.asset(
+                    'assets/Crystal-Solutions-logo-removebg-preview.png'),
               ),
             ),
           ),
-
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
             child: SingleChildScrollView(
@@ -179,8 +198,10 @@ class _AddCustomersState extends State<AddCustomers> {
                         height: 15,
                       ),
                       ConstrainedBox(
-                        constraints: BoxConstraints.tightFor(height: _height / 12,
-                          width: _width / 1.5,),
+                        constraints: BoxConstraints.tightFor(
+                          height: _height / 12,
+                          width: _width / 1.5,
+                        ),
                         child: TextFormField(
                           maxLength: 11,
                           controller: _mobileController,
@@ -199,8 +220,10 @@ class _AddCustomersState extends State<AddCustomers> {
                       //   height: 15,
                       // ),
                       ConstrainedBox(
-                        constraints: BoxConstraints.tightFor(height: _height / 12,
-                          width: _width / 1.5,),
+                        constraints: BoxConstraints.tightFor(
+                          height: _height / 12,
+                          width: _width / 1.5,
+                        ),
                         child: TextFormField(
                           maxLength: 11,
                           controller: _phoneController,
@@ -249,8 +272,10 @@ class _AddCustomersState extends State<AddCustomers> {
                         height: 15,
                       ),
                       ConstrainedBox(
-                        constraints: BoxConstraints.tightFor(height: _height / 12,
-                          width: _width / 1.5,),
+                        constraints: BoxConstraints.tightFor(
+                          height: _height / 12,
+                          width: _width / 1.5,
+                        ),
                         child: TextFormField(
                           controller: _emailController,
                           keyboardType: TextInputType.emailAddress,
@@ -399,72 +424,53 @@ class _AddCustomersState extends State<AddCustomers> {
                         height: _height / 17,
                         width: _width / 1.5,
                         child: DropdownButtonFormField<String>(
-                          value: reference,
+                          value: SelectedReference,
                           onChanged: (newValue) {
                             setState(() {
-                              reference = newValue;
+                              SelectedReference = newValue;
                             });
                           },
-                          items: <String>['1', '2']
-                              .map<DropdownMenuItem<String>>((String value) {
-                            return DropdownMenuItem<String>(
-                              value: value,
-                              child: Text(value),
-                            );
-                          }).toList(),
                           decoration: InputDecoration(
                             labelText: "Reference",
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(3),
-                              borderSide: const BorderSide(
-                                color: Colors.black,
-                              ),
                             ),
                           ),
+                          items: widget.getReferenceList.map((refernce) {
+                            return DropdownMenuItem<String>(
+                              value: refernce.trefid ?? '',
+                              child: Text(refernce.trefdsc ?? ''),
+                            );
+                          }).toList() ??
+                              [],
                         ),
                       ),
-                      const SizedBox(
-                        height: 5,
-                      ),
-                      // DropdownButtonFormField<String>(
-                      //   value: status,
-                      //   onChanged: (newValue) {
-                      //     setState(() {
-                      //       status = newValue;
-                      //     });
-                      //   },
-                      //   items: <String>['Yes', 'No']
-                      //       .map<DropdownMenuItem<String>>((String value) {
-                      //     return DropdownMenuItem<String>(
-                      //       value: value,
-                      //       child: Text(value),
-                      //     );
-                      //   }).toList(),
-                      //   decoration: InputDecoration(
-                      //     labelText: "Status",
-                      //     border: OutlineInputBorder(
-                      //       borderRadius: BorderRadius.circular(10),
-                      //       borderSide: const BorderSide(
-                      //         color: Colors.black,
-                      //       ),
-                      //     ),
-                      //   ),
-                      // ),
                       const SizedBox(
                         height: 15,
                       ),
                       Container(
                         height: _height / 17,
                         width: _width / 1.5,
-                        child: TextField(
-                          controller: _typeController,
-                          keyboardType: TextInputType.number,
+                        child: DropdownButtonFormField<String>(
+                          value: SelectedType,
+                          onChanged: (newValue) {
+                            setState(() {
+                              SelectedType = newValue;
+                            });
+                          },
                           decoration: InputDecoration(
                             labelText: "Type",
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(3),
                             ),
                           ),
+                          items: widget.getTypeList.map((type) {
+                            return DropdownMenuItem<String>(
+                              value: type.ttypid ?? '',
+                              child: Text(type.ttypdsc ?? ''),
+                            );
+                          }).toList() ??
+                              [],
                         ),
                       ),
                       const SizedBox(
@@ -473,15 +479,26 @@ class _AddCustomersState extends State<AddCustomers> {
                       Container(
                         height: _height / 17,
                         width: _width / 1.5,
-                        child: TextField(
-                          controller: _collectorController,
-                          keyboardType: TextInputType.number,
+                        child: DropdownButtonFormField<String>(
+                          value: SelectedCollector,
+                          onChanged: (newValue) {
+                            setState(() {
+                              SelectedCollector = newValue;
+                            });
+                          },
                           decoration: InputDecoration(
                             labelText: "Collector",
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(3),
                             ),
                           ),
+                          items: widget.getCollectorList.map((collector) {
+                            return DropdownMenuItem<String>(
+                              value: collector.tcolid ?? '',
+                              child: Text(collector.tcoldsc ?? ''),
+                            );
+                          }).toList() ??
+                              [],
                         ),
                       ),
                       const SizedBox(
@@ -490,15 +507,26 @@ class _AddCustomersState extends State<AddCustomers> {
                       Container(
                         height: _height / 17,
                         width: _width / 1.5,
-                        child: TextField(
-                          controller: _cityController,
-                          keyboardType: TextInputType.number,
+                        child: DropdownButtonFormField<String>(
+                          value: selectedCity,
+                          onChanged: (newValue) {
+                            setState(() {
+                              selectedCity = newValue;
+                            });
+                          },
                           decoration: InputDecoration(
                             labelText: "City",
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(3),
                             ),
                           ),
+                          items: widget.getCityList.map((city) {
+                            return DropdownMenuItem<String>(
+                              value: city.tctyid ?? '',
+                              child: Text(city.tctydsc ?? ''),
+                            );
+                          }).toList() ??
+                              [],
                         ),
                       ),
                       const SizedBox(
@@ -527,7 +555,8 @@ class _AddCustomersState extends State<AddCustomers> {
                         child: ElevatedButton(
                           onPressed: () {
                             if (_formKey.currentState!.validate()) {
-                              Cosmos.waitingDialog(context, "       Please Wait");
+                              Cosmos.waitingDialog(
+                                  context, "       Please Wait");
                               post_addCust();
                             }
                           },
@@ -602,9 +631,8 @@ class _AddCustomersState extends State<AddCustomers> {
   //   }
   // }
   Future post_addCust() async {
-    var response = await http.post(Uri.parse(addCust),
-        body: {
-      'FColId': _collectorController.text.toString(),
+    var response = await http.post(Uri.parse(addCust), body: {
+      'FColId': SelectedCollector.toString(),
       'FCstDsc': _description.text.toString(),
       'FCstSts': 'Yes',
       'FCntPer': _cntPersonController.text.toString(),
@@ -615,19 +643,19 @@ class _AddCustomersState extends State<AddCustomers> {
       'FEmlAdd': _emailController.text.toString(),
       'FShpNum': _shopController.text.toString(),
       'FMthChg': _monthlyChargesController.text.toString(),
-      'FRefId':  reference.toString(),
-      'FTypId': _typeController.text.toString(),
-      'FCtyId': _cityController.text.toString(),
+      'FRefId': SelectedReference.toString(),
+      'FTypId': SelectedType.toString(),
+      'FCtyId': selectedCity.toString(),
       'FLatVal': _latitudeController.text.toString(),
       'FLngVal': _longitudeController.text.toString(),
       'FSrvIp': _ipController.text.toString(),
     });
     var result = jsonDecode(response.body);
-    if(result['error'] == 200){
+    if (result['error'] == 200) {
       Fluttertoast.showToast(msg: result['message']);
       Navigator.pop(context);
       Navigator.pop(context);
-    }else{
+    } else {
       Fluttertoast.showToast(msg: result['message']);
       print(result['message']);
       Navigator.pop(context);

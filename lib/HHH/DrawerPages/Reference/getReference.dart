@@ -68,7 +68,7 @@ class _GetReferenceScreenState extends State<GetReferenceScreen> {
                     itemCount: _getReferenceList.length,
                     itemBuilder: (context, index) {
                       return Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 5.0),
+                        padding: const EdgeInsets.symmetric(vertical: 1),
                         child: Card(
                           elevation: 2,
                           shadowColor: Cosmic.app_color,
@@ -84,7 +84,7 @@ class _GetReferenceScreenState extends State<GetReferenceScreen> {
                                   _getReferenceList[index]
                                       .trefdsc
                                       .toString(),
-                                  style: FontSizeAndWeight.Heading1,
+                               style: const TextStyle(fontSize: 14),
                                 ),
                                 Row(
                                   mainAxisAlignment:
@@ -92,7 +92,7 @@ class _GetReferenceScreenState extends State<GetReferenceScreen> {
                                   children: [
                                     Text(_getReferenceList[index]
                                         .trefsts
-                                        .toString()),
+                                        .toString(), style: const TextStyle(fontSize: 12),),
                                     InkWell(
                                         onTap: () {
                                           Navigator.push(
@@ -114,7 +114,7 @@ class _GetReferenceScreenState extends State<GetReferenceScreen> {
                                 ),
                                 Text(_getReferenceList[index]
                                     .temladd
-                                    .toString()),
+                                    .toString(), style: const TextStyle(fontSize: 12),),
                               ],
                             ),
                           ),

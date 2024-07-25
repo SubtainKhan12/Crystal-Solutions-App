@@ -17,6 +17,7 @@ class CityScreen extends StatefulWidget {
 
 class _CityScreenState extends State<CityScreen> {
   List<GetCityModel> _getCityList = [];
+  List<GetCityModel> _filterCityList = [];
 
   @override
   void initState() {
@@ -30,7 +31,7 @@ class _CityScreenState extends State<CityScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Types',
+          'Cities',
           style: TextStyle(color: Cosmic.white_color),
         ),
         centerTitle: true,
@@ -52,6 +53,9 @@ class _CityScreenState extends State<CityScreen> {
           child: Column(
             children: [
               TextField(
+                onChanged: (value){
+                  filterCity(value);
+                },
                 decoration: InputDecoration(
                   labelText: "Search",
                   border: OutlineInputBorder(
@@ -60,12 +64,12 @@ class _CityScreenState extends State<CityScreen> {
                 ),
               ),
               Expanded(
-                child: _getCityList.isEmpty
+                child: _filterCityList.isEmpty
                     ? const Center(
                   child: CircularProgressIndicator(),
                 )
                     : ListView.builder(
-                    itemCount: _getCityList.length,
+                    itemCount: _filterCityList.length,
                     itemBuilder: (context, index) {
                       return Padding(
                         padding: const EdgeInsets.symmetric(vertical: 5.0),
@@ -81,7 +85,7 @@ class _CityScreenState extends State<CityScreen> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  _getCityList[index]
+                                  _filterCityList[index]
                                       .tctydsc
                                       .toString(),
                                   style: FontSizeAndWeight.Heading1,
@@ -90,7 +94,7 @@ class _CityScreenState extends State<CityScreen> {
                                   mainAxisAlignment:
                                   MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Text(_getCityList[index]
+                                    Text(_filterCityList[index]
                                         .tctysts
                                         .toString()),
                                     InkWell(
@@ -134,7 +138,17 @@ class _CityScreenState extends State<CityScreen> {
       for (Map i in result) {
         _getCityList.add(GetCityModel.fromJson(i));
       }
-      setState(() {});
+      setState(() {
+        _filterCityList = List.from(_getCityList);
+      });
     }
+  }
+  filterCity(String query) {
+    setState(() {
+      _filterCityList = _getCityList
+          .where((element) =>
+          element.tctydsc!.toLowerCase().contains(query.toLowerCase()))
+          .toList();
+    });
   }
 }
