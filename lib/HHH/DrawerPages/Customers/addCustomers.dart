@@ -166,8 +166,8 @@ class _AddCustomersState extends State<AddCustomers> {
                         height: 10,
                       ),
                       Container(
-                        height: _height / 17,
-                        width: _width / 1.5,
+                        height: _height / 16,
+                        width: _width / 0.3,
                         child: TextField(
                           controller: _description,
                           decoration: InputDecoration(
@@ -179,11 +179,11 @@ class _AddCustomersState extends State<AddCustomers> {
                         ),
                       ),
                       const SizedBox(
-                        height: 15,
+                        height: 5,
                       ),
                       Container(
-                        height: _height / 17,
-                        width: _width / 1.5,
+                        height: _height / 16,
+                        width: _width / 0.3,
                         child: TextField(
                           controller: _cntPersonController,
                           decoration: InputDecoration(
@@ -195,12 +195,12 @@ class _AddCustomersState extends State<AddCustomers> {
                         ),
                       ),
                       const SizedBox(
-                        height: 15,
+                        height: 5,
                       ),
                       ConstrainedBox(
                         constraints: BoxConstraints.tightFor(
-                          height: _height / 12,
-                          width: _width / 1.5,
+                          height: _height / 14,
+                          width: _width / 0.3,
                         ),
                         child: TextFormField(
                           maxLength: 11,
@@ -221,8 +221,8 @@ class _AddCustomersState extends State<AddCustomers> {
                       // ),
                       ConstrainedBox(
                         constraints: BoxConstraints.tightFor(
-                          height: _height / 12,
-                          width: _width / 1.5,
+                          height: _height / 14,
+                          width: _width / 0.3,
                         ),
                         child: TextFormField(
                           maxLength: 11,
@@ -240,8 +240,8 @@ class _AddCustomersState extends State<AddCustomers> {
                       ),
 
                       Container(
-                        height: _height / 17,
-                        width: _width / 1.5,
+                        height: _height / 16,
+                        width: _width / 0.3,
                         child: TextField(
                           controller: _address1Controller,
                           decoration: InputDecoration(
@@ -253,11 +253,11 @@ class _AddCustomersState extends State<AddCustomers> {
                         ),
                       ),
                       const SizedBox(
-                        height: 15,
+                        height: 5,
                       ),
                       Container(
-                        height: _height / 17,
-                        width: _width / 1.5,
+                        height: _height / 16,
+                        width: _width / 0.3,
                         child: TextField(
                           controller: _address2Controller,
                           decoration: InputDecoration(
@@ -269,12 +269,12 @@ class _AddCustomersState extends State<AddCustomers> {
                         ),
                       ),
                       const SizedBox(
-                        height: 15,
+                        height: 5,
                       ),
                       ConstrainedBox(
                         constraints: BoxConstraints.tightFor(
-                          height: _height / 12,
-                          width: _width / 1.5,
+                          height: _height / 14,
+                          width: _width / 0.3,
                         ),
                         child: TextFormField(
                           controller: _emailController,
@@ -293,8 +293,8 @@ class _AddCustomersState extends State<AddCustomers> {
                       // ),
 
                       Container(
-                        height: _height / 17,
-                        width: _width / 1.5,
+                        height: _height / 16,
+                        width: _width / 0.3,
                         child: TextField(
                           controller: _shopController,
                           keyboardType: TextInputType.number,
@@ -307,11 +307,11 @@ class _AddCustomersState extends State<AddCustomers> {
                         ),
                       ),
                       const SizedBox(
-                        height: 15,
+                        height: 5,
                       ),
                       Container(
-                        height: _height / 17,
-                        width: _width / 1.5,
+                        height: _height / 16,
+                        width: _width / 0.3,
                         child: TextField(
                           controller: _monthlyChargesController,
                           keyboardType: TextInputType.number,
@@ -324,16 +324,16 @@ class _AddCustomersState extends State<AddCustomers> {
                         ),
                       ),
                       const SizedBox(
-                        height: 15,
+                        height: 5,
                       ),
                       Container(
-                        height: _height / 17,
-                        width: _width / 1.5,
+                        height: _height / 16,
+                        width: _width / 0.3,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             SizedBox(
-                              width: _width * 0.3,
+                              width: _width * 0.45,
                               child: TextField(
                                 controller: _latitudeController,
                                 keyboardType: TextInputType.number,
@@ -346,7 +346,7 @@ class _AddCustomersState extends State<AddCustomers> {
                               ),
                             ),
                             SizedBox(
-                              width: _width * 0.3,
+                              width: _width * 0.45,
                               child: TextField(
                                 controller: _longitudeController,
                                 keyboardType: TextInputType.number,
@@ -362,67 +362,11 @@ class _AddCustomersState extends State<AddCustomers> {
                         ),
                       ),
                       const SizedBox(
-                        height: 15,
+                        height: 5,
                       ),
-                      // Row(
-                      //   crossAxisAlignment: CrossAxisAlignment.start,
-                      //   children: [
-                      //     Container(
-                      //       height: 60,
-                      //       decoration: BoxDecoration(
-                      //           borderRadius: BorderRadius.circular(10),
-                      //           border: Border.all(color: Colors.black54)
-                      //       ),
-                      //       child: Padding(
-                      //         padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                      //         child: DropdownButton<String>(
-                      //           value: dropDown_package,
-                      //           onChanged: (String? newValue) {
-                      //             setState(() {
-                      //               dropDown_package = newValue;
-                      //               if (newValue != null) {
-                      //                 updatePackageDetails(newValue);
-                      //               }
-                      //             });
-                      //           },
-                      //           items: [
-                      //             const DropdownMenuItem<String>(
-                      //               value: null,
-                      //               child: Text('Select Package'),
-                      //             ),
-                      //             ...allPackagesList
-                      //                 .map<DropdownMenuItem<String>>((category) {
-                      //               return DropdownMenuItem<String>(
-                      //                 value: category.id ?? '',
-                      //                 child: Text(category.pkDsc ?? ''),
-                      //               );
-                      //             }).toList(),
-                      //           ],
-                      //         ),
-                      //       ),
-                      //     ),
-                      //     const SizedBox(
-                      //       width: 12,
-                      //     ),
-                      //     SizedBox(
-                      //       width: 155,
-                      //       child: TextField(
-                      //         maxLength: 4,
-                      //         controller: _speedController,
-                      //         keyboardType: TextInputType.number,
-                      //         decoration: InputDecoration(
-                      //           labelText: "Mbps",
-                      //           border: OutlineInputBorder(
-                      //             borderRadius: BorderRadius.circular(10),
-                      //           ),
-                      //         ),
-                      //       ),
-                      //     ),
-                      //   ],
-                      // ),
                       Container(
-                        height: _height / 17,
-                        width: _width / 1.5,
+                        height: _height / 16,
+                        width: _width / 0.3,
                         child: DropdownButtonFormField<String>(
                           value: SelectedReference,
                           onChanged: (newValue) {
@@ -446,11 +390,11 @@ class _AddCustomersState extends State<AddCustomers> {
                         ),
                       ),
                       const SizedBox(
-                        height: 15,
+                        height: 5,
                       ),
                       Container(
-                        height: _height / 17,
-                        width: _width / 1.5,
+                        height: _height / 16,
+                        width: _width / 0.3,
                         child: DropdownButtonFormField<String>(
                           value: SelectedType,
                           onChanged: (newValue) {
@@ -474,11 +418,11 @@ class _AddCustomersState extends State<AddCustomers> {
                         ),
                       ),
                       const SizedBox(
-                        height: 15,
+                        height: 5,
                       ),
                       Container(
-                        height: _height / 17,
-                        width: _width / 1.5,
+                        height: _height / 16,
+                        width: _width / 0.3,
                         child: DropdownButtonFormField<String>(
                           value: SelectedCollector,
                           onChanged: (newValue) {
@@ -502,11 +446,11 @@ class _AddCustomersState extends State<AddCustomers> {
                         ),
                       ),
                       const SizedBox(
-                        height: 15,
+                        height: 5,
                       ),
                       Container(
-                        height: _height / 17,
-                        width: _width / 1.5,
+                        height: _height / 16,
+                        width: _width / 0.3,
                         child: DropdownButtonFormField<String>(
                           value: selectedCity,
                           onChanged: (newValue) {
@@ -530,11 +474,11 @@ class _AddCustomersState extends State<AddCustomers> {
                         ),
                       ),
                       const SizedBox(
-                        height: 15,
+                        height: 5,
                       ),
                       Container(
-                        height: _height / 17,
-                        width: _width / 1.5,
+                        height: _height / 16,
+                        width: _width / 0.3,
                         child: TextField(
                           controller: _ipController,
                           keyboardType: TextInputType.number,
@@ -547,11 +491,11 @@ class _AddCustomersState extends State<AddCustomers> {
                         ),
                       ),
                       const SizedBox(
-                        height: 15,
+                        height: 5,
                       ),
                       SizedBox(
-                        height: _height / 17,
-                        width: _width / 1.5, // Set the height
+                        height: _height / 16,
+                        width: _width / 0.3, // Set the height
                         child: ElevatedButton(
                           onPressed: () {
                             if (_formKey.currentState!.validate()) {

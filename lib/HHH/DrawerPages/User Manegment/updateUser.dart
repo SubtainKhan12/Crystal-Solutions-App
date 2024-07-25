@@ -87,8 +87,8 @@ class _UpdateUserScreenState extends State<UpdateUserScreen> {
                       // Text('Fill out the form bellow to Update    \n the user',style: TextStyle(fontWeight: FontWeight.w500,fontSize: 16),),
                       SizedBox(height: 15,),
                       Container(
-                        width: MediaQuery.of(context).size.width / 1.5,
-                        height: MediaQuery.of(context).size.height / 17,
+                        width: MediaQuery.of(context).size.width / 0.3,
+                        height: MediaQuery.of(context).size.height / 16,
                         child: TextField(
                           controller: _nameController,
                           decoration: InputDecoration(
@@ -100,11 +100,11 @@ class _UpdateUserScreenState extends State<UpdateUserScreen> {
                         ),
                       ),
                       const SizedBox(
-                        height: 15,
+                        height: 5,
                       ),
                       ConstrainedBox(
-                        constraints: BoxConstraints.tightFor(width: MediaQuery.of(context).size.width / 1.5,
-                          height: MediaQuery.of(context).size.height / 12,),
+                        constraints: BoxConstraints.tightFor(width: MediaQuery.of(context).size.width / 0.3,
+                          height: MediaQuery.of(context).size.height / 14,),
                         child: TextFormField(
                           controller: _mobileController,
                           keyboardType: TextInputType.number,
@@ -120,8 +120,8 @@ class _UpdateUserScreenState extends State<UpdateUserScreen> {
                         ),
                       ),
                       ConstrainedBox(
-                        constraints: BoxConstraints.tightFor(width: MediaQuery.of(context).size.width / 1.5,
-                          height: MediaQuery.of(context).size.height / 12,),
+                        constraints: BoxConstraints.tightFor(width: MediaQuery.of(context).size.width / 0.3,
+                          height: MediaQuery.of(context).size.height / 14,),
                         child: TextFormField(
                           keyboardType: TextInputType.emailAddress,
                           controller: _emailController,
@@ -135,8 +135,8 @@ class _UpdateUserScreenState extends State<UpdateUserScreen> {
                         ),
                       ),
                       Container(
-                        width: MediaQuery.of(context).size.width / 1.5,
-                        height: MediaQuery.of(context).size.height / 17,
+                        width: MediaQuery.of(context).size.width / 0.3,
+                        height: MediaQuery.of(context).size.height / 16,
                         child: TextField(
                           controller: _loginIdController,
                           decoration: InputDecoration(
@@ -148,11 +148,11 @@ class _UpdateUserScreenState extends State<UpdateUserScreen> {
                         ),
                       ),
                       const SizedBox(
-                        height: 15,
+                        height: 5,
                       ),
                       Container(
-                        width: MediaQuery.of(context).size.width / 1.5,
-                        height: MediaQuery.of(context).size.height / 17,
+                        width: MediaQuery.of(context).size.width / 0.3,
+                        height: MediaQuery.of(context).size.height / 16,
                         child: TextField(
                           controller: _passwordController,
                           decoration: InputDecoration(
@@ -164,11 +164,11 @@ class _UpdateUserScreenState extends State<UpdateUserScreen> {
                         ),
                       ),
                       const SizedBox(
-                        height: 15,
+                        height: 5,
                       ),
                       Container(
-                        width: MediaQuery.of(context).size.width / 1.5,
-                        height: MediaQuery.of(context).size.height / 17,
+                        width: MediaQuery.of(context).size.width / 0.3,
+                        height: MediaQuery.of(context).size.height / 16,
                         child: DropdownButtonFormField<String>(
                           value: type,
                           onChanged: (newValue) {
@@ -195,7 +195,7 @@ class _UpdateUserScreenState extends State<UpdateUserScreen> {
                         ),
                       ),
                       SizedBox(
-                        height: 15,
+                        height: 5,
                       ),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 50.0),
@@ -262,8 +262,8 @@ class _UpdateUserScreenState extends State<UpdateUserScreen> {
                       //   height: 15,
                       // ),
                       SizedBox(
-                        width: MediaQuery.of(context).size.width / 1.5,
-                        height: MediaQuery.of(context).size.height / 18, // Set the height
+                        width: MediaQuery.of(context).size.width / 0.3,
+                        height: MediaQuery.of(context).size.height / 16, // Set the height
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
                               shape: RoundedRectangleBorder(

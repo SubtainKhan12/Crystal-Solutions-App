@@ -30,7 +30,7 @@ class _GetReferenceScreenState extends State<GetReferenceScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Types',
+          'Reference',
           style: TextStyle(color: Cosmic.white_color),
         ),
         centerTitle: true,

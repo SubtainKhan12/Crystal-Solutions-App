@@ -90,8 +90,8 @@ class _UpdateCollectorState extends State<UpdateCollector> {
                         height: 10,
                       ),
                       Container(
-                        width: MediaQuery.of(context).size.width / 1.5,
-                        height: MediaQuery.of(context).size.height / 17,
+                        width: MediaQuery.of(context).size.width / 0.3,
+                        height: MediaQuery.of(context).size.height / 16,
                         child: TextField(
                           controller: _description,
                           decoration: InputDecoration(
@@ -103,11 +103,11 @@ class _UpdateCollectorState extends State<UpdateCollector> {
                         ),
                       ),
                       const SizedBox(
-                        height: 15,
+                        height: 5,
                       ),
                       ConstrainedBox(
-                        constraints: BoxConstraints.tightFor(width: MediaQuery.of(context).size.width / 1.5,
-                          height: MediaQuery.of(context).size.height / 12,),
+                        constraints: BoxConstraints.tightFor(width: MediaQuery.of(context).size.width / 0.3,
+                          height: MediaQuery.of(context).size.height / 14,),
                         child: TextFormField(
                           maxLength: 11,
                           controller: _phoneController,
@@ -123,8 +123,8 @@ class _UpdateCollectorState extends State<UpdateCollector> {
                         ),
                       ),
                       Container(
-                        width: MediaQuery.of(context).size.width / 1.5,
-                        height: MediaQuery.of(context).size.height / 17,
+                        width: MediaQuery.of(context).size.width / 0.3,
+                        height: MediaQuery.of(context).size.height / 16,
                         child: TextField(
                           controller: _address1Controller,
                           decoration: InputDecoration(
@@ -136,11 +136,11 @@ class _UpdateCollectorState extends State<UpdateCollector> {
                         ),
                       ),
                       const SizedBox(
-                        height: 15,
+                        height: 5,
                       ),
                       Container(
-                        width: MediaQuery.of(context).size.width / 1.5,
-                        height: MediaQuery.of(context).size.height / 17,
+                        width: MediaQuery.of(context).size.width / 0.3,
+                        height: MediaQuery.of(context).size.height / 16,
                         child: TextField(
                           controller: _address2Controller,
                           decoration: InputDecoration(
@@ -152,11 +152,11 @@ class _UpdateCollectorState extends State<UpdateCollector> {
                         ),
                       ),
                       const SizedBox(
-                        height: 15,
+                        height: 5,
                       ),
                       ConstrainedBox(
-                        constraints: BoxConstraints.tightFor(width: MediaQuery.of(context).size.width / 1.5,
-                          height: MediaQuery.of(context).size.height / 12,),
+                        constraints: BoxConstraints.tightFor(width: MediaQuery.of(context).size.width / 0.3,
+                          height: MediaQuery.of(context).size.height / 14,),
                         child: TextFormField(
                           controller: _emailController,
                           keyboardType: TextInputType.emailAddress,
@@ -208,11 +208,11 @@ class _UpdateCollectorState extends State<UpdateCollector> {
                         ),
                       ),
                       const SizedBox(
-                        height: 15,
+                        height: 5,
                       ),
                       SizedBox(
-                        width: MediaQuery.of(context).size.width / 1.5,
-                        height: MediaQuery.of(context).size.height / 17,
+                        width: MediaQuery.of(context).size.width / 0.3,
+                        height: MediaQuery.of(context).size.height / 16,
                         child: ElevatedButton(
                           onPressed: () {
                             if (_formKey.currentState!.validate()) {

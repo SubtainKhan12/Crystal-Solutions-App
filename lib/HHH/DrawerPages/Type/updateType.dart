@@ -55,8 +55,8 @@ class _UpdateTypeScreenState extends State<UpdateTypeScreen> {
               child: Column(
                 children: [
                   Container(
-                    height: _height / 17,
-                    width: _width / 1.5,
+                    height: _height / 16,
+                    width: _width / 0.3,
                     child: TextField(
                       controller: _descriptionController,
                       decoration: InputDecoration(
@@ -68,7 +68,7 @@ class _UpdateTypeScreenState extends State<UpdateTypeScreen> {
                     ),
                   ),
                   const SizedBox(
-                    height: 15,
+                    height: 5,
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 50.0),
@@ -108,8 +108,8 @@ class _UpdateTypeScreenState extends State<UpdateTypeScreen> {
                     ),
                   ),
                   SizedBox(
-                    width: _width / 1.5, // Set the width
-                    height: _height / 17, // Set the height
+                    width: _width / 0.3, // Set the width
+                    height: _height / 16, // Set the height
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(),
                       onPressed: () {

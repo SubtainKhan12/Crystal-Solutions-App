@@ -47,8 +47,8 @@ class _AddTypeState extends State<AddType> {
               child: Column(
                 children: [
                   Container(
-                    height: _height / 17,
-                    width: _width / 1.5,
+                    height: _height / 16,
+                    width: _width / 0.3,
                     child: TextField(
                       controller: _descriptionController,
                       decoration: InputDecoration(
@@ -60,38 +60,11 @@ class _AddTypeState extends State<AddType> {
                     ),
                   ),
                   const SizedBox(
-                    height: 15,
+                    height: 5,
                   ),
-                  // DropdownButtonFormField<String>(
-                  //   value: status,
-                  //   onChanged: (newValue) {
-                  //     setState(() {
-                  //       status = newValue;
-                  //     });
-                  //   },
-                  //   items: <String>['Yes', 'No']
-                  //       .map<DropdownMenuItem<String>>((String value) {
-                  //     return DropdownMenuItem<String>(
-                  //       value: value,
-                  //       child: Text(value),
-                  //     );
-                  //   }).toList(),
-                  //   decoration: InputDecoration(
-                  //     labelText: "Status",
-                  //     border: OutlineInputBorder(
-                  //       borderRadius: BorderRadius.circular(10),
-                  //       borderSide: const BorderSide(
-                  //         color: Colors.black,
-                  //       ),
-                  //     ),
-                  //   ),
-                  // ),
-                  // const SizedBox(
-                  //   height: 15,
-                  // ),
                   SizedBox(
-                    width: _width / 1.5, // Set the width
-                    height: _height / 17, // Set the height
+                    width: _width / 0.3, // Set the width
+                    height: _height / 16, // Set the height
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(),
                       onPressed: () {

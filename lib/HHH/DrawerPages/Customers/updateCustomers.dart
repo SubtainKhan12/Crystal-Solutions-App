@@ -175,8 +175,8 @@ class _UpdateCustomersScreenState extends State<UpdateCustomersScreen> {
                         height: 10,
                       ),
                       Container(
-                        height: _height / 17,
-                        width: _width / 1.5,
+                        height: _height / 16,
+                        width: _width / 0.3,
                         child: TextField(
                           controller: _description,
                           decoration: InputDecoration(
@@ -191,8 +191,8 @@ class _UpdateCustomersScreenState extends State<UpdateCustomersScreen> {
                         height: 15,
                       ),
                       Container(
-                        height: _height / 17,
-                        width: _width / 1.5,
+                        height: _height / 16,
+                        width: _width / 0.3,
                         child: TextField(
                           controller: _cntPersonController,
                           decoration: InputDecoration(
@@ -204,12 +204,12 @@ class _UpdateCustomersScreenState extends State<UpdateCustomersScreen> {
                         ),
                       ),
                       const SizedBox(
-                        height: 15,
+                        height: 5,
                       ),
                       ConstrainedBox(
                         constraints: BoxConstraints.tightFor(
-                          height: _height / 12,
-                          width: _width / 1.5,
+                          height: _height / 14,
+                          width: _width / 0.3,
                         ),
                         child: TextFormField(
                           maxLength: 11,
@@ -230,8 +230,8 @@ class _UpdateCustomersScreenState extends State<UpdateCustomersScreen> {
                       // ),
                       ConstrainedBox(
                         constraints: BoxConstraints.tightFor(
-                          height: _height / 12,
-                          width: _width / 1.5,
+                          height: _height / 14,
+                          width: _width / 0.3,
                         ),
                         child: TextFormField(
                           maxLength: 11,
@@ -249,8 +249,8 @@ class _UpdateCustomersScreenState extends State<UpdateCustomersScreen> {
                       ),
 
                       Container(
-                        height: _height / 17,
-                        width: _width / 1.5,
+                        height: _height / 16,
+                        width: _width / 0.3,
                         child: TextField(
                           controller: _address1Controller,
                           decoration: InputDecoration(
@@ -262,11 +262,11 @@ class _UpdateCustomersScreenState extends State<UpdateCustomersScreen> {
                         ),
                       ),
                       const SizedBox(
-                        height: 15,
+                        height: 5,
                       ),
                       Container(
-                        height: _height / 17,
-                        width: _width / 1.5,
+                        height: _height / 16,
+                        width: _width / 0.3,
                         child: TextField(
                           controller: _address2Controller,
                           decoration: InputDecoration(
@@ -278,12 +278,12 @@ class _UpdateCustomersScreenState extends State<UpdateCustomersScreen> {
                         ),
                       ),
                       const SizedBox(
-                        height: 15,
+                        height: 5,
                       ),
                       ConstrainedBox(
                         constraints: BoxConstraints.tightFor(
-                          height: _height / 12,
-                          width: _width / 1.5,
+                          height: _height / 14,
+                          width: _width / 0.3,
                         ),
                         child: TextFormField(
                           controller: _emailController,
@@ -302,8 +302,8 @@ class _UpdateCustomersScreenState extends State<UpdateCustomersScreen> {
                       // ),
 
                       Container(
-                        height: _height / 17,
-                        width: _width / 1.5,
+                        height: _height / 16,
+                        width: _width / 0.3,
                         child: TextField(
                           controller: _shopController,
                           keyboardType: TextInputType.number,
@@ -316,11 +316,11 @@ class _UpdateCustomersScreenState extends State<UpdateCustomersScreen> {
                         ),
                       ),
                       const SizedBox(
-                        height: 15,
+                        height: 5,
                       ),
                       Container(
-                        height: _height / 17,
-                        width: _width / 1.5,
+                        height: _height / 16,
+                        width: _width / 0.3,
                         child: TextField(
                           controller: _monthlyChargesController,
                           keyboardType: TextInputType.number,
@@ -333,16 +333,16 @@ class _UpdateCustomersScreenState extends State<UpdateCustomersScreen> {
                         ),
                       ),
                       const SizedBox(
-                        height: 15,
+                        height: 5,
                       ),
                       Container(
-                        height: _height / 17,
-                        width: _width / 1.5,
+                        height: _height / 16,
+                        width: _width / 0.3,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             SizedBox(
-                              width: _width * 0.3,
+                              width: _width * 0.45,
                               child: TextField(
                                 controller: _latitudeController,
                                 keyboardType: TextInputType.number,
@@ -355,7 +355,7 @@ class _UpdateCustomersScreenState extends State<UpdateCustomersScreen> {
                               ),
                             ),
                             SizedBox(
-                              width: _width * 0.3,
+                              width: _width * 0.45,
                               child: TextField(
                                 controller: _longitudeController,
                                 keyboardType: TextInputType.number,
@@ -371,7 +371,7 @@ class _UpdateCustomersScreenState extends State<UpdateCustomersScreen> {
                         ),
                       ),
                       const SizedBox(
-                        height: 15,
+                        height: 5,
                       ),
                       // Row(
                       //   crossAxisAlignment: CrossAxisAlignment.start,
@@ -430,8 +430,8 @@ class _UpdateCustomersScreenState extends State<UpdateCustomersScreen> {
                       //   ],
                       // ),
                       Container(
-                        height: _height / 17,
-                        width: _width / 1.5,
+                        height: _height / 16,
+                        width: _width / 0.3,
                         child: DropdownButtonFormField<String>(
                           value: SelectedReference,
                           onChanged: (newValue) {
@@ -455,11 +455,11 @@ class _UpdateCustomersScreenState extends State<UpdateCustomersScreen> {
                         ),
                       ),
                       const SizedBox(
-                        height: 15,
+                        height: 5,
                       ),
                       Container(
-                        height: _height / 17,
-                        width: _width / 1.5,
+                        height: _height / 16,
+                        width: _width / 0.3,
                         child: DropdownButtonFormField<String>(
                           value: SelectedType,
                           onChanged: (newValue) {
@@ -483,11 +483,11 @@ class _UpdateCustomersScreenState extends State<UpdateCustomersScreen> {
                         ),
                       ),
                       const SizedBox(
-                        height: 15,
+                        height: 5,
                       ),
                       Container(
-                        height: _height / 17,
-                        width: _width / 1.5,
+                        height: _height / 16,
+                        width: _width / 0.3,
                         child: DropdownButtonFormField<String>(
                           value: SelectedCollector,
                           onChanged: (newValue) {
@@ -511,11 +511,11 @@ class _UpdateCustomersScreenState extends State<UpdateCustomersScreen> {
                         ),
                       ),
                       const SizedBox(
-                        height: 15,
+                        height: 5,
                       ),
                       Container(
-                        height: _height / 17,
-                        width: _width / 1.5,
+                        height: _height / 16,
+                        width: _width / 0.3,
                         child: DropdownButtonFormField<String>(
                           value: selectedCity,
                           onChanged: (newValue) {
@@ -539,11 +539,11 @@ class _UpdateCustomersScreenState extends State<UpdateCustomersScreen> {
                         ),
                       ),
                       const SizedBox(
-                        height: 15,
+                        height: 5,
                       ),
                       Container(
-                        height: _height / 17,
-                        width: _width / 1.5,
+                        height: _height / 16,
+                        width: _width / 0.3,
                         child: TextField(
                           controller: _ipController,
                           keyboardType: TextInputType.number,
@@ -556,7 +556,7 @@ class _UpdateCustomersScreenState extends State<UpdateCustomersScreen> {
                         ),
                       ),
                       const SizedBox(
-                        height: 15,
+                        height: 5,
                       ),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 50.0),
@@ -602,8 +602,8 @@ class _UpdateCustomersScreenState extends State<UpdateCustomersScreen> {
                         ),
                       ),
                       SizedBox(
-                        height: _height / 17,
-                        width: _width / 1.5, // Set the height
+                        height: _height / 16,
+                        width: _width / 0.3, // Set the height
                         child: ElevatedButton(
                           onPressed: () {
                             if (_formKey.currentState!.validate()) {
