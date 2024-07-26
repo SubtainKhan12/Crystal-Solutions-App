@@ -1,3 +1,4 @@
+String baseUrl = 'https://crystalsolutions.com.pk/csnew';
 
 
 String login = '$baseUrl/login.php';
@@ -31,3 +32,14 @@ String updateCol = '$baseUrl/updateCol.php';
 String getCust = '$baseUrl/getCust.php';
 String addCust = '$baseUrl/addCust.php';
 String updateCust = '$baseUrl/updateCust.php';
+
+
+
+String getExp = '$baseUrl/getExp.php';
+String addExp = '$baseUrl/addExp.php';
+String updateExp = '$baseUrl/updateExp.php';
+
+
+String getBank = '$baseUrl/getBank.php';
+String updateBank = '$baseUrl/updateBank.php';
+String addBank = '$baseUrl/addBank.php';

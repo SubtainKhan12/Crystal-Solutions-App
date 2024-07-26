@@ -86,9 +86,9 @@ class _UpdateCollectorState extends State<UpdateCollector> {
                     // crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       // Text('Fill out the form bellow to Update\n the  collector',style: TextStyle(fontWeight: FontWeight.w500,fontSize: 16),),
-                      const SizedBox(
-                        height: 10,
-                      ),
+                      // const SizedBox(
+                      //   height: 10,
+                      // ),
                       Container(
                         width: MediaQuery.of(context).size.width / 0.3,
                         height: MediaQuery.of(context).size.height / 16,

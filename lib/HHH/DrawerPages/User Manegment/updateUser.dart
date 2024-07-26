@@ -85,7 +85,7 @@ class _UpdateUserScreenState extends State<UpdateUserScreen> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       // Text('Fill out the form bellow to Update    \n the user',style: TextStyle(fontWeight: FontWeight.w500,fontSize: 16),),
-                      SizedBox(height: 15,),
+                      // SizedBox(height: 15,),
                       Container(
                         width: MediaQuery.of(context).size.width / 0.3,
                         height: MediaQuery.of(context).size.height / 16,

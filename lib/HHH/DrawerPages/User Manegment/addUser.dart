@@ -76,7 +76,7 @@ class _AddUserScreenState extends State<AddUserScreen> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       // Text('Fill out the form bellow to create a \nnew user',style: TextStyle(fontWeight: FontWeight.w500,fontSize: 16),),
-                      SizedBox(height: 15,),
+
                       Container(
                         width: MediaQuery.of(context).size.width / 0.3,
                         height: MediaQuery.of(context).size.height / 16,
