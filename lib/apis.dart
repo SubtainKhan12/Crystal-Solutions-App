@@ -1,4 +1,3 @@
-String baseUrl = 'https://crystalsolutions.com.pk/csnew';
 
 
 String login = '$baseUrl/login.php';
