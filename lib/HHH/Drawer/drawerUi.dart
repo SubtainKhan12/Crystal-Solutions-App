@@ -1,8 +1,10 @@
 import 'package:crystal_solutions/HHH/DrawerPages/Bank/getBankScreen.dart';
 import 'package:crystal_solutions/HHH/DrawerPages/City/getCity.dart';
 import 'package:crystal_solutions/HHH/DrawerPages/Collectors/getCollectors.dart';
+import 'package:crystal_solutions/HHH/DrawerPages/Designation/getDesignation.dart';
 import 'package:crystal_solutions/HHH/DrawerPages/Reference/getReference.dart';
 import 'package:crystal_solutions/HHH/DrawerPages/Type/getType.dart';
+import 'package:crystal_solutions/HHH/DrawerPages/getEmployee.dart';
 import 'package:crystal_solutions/HHH/Login/loginScreen.dart';
 import 'package:crystal_solutions/cosmos.dart';
 import 'package:flutter/material.dart';
@@ -75,7 +77,9 @@ class _DrawerUiState extends State<DrawerUi> {
                       SizedBox(
                         height: 39,
                         child: TextButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.push(context, MaterialPageRoute(builder: (context)=> GetDesignationScreen()));
+                            },
                             child: const Row(
                               children: [
                                 SizedBox(
@@ -95,7 +99,9 @@ class _DrawerUiState extends State<DrawerUi> {
                       SizedBox(
                         height: 39,
                         child: TextButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.push(context, MaterialPageRoute(builder: (context)=> GetEmployeeScreen()));
+                            },
                             child: const Row(
                               children: [
                                 SizedBox(

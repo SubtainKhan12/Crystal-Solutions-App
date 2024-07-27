@@ -42,3 +42,14 @@ String updateExp = '$baseUrl/updateExp.php';
 String getBank = '$baseUrl/getBank.php';
 String updateBank = '$baseUrl/updateBank.php';
 String addBank = '$baseUrl/addBank.php';
+
+
+String getDesignation = '$baseUrl/getDesignation.php';
+String addDesignation = '$baseUrl/addDesignation.php';
+String updateDesignation = '$baseUrl/updateDesignation.php';
+
+
+
+String getEmployee = '$baseUrl/getEmployee.php';
+String addEmployee = '$baseUrl/addEmployee.php';
+String updateEmployee = '$baseUrl/updateEmployee.php';

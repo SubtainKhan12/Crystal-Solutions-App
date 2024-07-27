@@ -74,14 +74,16 @@ class _GetUsersScreenState extends State<GetUsersScreen> {
                           return Padding(
                             padding: const EdgeInsets.symmetric(vertical: 1),
                             child: Card(
+                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
                               elevation: 2,
                               shadowColor: Cosmic.app_color,
                               borderOnForeground: true,
-                              surfaceTintColor: Colors.blue,
+                              surfaceTintColor: Colors.blue.shade100,
                               child: Theme(
                                 data: Theme.of(context)
                                     .copyWith(dividerColor: Colors.transparent),
                                 child: ExpansionTile(
+                                  minTileHeight: 20,
                                   title: Text(
                                     filterUsersList[index]
                                         .tUsrNam

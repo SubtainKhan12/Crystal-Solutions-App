@@ -74,10 +74,11 @@ class _CityScreenState extends State<CityScreen> {
                       return Padding(
                         padding: const EdgeInsets.symmetric(vertical: 1),
                         child: Card(
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
                           elevation: 2,
                           shadowColor: Cosmic.app_color,
                           borderOnForeground: true,
-                          surfaceTintColor: Colors.blue,
+                          surfaceTintColor: Colors.blue.shade100,
                           child: Padding(
                             padding: const EdgeInsets.symmetric(
                                 horizontal: 15, vertical: 10),
@@ -88,7 +89,7 @@ class _CityScreenState extends State<CityScreen> {
                                   _filterCityList[index]
                                       .tctydsc
                                       .toString(),
-                                  style: FontSizeAndWeight.Heading1,
+                                  style: const TextStyle(fontSize: 14),
                                 ),
                                 Row(
                                   mainAxisAlignment:

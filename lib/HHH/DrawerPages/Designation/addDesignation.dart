@@ -1,29 +1,21 @@
 import 'dart:convert';
 
-import 'package:crystal_solutions/Model/City/GetCityModel.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:http/http.dart'as http;
 import '../../../apis.dart';
 import '../../../cosmos.dart';
-import 'package:http/http.dart'as http;
 
-class UpdateCityScreen extends StatefulWidget {
-  GetCityModel getCityList;
-   UpdateCityScreen({super.key, required this.getCityList});
+class AddDesignationScreen extends StatefulWidget {
+  const AddDesignationScreen({super.key});
 
   @override
-  State<UpdateCityScreen> createState() => _UpdateCityScreenState();
+  State<AddDesignationScreen> createState() => _AddDesignationScreenState();
 }
 
-class _UpdateCityScreenState extends State<UpdateCityScreen> {
+class _AddDesignationScreenState extends State<AddDesignationScreen> {
   TextEditingController _descriptionController = TextEditingController();
-  String? status;
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    setCityData();
-  }
+  // String? status;
   @override
   Widget build(BuildContext context) {
     var _width = MediaQuery.of(context).size.width;
@@ -31,7 +23,7 @@ class _UpdateCityScreenState extends State<UpdateCityScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Update City',
+          'Add Designation',
           style: TextStyle(color: Cosmic.white_color),
         ),
         centerTitle: true,
@@ -70,43 +62,6 @@ class _UpdateCityScreenState extends State<UpdateCityScreen> {
                   const SizedBox(
                     height: 15,
                   ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 50.0),
-                    child: Row(
-                      children: [
-                        const Text(
-                          'Status:',
-                          style: TextStyle(fontSize: 16),
-                        ),
-                        Expanded(
-                          child: RadioListTile<String>(
-                            title: const Text('Yes'),
-                            value: 'Yes',
-                            groupValue: status,
-                            contentPadding: EdgeInsets.symmetric(horizontal: -20), // Adjust padding here
-                            onChanged: (String? value) {
-                              setState(() {
-                                status = value;
-                              });
-                            },
-                          ),
-                        ),
-                        Expanded(
-                          child: RadioListTile<String>(
-                            title: const Text('No',),
-                            value: 'No',
-                            groupValue: status,
-                            contentPadding: const EdgeInsets.symmetric(horizontal: -20), // Adjust padding here
-                            onChanged: (String? value) {
-                              setState(() {
-                                status = value;
-                              });
-                            },
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
                   // DropdownButtonFormField<String>(
                   //   value: status,
                   //   onChanged: (newValue) {
@@ -142,7 +97,7 @@ class _UpdateCityScreenState extends State<UpdateCityScreen> {
                       onPressed: () {
 
                         Cosmos.waitingDialog(context, 'Please Wait        ');
-                        post_UpdateCity();
+                        post_addDesignation();
 
                       },
                       child: const Text(
@@ -159,15 +114,10 @@ class _UpdateCityScreenState extends State<UpdateCityScreen> {
       ),
     );
   }
-  setCityData(){
-    _descriptionController.text = widget.getCityList.tctydsc.toString() ?? '';
-    status = widget.getCityList.tctysts.toString() ?? '';
-  }
-  Future post_UpdateCity()async{
-    var response = await http.post(Uri.parse(updateCity),body: {
-      'FCtyId': widget.getCityList.tctyid.toString(),
-      'FCtyDsc': _descriptionController.text,
-      'FCtySts': status.toString(),
+  Future post_addDesignation()async{
+    var response = await http.post(Uri.parse(addDesignation),body: {
+      'FDsgDsc': _descriptionController.text,
+      'FDsgSts': 'Yes',
     });
     var result = jsonDecode(response.body);
     if(result['error'] == 200){

@@ -1,21 +1,21 @@
 import 'dart:convert';
 
-import 'package:crystal_solutions/Model/City/GetCityModel.dart';
+import 'package:crystal_solutions/Model/Designation/GetDesignationModel.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:http/http.dart'as http;
 import '../../../apis.dart';
 import '../../../cosmos.dart';
-import 'package:http/http.dart'as http;
 
-class UpdateCityScreen extends StatefulWidget {
-  GetCityModel getCityList;
-   UpdateCityScreen({super.key, required this.getCityList});
+class UpdateDesignationScreen extends StatefulWidget {
+  GetDesignationModel getDesignationList;
+   UpdateDesignationScreen({super.key, required this.getDesignationList});
 
   @override
-  State<UpdateCityScreen> createState() => _UpdateCityScreenState();
+  State<UpdateDesignationScreen> createState() => _UpdateDesignationScreenState();
 }
 
-class _UpdateCityScreenState extends State<UpdateCityScreen> {
+class _UpdateDesignationScreenState extends State<UpdateDesignationScreen> {
   TextEditingController _descriptionController = TextEditingController();
   String? status;
   @override
@@ -31,7 +31,7 @@ class _UpdateCityScreenState extends State<UpdateCityScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Update City',
+          'Update Designation',
           style: TextStyle(color: Cosmic.white_color),
         ),
         centerTitle: true,
@@ -160,14 +160,14 @@ class _UpdateCityScreenState extends State<UpdateCityScreen> {
     );
   }
   setCityData(){
-    _descriptionController.text = widget.getCityList.tctydsc.toString() ?? '';
-    status = widget.getCityList.tctysts.toString() ?? '';
+    _descriptionController.text = widget.getDesignationList.tdsgdsc.toString() ?? '';
+    status = widget.getDesignationList.tdsgsts.toString() ?? '';
   }
   Future post_UpdateCity()async{
-    var response = await http.post(Uri.parse(updateCity),body: {
-      'FCtyId': widget.getCityList.tctyid.toString(),
-      'FCtyDsc': _descriptionController.text,
-      'FCtySts': status.toString(),
+    var response = await http.post(Uri.parse(updateDesignation),body: {
+      'FDsgId': widget.getDesignationList.tdsgid.toString(),
+      'FDsgDsc': _descriptionController.text,
+      'FDsgSts': status.toString(),
     });
     var result = jsonDecode(response.body);
     if(result['error'] == 200){
@@ -180,3 +180,4 @@ class _UpdateCityScreenState extends State<UpdateCityScreen> {
     }
   }
 }
+

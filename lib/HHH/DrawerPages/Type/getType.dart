@@ -74,10 +74,11 @@ class _GetTypeScreenState extends State<GetTypeScreen> {
                       return Padding(
                         padding: const EdgeInsets.symmetric(vertical: 1),
                         child: Card(
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
                           elevation: 2,
                           shadowColor: Cosmic.app_color,
                           borderOnForeground: true,
-                          surfaceTintColor: Colors.blue,
+                          surfaceTintColor: Colors.blue.shade100,
                           child: Padding(
                             padding: const EdgeInsets.symmetric(
                                 horizontal: 15, vertical: 10),

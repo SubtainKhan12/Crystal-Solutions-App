@@ -88,16 +88,18 @@ class _GetCustomersScreenState extends State<GetCustomersScreen> {
             itemCount: filterCustomerList.length,
             itemBuilder: (context, index) {
               return Padding(
-                padding: const EdgeInsets.symmetric(vertical: 1),
+                padding: const EdgeInsets.symmetric(vertical: 0),
                 child: Card(
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
                   elevation: 2,
                   shadowColor: Cosmic.app_color,
                   borderOnForeground: true,
-                  surfaceTintColor: Colors.blue,
+                  surfaceTintColor: Colors.blue.shade100,
                   child: Theme(
                     data: Theme.of(context)
                         .copyWith(dividerColor: Colors.transparent),
                     child: ExpansionTile(
+                      minTileHeight: 30,
                       title: Text(
                         filterCustomerList[index].tCstDsc.toString(),
                            style: const TextStyle(fontSize: 14),
