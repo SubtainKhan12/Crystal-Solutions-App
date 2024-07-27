@@ -72,7 +72,7 @@ class _CityScreenState extends State<CityScreen> {
                     itemCount: _filterCityList.length,
                     itemBuilder: (context, index) {
                       return Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 5.0),
+                        padding: const EdgeInsets.symmetric(vertical: 1),
                         child: Card(
                           elevation: 2,
                           shadowColor: Cosmic.app_color,

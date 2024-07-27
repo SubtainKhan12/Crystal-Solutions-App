@@ -1,16 +1,11 @@
 import 'package:crystal_solutions/HHH/DrawerPages/Bank/getBankScreen.dart';
-import 'package:crystal_solutions/HHH/DrawerPages/City/addCity.dart';
 import 'package:crystal_solutions/HHH/DrawerPages/City/getCity.dart';
 import 'package:crystal_solutions/HHH/DrawerPages/Collectors/getCollectors.dart';
-import 'package:crystal_solutions/HHH/DrawerPages/Reference/addReference.dart';
 import 'package:crystal_solutions/HHH/DrawerPages/Reference/getReference.dart';
-import 'package:crystal_solutions/HHH/DrawerPages/Type/addType.dart';
 import 'package:crystal_solutions/HHH/DrawerPages/Type/getType.dart';
 import 'package:crystal_solutions/HHH/Login/loginScreen.dart';
-import 'package:crystal_solutions/Model/Collectors/GetCollectorsModel.dart';
 import 'package:crystal_solutions/cosmos.dart';
 import 'package:flutter/material.dart';
-import '../DrawerPages/Collectors/addCollectors.dart';
 import '../DrawerPages/Customers/customersScreen.dart';
 import '../DrawerPages/Expense/getExpenseScreen.dart';
 import '../DrawerPages/User Manegment/usersScreen.dart';
@@ -60,11 +55,81 @@ class _DrawerUiState extends State<DrawerUi> {
                       )),
                 ),
                 Theme(
-                  data: Theme.of(context)
-                      .copyWith(dividerColor: Colors.transparent),
+                  data: Theme.of(context).copyWith(
+                    dividerColor: Colors.transparent,
+                    listTileTheme: ListTileTheme.of(context)
+                        .copyWith(dense: true, minVerticalPadding: 16),
+                  ),
                   child: ExpansionTile(
-                    leading:  Icon(Icons.person,color: Cosmic.app_color,),
-                    title:  Text('Customers',selectionColor: Color(0xff111441),
+
+                    leading: Icon(
+                      Icons.person,
+                      color: Cosmic.app_color,
+                    ),
+                    title: Text(
+                      'Employee',
+                      style: TextStyle(fontSize: 18),
+                      selectionColor: Color(0xff111441),
+                    ),
+                    children: [
+                      SizedBox(
+                        height: 39,
+                        child: TextButton(
+                            onPressed: () {},
+                            child: const Row(
+                              children: [
+                                SizedBox(
+                                    height: 30,
+                                    width: 30,
+                                    child: Icon(Icons.perm_device_info)),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                Text(
+                                  "Designation",
+                                  style: TextStyle(fontSize: 18),
+                                ),
+                              ],
+                            )),
+                      ),
+                      SizedBox(
+                        height: 39,
+                        child: TextButton(
+                            onPressed: () {},
+                            child: const Row(
+                              children: [
+                                SizedBox(
+                                    height: 30,
+                                    width: 30,
+                                    child: Icon(Icons.person_pin_outlined)),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                Text(
+                                  "Employee",
+                                  style: TextStyle(fontSize: 18),
+                                ),
+                              ],
+                            )),
+                      ),
+                    ],
+                  ),
+                ),
+                Theme(
+                  data: Theme.of(context).copyWith(
+                    dividerColor: Colors.transparent,
+                    listTileTheme: ListTileTheme.of(context)
+                        .copyWith(dense: true, minVerticalPadding: 16),
+                  ),
+                  child: ExpansionTile(
+                    leading: Icon(
+                      Icons.person,
+                      color: Cosmic.app_color,
+                    ),
+                    title: Text(
+                      'Customers',
+                      style: TextStyle(fontSize: 18),
+                      selectionColor: Color(0xff111441),
                     ),
                     children: [
                       SizedBox(
@@ -152,7 +217,8 @@ class _DrawerUiState extends State<DrawerUi> {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => const CityScreen()));
+                                      builder: (context) =>
+                                          const CityScreen()));
                             },
                             child: const Row(
                               children: [
@@ -244,6 +310,146 @@ class _DrawerUiState extends State<DrawerUi> {
                           ),
                         ],
                       )),
+                ),
+                Theme(
+                  data: Theme.of(context).copyWith(
+                    dividerColor: Colors.transparent,
+                    listTileTheme: ListTileTheme.of(context)
+                        .copyWith(dense: true, minVerticalPadding: 16),
+                  ),
+                  child: ExpansionTile(
+                    leading: Icon(
+                      Icons.person,
+                      color: Cosmic.app_color,
+                    ),
+                    title: Text(
+                      'Billing',
+                      style: TextStyle(fontSize: 18),
+                      selectionColor: Color(0xff111441),
+                    ),
+                    children: [
+                      SizedBox(
+                        height: 39,
+                        child: TextButton(
+                            onPressed: () {},
+                            child: const Row(
+                              children: [
+                                SizedBox(
+                                    height: 30,
+                                    width: 30,
+                                    child: Icon(Icons.person_pin)),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                Text(
+                                  "Customers Billing",
+                                  style: TextStyle(fontSize: 18),
+                                ),
+                              ],
+                            )),
+                      ),
+                    ],
+                  ),
+                ),
+                Theme(
+                  data: Theme.of(context).copyWith(
+                    dividerColor: Colors.transparent,
+                    listTileTheme: ListTileTheme.of(context)
+                        .copyWith(dense: true, minVerticalPadding: 16),
+                  ),
+                  child: ExpansionTile(
+                    leading: Icon(
+                      Icons.person,
+                      color: Cosmic.app_color,
+                    ),
+                    title: Text(
+                      'Receipts',
+                      style: TextStyle(fontSize: 18),
+                      selectionColor: Color(0xff111441),
+                    ),
+                    children: [
+                      SizedBox(
+                        height: 39,
+                        child: TextButton(
+                            onPressed: () {},
+                            child: const Row(
+                              children: [
+                                SizedBox(
+                                    height: 30,
+                                    width: 30,
+                                    child: Icon(Icons.person_pin)),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                Text(
+                                  "Customer Collections",
+                                  style: TextStyle(fontSize: 18),
+                                ),
+                              ],
+                            )),
+                      ),
+                    ],
+                  ),
+                ),
+                Theme(
+                  data: Theme.of(context).copyWith(
+                    dividerColor: Colors.transparent,
+                    listTileTheme: ListTileTheme.of(context)
+                        .copyWith(dense: true, minVerticalPadding: 16),
+                  ),
+                  child: ExpansionTile(
+                    leading: Icon(
+                      Icons.person,
+                      color: Cosmic.app_color,
+                    ),
+                    title: Text(
+                      'Payments',
+                      style: TextStyle(fontSize: 18),
+                      selectionColor: Color(0xff111441),
+                    ),
+                    children: [
+                      SizedBox(
+                        height: 39,
+                        child: TextButton(
+                            onPressed: () {},
+                            child: const Row(
+                              children: [
+                                SizedBox(
+                                    height: 30,
+                                    width: 30,
+                                    child: Icon(Icons.person_pin)),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                Text(
+                                  "Expense Payment",
+                                  style: TextStyle(fontSize: 18),
+                                ),
+                              ],
+                            )),
+                      ),
+                      SizedBox(
+                        height: 39,
+                        child: TextButton(
+                            onPressed: () {},
+                            child: const Row(
+                              children: [
+                                SizedBox(
+                                    height: 30,
+                                    width: 30,
+                                    child: Icon(Icons.person_pin)),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                Text(
+                                  "Salary Payment",
+                                  style: TextStyle(fontSize: 18),
+                                ),
+                              ],
+                            )),
+                      ),
+                    ],
+                  ),
                 ),
                 // SizedBox(
                 //   height: 39,

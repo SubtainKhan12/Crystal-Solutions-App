@@ -139,7 +139,7 @@ class _GetCustomersScreenState extends State<GetCustomersScreen> {
                                     ),
                                     TextSpan(
                                       text: filterCustomerList[index]
-                                          .tMthChg
+                                          .tmthChg
                                           .toString(),
                                       style: const TextStyle(
                                         color: Colors.black,

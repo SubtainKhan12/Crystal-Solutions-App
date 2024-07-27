@@ -32,7 +32,7 @@ class _UpdateExpenseScreenState extends State<UpdateExpenseScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Add Expense',
+          'Update Expense',
           style: TextStyle(color: Cosmic.white_color),
         ),
         centerTitle: true,

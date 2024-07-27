@@ -40,14 +40,15 @@ class _UpdateCustomersScreenState extends State<UpdateCustomersScreen> {
   TextEditingController _phoneController = TextEditingController();
   TextEditingController _mobileController = TextEditingController();
   TextEditingController _emailController = TextEditingController();
-  TextEditingController _typeController = TextEditingController();
   TextEditingController _ipController = TextEditingController();
   TextEditingController _latitudeController = TextEditingController();
   TextEditingController _longitudeController = TextEditingController();
   TextEditingController _monthlyChargesController = TextEditingController();
   TextEditingController _shopController = TextEditingController();
-  TextEditingController _cityController = TextEditingController();
-  TextEditingController _collectorController = TextEditingController();
+  TextEditingController _serverChargesController = TextEditingController();
+  TextEditingController _smsChargesController = TextEditingController();
+  TextEditingController _posChargesController = TextEditingController();
+  TextEditingController _advanceChargesController = TextEditingController();
 
   String? status;
   File? _image;
@@ -309,6 +310,74 @@ class _UpdateCustomersScreenState extends State<UpdateCustomersScreen> {
                           keyboardType: TextInputType.number,
                           decoration: InputDecoration(
                             labelText: "Shops",
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(3),
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      Container(
+                        height: _height / 16,
+                        width: _width / 0.3,
+                        child: TextField(
+                          controller: _serverChargesController,
+                          keyboardType: TextInputType.number,
+                          decoration: InputDecoration(
+                            labelText: "Server Charges",
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(3),
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      Container(
+                        height: _height / 16,
+                        width: _width / 0.3,
+                        child: TextField(
+                          controller: _smsChargesController,
+                          keyboardType: TextInputType.number,
+                          decoration: InputDecoration(
+                            labelText: "Sms Charges",
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(3),
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      Container(
+                        height: _height / 16,
+                        width: _width / 0.3,
+                        child: TextField(
+                          controller: _advanceChargesController,
+                          keyboardType: TextInputType.number,
+                          decoration: InputDecoration(
+                            labelText: "Advance Charges",
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(3),
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      Container(
+                        height: _height / 16,
+                        width: _width / 0.3,
+                        child: TextField(
+                          controller: _posChargesController,
+                          keyboardType: TextInputType.number,
+                          decoration: InputDecoration(
+                            labelText: "Pos Charges",
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(3),
                             ),
@@ -691,7 +760,7 @@ class _UpdateCustomersScreenState extends State<UpdateCustomersScreen> {
     _address2Controller.text = widget.getCustomersModel.tAdd002 ?? '';
     _emailController.text = widget.getCustomersModel.tEmlAdd ?? '';
     _shopController.text = widget.getCustomersModel.tShpNum ?? '';
-    _monthlyChargesController.text = widget.getCustomersModel.tMthChg ?? '';
+    _monthlyChargesController.text = widget.getCustomersModel.tmthChg ?? '';
     _latitudeController.text = widget.getCustomersModel.tLatVal ?? '';
     _longitudeController.text = widget.getCustomersModel.tLngVal ?? '';
     SelectedReference = widget.getCustomersModel.tRefId ?? '';
@@ -699,7 +768,10 @@ class _UpdateCustomersScreenState extends State<UpdateCustomersScreen> {
     SelectedType = widget.getCustomersModel.tTypId ?? '';
     SelectedCollector = widget.getCustomersModel.tColId ?? '';
     selectedCity = widget.getCustomersModel.tctyid ?? '';
-    _ipController.text = widget.getCustomersModel.tSrvIp ?? '';
+    _posChargesController.text = widget.getCustomersModel.tposchg ?? '';
+    _advanceChargesController.text = widget.getCustomersModel.tadvchg ?? '';
+    _serverChargesController.text = widget.getCustomersModel.tsrvchg ?? '';
+    _smsChargesController.text = widget.getCustomersModel.tsmschg ?? '';
   }
 
   Future post_updateCust() async {
@@ -714,7 +786,7 @@ class _UpdateCustomersScreenState extends State<UpdateCustomersScreen> {
       'FAdd002': _address2Controller.text.toString(),
       'FEmlAdd': _emailController.text.toString(),
       'FShpNum': _shopController.text.toString(),
-      'FMthChg': _monthlyChargesController.text.toString(),
+      'FMthChg': _monthlyChargesController.text.toString().isEmpty ? '0': _monthlyChargesController.text,
       'FRefId': SelectedReference.toString(),
       'FTypId': SelectedType.toString(),
       'FCtyId': selectedCity.toString(),
@@ -722,6 +794,10 @@ class _UpdateCustomersScreenState extends State<UpdateCustomersScreen> {
       'FLngVal': _longitudeController.text.toString(),
       'FSrvIp': _ipController.text.toString(),
       'FCstId': widget.getCustomersModel.tcstid.toString(),
+      'FSrvChg': _serverChargesController.text.toString().isEmpty ? '0': _serverChargesController.text,
+      'FSmsChg': _smsChargesController.text.toString().isEmpty ? '0': _smsChargesController.text,
+      'FAdvChg': _advanceChargesController.text.toString().isEmpty ? '0':_advanceChargesController.text,
+      'FPosChg': _posChargesController.text.toString().isEmpty ? '0': _posChargesController.text,
     });
     var result = jsonDecode(response.body);
     if (result['error'] == 200) {

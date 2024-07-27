@@ -38,16 +38,18 @@ class _AddCustomersState extends State<AddCustomers> {
   TextEditingController _phoneController = TextEditingController();
   TextEditingController _mobileController = TextEditingController();
   TextEditingController _emailController = TextEditingController();
-  TextEditingController _typeController = TextEditingController();
   TextEditingController _ipController = TextEditingController();
   TextEditingController _latitudeController = TextEditingController();
   TextEditingController _longitudeController = TextEditingController();
   TextEditingController _monthlyChargesController = TextEditingController();
   TextEditingController _shopController = TextEditingController();
-  TextEditingController _cityController = TextEditingController();
-  TextEditingController _collectorController = TextEditingController();
+  TextEditingController _serverChargesController = TextEditingController();
+  TextEditingController _smsChargesController = TextEditingController();
+  TextEditingController _posChargesController = TextEditingController();
+  TextEditingController _advanceChargesController = TextEditingController();
 
-  String?  status;
+
+  String? status;
   String? selectedCity;
   String? SelectedCollector;
   String? SelectedReference;
@@ -291,15 +293,82 @@ class _AddCustomersState extends State<AddCustomers> {
                       // const SizedBox(
                       //   height: 15,
                       // ),
-
                       Container(
                         height: _height / 16,
                         width: _width / 0.3,
-                        child: TextField(
+                        child: TextFormField(
                           controller: _shopController,
                           keyboardType: TextInputType.number,
                           decoration: InputDecoration(
                             labelText: "Shops",
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(3),
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      Container(
+                        height: _height / 16,
+                        width: _width / 0.3,
+                        child: TextFormField(
+                          controller: _serverChargesController,
+                          keyboardType: TextInputType.number,
+                          decoration: InputDecoration(
+                            labelText: "Server Charges",
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(3),
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      Container(
+                        height: _height / 16,
+                        width: _width / 0.3,
+                        child: TextField(
+                          controller: _smsChargesController,
+                          keyboardType: TextInputType.number,
+                          decoration: InputDecoration(
+                            labelText: "Sms Charges",
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(3),
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      Container(
+                        height: _height / 16,
+                        width: _width / 0.3,
+                        child: TextField(
+                          controller: _advanceChargesController,
+                          keyboardType: TextInputType.number,
+                          decoration: InputDecoration(
+                            labelText: "Advance Charges",
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(3),
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      Container(
+                        height: _height / 16,
+                        width: _width / 0.3,
+                        child: TextField(
+                          controller: _posChargesController,
+                          keyboardType: TextInputType.number,
+                          decoration: InputDecoration(
+                            labelText: "Pos Charges",
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(3),
                             ),
@@ -381,11 +450,11 @@ class _AddCustomersState extends State<AddCustomers> {
                             ),
                           ),
                           items: widget.getReferenceList.map((refernce) {
-                            return DropdownMenuItem<String>(
-                              value: refernce.trefid ?? '',
-                              child: Text(refernce.trefdsc ?? ''),
-                            );
-                          }).toList() ??
+                                return DropdownMenuItem<String>(
+                                  value: refernce.trefid ?? '',
+                                  child: Text(refernce.trefdsc ?? ''),
+                                );
+                              }).toList() ??
                               [],
                         ),
                       ),
@@ -409,11 +478,11 @@ class _AddCustomersState extends State<AddCustomers> {
                             ),
                           ),
                           items: widget.getTypeList.map((type) {
-                            return DropdownMenuItem<String>(
-                              value: type.ttypid ?? '',
-                              child: Text(type.ttypdsc ?? ''),
-                            );
-                          }).toList() ??
+                                return DropdownMenuItem<String>(
+                                  value: type.ttypid ?? '',
+                                  child: Text(type.ttypdsc ?? ''),
+                                );
+                              }).toList() ??
                               [],
                         ),
                       ),
@@ -437,11 +506,11 @@ class _AddCustomersState extends State<AddCustomers> {
                             ),
                           ),
                           items: widget.getCollectorList.map((collector) {
-                            return DropdownMenuItem<String>(
-                              value: collector.tcolid ?? '',
-                              child: Text(collector.tcoldsc ?? ''),
-                            );
-                          }).toList() ??
+                                return DropdownMenuItem<String>(
+                                  value: collector.tcolid ?? '',
+                                  child: Text(collector.tcoldsc ?? ''),
+                                );
+                              }).toList() ??
                               [],
                         ),
                       ),
@@ -465,11 +534,11 @@ class _AddCustomersState extends State<AddCustomers> {
                             ),
                           ),
                           items: widget.getCityList.map((city) {
-                            return DropdownMenuItem<String>(
-                              value: city.tctyid ?? '',
-                              child: Text(city.tctydsc ?? ''),
-                            );
-                          }).toList() ??
+                                return DropdownMenuItem<String>(
+                                  value: city.tctyid ?? '',
+                                  child: Text(city.tctydsc ?? ''),
+                                );
+                              }).toList() ??
                               [],
                         ),
                       ),
@@ -577,22 +646,26 @@ class _AddCustomersState extends State<AddCustomers> {
   Future post_addCust() async {
     var response = await http.post(Uri.parse(addCust), body: {
       'FColId': SelectedCollector.toString(),
-      'FCstDsc': _description.text.toString(),
+      'FCstDsc': _description.text,
       'FCstSts': 'Yes',
-      'FCntPer': _cntPersonController.text.toString(),
-      'FPhnNum': _phoneController.text.toString(),
-      'FMobNum': _mobileController.text.toString(),
-      'FAdd001': _address1Controller.text.toString(),
-      'FAdd002': _address2Controller.text.toString(),
-      'FEmlAdd': _emailController.text.toString(),
-      'FShpNum': _shopController.text.toString(),
-      'FMthChg': _monthlyChargesController.text.toString(),
+      'FCntPer': _cntPersonController.text,
+      'FPhnNum': _phoneController.text,
+      'FMobNum': _mobileController.text,
+      'FAdd001': _address1Controller.text,
+      'FAdd002': _address2Controller.text,
+      'FEmlAdd': _emailController.text,
+      'FShpNum': _shopController.text,
+      'FMthChg': _monthlyChargesController.text.isEmpty ? '0' : _monthlyChargesController.text,
       'FRefId': SelectedReference.toString(),
       'FTypId': SelectedType.toString(),
       'FCtyId': selectedCity.toString(),
-      'FLatVal': _latitudeController.text.toString(),
-      'FLngVal': _longitudeController.text.toString(),
-      'FSrvIp': _ipController.text.toString(),
+      'FLatVal': _latitudeController.text,
+      'FLngVal': _longitudeController.text,
+      'FSrvIp': _ipController.text,
+      'FSrvChg': _serverChargesController.text.isEmpty ? '0' : _serverChargesController.text,
+      'FSmsChg': _smsChargesController.text.isEmpty ? '0' : _smsChargesController.text,
+      'FAdvChg': _advanceChargesController.text.isEmpty ? '0' : _advanceChargesController.text,
+      'FPosChg': _posChargesController.text.isEmpty ? '0' : _posChargesController.text,
     });
     var result = jsonDecode(response.body);
     if (result['error'] == 200) {
@@ -605,4 +678,5 @@ class _AddCustomersState extends State<AddCustomers> {
       Navigator.pop(context);
     }
   }
+
 }

@@ -29,7 +29,7 @@ class _GetBankScreenState extends State<GetBankScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Expenses',
+          'Bank',
           style: TextStyle(color: Cosmic.white_color),
         ),
         centerTitle: true,

@@ -22,7 +22,7 @@ class _CollectorsScreenState extends State<CollectorsScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    get_Collectors();
+    get_Collectors(); 
   }
 
   @override
@@ -220,7 +220,7 @@ class _CollectorsScreenState extends State<CollectorsScreen> {
       _getCollectorList.clear();
       for (Map i in result) {
         _getCollectorList.add(GetCollectorsModel.fromJson(i));
-        print(response.body);
+        // print(response.body);
       }
       setState(() {
         filterCollectorsList = List.from(_getCollectorList);
