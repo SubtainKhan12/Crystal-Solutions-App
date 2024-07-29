@@ -5,26 +5,29 @@ import 'package:crystal_solutions/Model/Customers/GetCustomersModel.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
+import '../../../Model/City/GetActiveCity.dart';
 import '../../../Model/City/GetCityModel.dart';
 import '../../../Model/Collectors/GetCollectorsModel.dart';
+import '../../../Model/Reference/GetActiveReference.dart';
 import '../../../Model/Reference/GetReferenceModel.dart';
+import '../../../Model/Type/GetActiveType.dart';
 import '../../../Model/Type/GetType.dart';
 import '../../../apis.dart';
 import '../../../cosmos.dart';
 
 class UpdateCustomersScreen extends StatefulWidget {
   GetCustomersModel getCustomersModel;
-  List<GetCityModel> getCityList = [];
-  List<GetReferenceModel> getReferenceList = [];
+  List<GetActiveCity> getActiveCityList = [];
+  List<GetActiveReference> getActiveReferenceList = [];
   List<GetCollectorsModel> getCollectorList = [];
-  List<GetType> getTypeList = [];
+  List<GetActiveType> getActiveTypeList = [];
 
   UpdateCustomersScreen(
       {super.key,
       required this.getCustomersModel,
-      required this.getCityList,
-      required this.getReferenceList,
-      required this.getTypeList,
+      required this.getActiveCityList,
+      required this.getActiveReferenceList,
+      required this.getActiveTypeList,
       required this.getCollectorList});
 
   @override
@@ -514,7 +517,7 @@ class _UpdateCustomersScreenState extends State<UpdateCustomersScreen> {
                               borderRadius: BorderRadius.circular(3),
                             ),
                           ),
-                          items: widget.getReferenceList.map((refernce) {
+                          items: widget.getActiveReferenceList.map((refernce) {
                                 return DropdownMenuItem<String>(
                                   value: refernce.trefid ?? '',
                                   child: Text(refernce.trefdsc ?? ''),
@@ -542,7 +545,7 @@ class _UpdateCustomersScreenState extends State<UpdateCustomersScreen> {
                               borderRadius: BorderRadius.circular(3),
                             ),
                           ),
-                          items: widget.getTypeList.map((type) {
+                          items: widget.getActiveTypeList.map((type) {
                                 return DropdownMenuItem<String>(
                                   value: type.ttypid ?? '',
                                   child: Text(type.ttypdsc ?? ''),
@@ -598,7 +601,7 @@ class _UpdateCustomersScreenState extends State<UpdateCustomersScreen> {
                               borderRadius: BorderRadius.circular(3),
                             ),
                           ),
-                          items: widget.getCityList.map((city) {
+                          items: widget.getActiveCityList.map((city) {
                                 return DropdownMenuItem<String>(
                                   value: city.tctyid ?? '',
                                   child: Text(city.tctydsc ?? ''),

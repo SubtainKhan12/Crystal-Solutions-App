@@ -9,16 +9,19 @@ String updateUser = '$baseUrl/updateUser.php';
 
 String addCity = '$baseUrl/addCity.php';
 String getCity = '$baseUrl/getCity.php';
+String getActiveCity = '$baseUrl/getActiveCity.php';
 String updateCity = '$baseUrl/updateCity.php';
 
 
 String addRef = '$baseUrl/addRef.php';
 String getRef = '$baseUrl/getRef.php';
+String getActiveRef = '$baseUrl/getActiveRef.php';
 String updateRef = '$baseUrl/updateRef.php';
 
 
 String addType = '$baseUrl/addType.php';
 String getType = '$baseUrl/getType.php';
+String getActiveType = '$baseUrl/getActiveType.php';
 String updateType = '$baseUrl/updateType.php';
 
 
@@ -29,27 +32,32 @@ String updateCol = '$baseUrl/updateCol.php';
 
 
 String getCust = '$baseUrl/getCust.php';
+String getActiveCust = '$baseUrl/getActiveCust.php';
 String addCust = '$baseUrl/addCust.php';
 String updateCust = '$baseUrl/updateCust.php';
 
 
 
 String getExp = '$baseUrl/getExp.php';
+String getActiveExp = '$baseUrl/getActiveExp.php';
 String addExp = '$baseUrl/addExp.php';
 String updateExp = '$baseUrl/updateExp.php';
 
 
 String getBank = '$baseUrl/getBank.php';
+String getActiveBank = '$baseUrl/getActiveBank.php';
 String updateBank = '$baseUrl/updateBank.php';
 String addBank = '$baseUrl/addBank.php';
 
 
 String getDesignation = '$baseUrl/getDesignation.php';
+String getActiveDesignation = '$baseUrl/getActiveDesignation.php';
 String addDesignation = '$baseUrl/addDesignation.php';
 String updateDesignation = '$baseUrl/updateDesignation.php';
 
 
 
 String getEmployee = '$baseUrl/getEmployee.php';
+String getActiveEmployee = '$baseUrl/getActiveEmployee.php';
 String addEmployee = '$baseUrl/addEmployee.php';
 String updateEmployee = '$baseUrl/updateEmployee.php';

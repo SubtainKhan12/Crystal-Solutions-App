@@ -1,20 +1,20 @@
 import 'dart:convert';
 import 'dart:io';
-import 'package:crystal_solutions/Model/Designation/GetDesignationModel.dart';
 import 'package:crystal_solutions/Model/Employe/GetEmployeeModel.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../../../Model/Designation/GetActiveDesignationModel.dart';
 import '../../../apis.dart';
 import '../../../cosmos.dart';
 
 class UpdateEmployee extends StatefulWidget {
   GetEmployeeModel getEmployeeList;
-  List<GetDesignationModel> getDesignationList = [];
+  List<GetActiveDesignationModel> getActiveDesignationList = [];
 
-  UpdateEmployee({super.key, required this.getDesignationList, required this.getEmployeeList});
+  UpdateEmployee({super.key, required this.getActiveDesignationList, required this.getEmployeeList});
 
   @override
   State<UpdateEmployee> createState() => _UpdateEmployeeState();
@@ -393,7 +393,7 @@ class _UpdateEmployeeState extends State<UpdateEmployee> {
                               borderRadius: BorderRadius.circular(3),
                             ),
                           ),
-                          items: widget.getDesignationList.map((city) {
+                          items: widget.getActiveDesignationList.map((city) {
                             return DropdownMenuItem<String>(
                               value: city.tdsgid ?? '',
                               child: Text(city.tdsgdsc ?? ''),

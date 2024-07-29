@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:crystal_solutions/HHH/DrawerPages/Employee/updateEmployee.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import '../../../Model/Designation/GetActiveDesignationModel.dart';
 import '../../../Model/Designation/GetDesignationModel.dart';
 import '../../../Model/Employe/GetEmployeeModel.dart';
 import '../../../apis.dart';
@@ -19,13 +20,13 @@ class GetEmployeeScreen extends StatefulWidget {
 class _GetEmployeeScreenState extends State<GetEmployeeScreen> {
   List<GetEmployeeModel> _getEmployeeList = [];
   List<GetEmployeeModel> filterEmployeeList = [];
-  List<GetDesignationModel> _getDesignationList = [];
+  List<GetActiveDesignationModel> _getActiveDesignationList = [];
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     get_Employee();
-    get_Designation();
+    get_ActiveDesignation();
   }
   @override
   Widget build(BuildContext context) {
@@ -42,7 +43,7 @@ class _GetEmployeeScreenState extends State<GetEmployeeScreen> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.push(context,
-              MaterialPageRoute(builder: (context) =>  AddEmployee(getDesignationList: _getDesignationList,)))
+              MaterialPageRoute(builder: (context) =>  AddEmployee(getActiveDesignationList: _getActiveDesignationList,)))
               .then((value) => get_Employee());
         },
         child: const Icon(Icons.add),
@@ -179,7 +180,7 @@ class _GetEmployeeScreenState extends State<GetEmployeeScreen> {
                                                     builder: (context) =>
                                                         UpdateEmployee(
                                                           getEmployeeList: _getEmployeeList[index],
-                                                          getDesignationList: _getDesignationList,
+                                                          getActiveDesignationList: _getActiveDesignationList,
                                                         ))).then(
                                                     (value) => get_Employee());
                                           },
@@ -272,13 +273,13 @@ class _GetEmployeeScreenState extends State<GetEmployeeScreen> {
       });
     }
   }
-  Future get_Designation() async {
-    var response = await http.post(Uri.parse(getDesignation));
+  Future get_ActiveDesignation() async {
+    var response = await http.post(Uri.parse(getActiveDesignation));
     var result = jsonDecode(response.body);
     if (response.statusCode == 200) {
-      _getDesignationList.clear();
+      _getActiveDesignationList.clear();
       for (Map i in result) {
-        _getDesignationList.add(GetDesignationModel.fromJson(i));
+        _getActiveDesignationList.add(GetActiveDesignationModel.fromJson(i));
       }
       setState(() {
       });

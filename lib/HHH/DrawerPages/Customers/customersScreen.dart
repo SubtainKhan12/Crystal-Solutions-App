@@ -2,13 +2,16 @@ import 'dart:convert';
 
 import 'package:crystal_solutions/HHH/DrawerPages/Customers/addCustomers.dart';
 import 'package:crystal_solutions/HHH/DrawerPages/Customers/updateCustomers.dart';
+import 'package:crystal_solutions/Model/City/GetActiveCity.dart';
 import 'package:crystal_solutions/apis.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import '../../../Model/City/GetCityModel.dart';
 import '../../../Model/Collectors/GetCollectorsModel.dart';
 import '../../../Model/Customers/GetCustomersModel.dart';
+import '../../../Model/Reference/GetActiveReference.dart';
 import '../../../Model/Reference/GetReferenceModel.dart';
+import '../../../Model/Type/GetActiveType.dart';
 import '../../../Model/Type/GetType.dart';
 import '../../../cosmos.dart';
 
@@ -22,20 +25,20 @@ class GetCustomersScreen extends StatefulWidget {
 class _GetCustomersScreenState extends State<GetCustomersScreen> {
   List<GetCustomersModel> _getCustomerListModel = [];
   List<GetCustomersModel> filterCustomerList = [];
-  List<GetCityModel> _getCityList = [];
-  List<GetReferenceModel> _getReferenceList = [];
+  List<GetActiveCity> _getActiveCityList = [];
+  List<GetActiveReference> _getActiveReferenceList = [];
   List<GetCollectorsModel> _getCollectorList = [];
-  List<GetType> _getTypeList = [];
+  List<GetActiveType> _getActiveTypeList = [];
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     get_Customers();
-    get_City();
+    get_ActiveCity();
     get_Collectors();
-    get_Reference();
-    get_Type();
+    get_ActiveReference();
+    get_ActiveType();
   }
 
 
@@ -54,10 +57,10 @@ class _GetCustomersScreenState extends State<GetCustomersScreen> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.push(context,
-                  MaterialPageRoute(builder: (context) =>  AddCustomers(getCityList: _getCityList,
+                  MaterialPageRoute(builder: (context) =>  AddCustomers(getActiveCityList: _getActiveCityList,
                     getCollectorList: _getCollectorList,
-                    getReferenceList: _getReferenceList,
-                    getTypeList: _getTypeList,)))
+                    getActiveReferenceList: _getActiveReferenceList,
+                    getActiveTypeList: _getActiveTypeList,)))
               .then((value) => get_Customers());
         },
         child: const Icon(Icons.add),
@@ -194,10 +197,10 @@ class _GetCustomersScreenState extends State<GetCustomersScreen> {
                                               builder: (context) =>
                                                   UpdateCustomersScreen(
                                                     getCustomersModel: filterCustomerList[index],
-                                                    getCityList: _getCityList,
+                                                    getActiveCityList: _getActiveCityList,
                                                     getCollectorList: _getCollectorList,
-                                                    getReferenceList: _getReferenceList,
-                                                    getTypeList: _getTypeList,
+                                                    getActiveReferenceList: _getActiveReferenceList,
+                                                    getActiveTypeList: _getActiveTypeList,
                                                   ))).then(
                                               (value) => get_Customers());
                                     },
@@ -290,24 +293,24 @@ class _GetCustomersScreenState extends State<GetCustomersScreen> {
       });
     }
   }
-  Future get_City() async {
-    var response = await http.post(Uri.parse(getCity));
+  Future get_ActiveCity() async {
+    var response = await http.post(Uri.parse(getActiveCity));
     var result = jsonDecode(response.body);
     if (response.statusCode == 200) {
-      _getCityList.clear();
+      _getActiveCityList.clear();
       for (Map i in result) {
-        _getCityList.add(GetCityModel.fromJson(i));
+        _getActiveCityList.add(GetActiveCity.fromJson(i));
       }
       setState(() {});
     }
   }
-  Future get_Reference() async {
-    var response = await http.post(Uri.parse(getRef));
+  Future get_ActiveReference() async {
+    var response = await http.post(Uri.parse(getActiveRef));
     var result = jsonDecode(response.body);
     if (response.statusCode == 200) {
-      _getReferenceList.clear();
+      _getActiveReferenceList.clear();
       for (Map i in result) {
-        _getReferenceList.add(GetReferenceModel.fromJson(i));
+        _getActiveReferenceList.add(GetActiveReference.fromJson(i));
       }
       setState(() {});
     }
@@ -325,13 +328,13 @@ class _GetCustomersScreenState extends State<GetCustomersScreen> {
       });
     }
   }
-  Future get_Type() async {
-    var response = await http.post(Uri.parse(getType));
+  Future get_ActiveType() async {
+    var response = await http.post(Uri.parse(getActiveType));
     var result = jsonDecode(response.body);
     if (response.statusCode == 200) {
-      _getTypeList.clear();
+      _getActiveTypeList.clear();
       for (Map i in result) {
-        _getTypeList.add(GetType.fromJson(i));
+        _getActiveTypeList.add(GetActiveType.fromJson(i));
       }
       setState(() {});
     }

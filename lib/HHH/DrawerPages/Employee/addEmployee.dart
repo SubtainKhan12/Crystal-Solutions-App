@@ -6,13 +6,14 @@ import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../../../Model/Designation/GetActiveDesignationModel.dart';
 import '../../../apis.dart';
 import '../../../cosmos.dart';
 
 class AddEmployee extends StatefulWidget {
-  List<GetDesignationModel> getDesignationList = [];
+  List<GetActiveDesignationModel> getActiveDesignationList = [];
 
-  AddEmployee({super.key, required this.getDesignationList});
+  AddEmployee({super.key, required this.getActiveDesignationList});
 
   @override
   State<AddEmployee> createState() => _AddEmployeeState();
@@ -385,7 +386,7 @@ class _AddEmployeeState extends State<AddEmployee> {
                               borderRadius: BorderRadius.circular(3),
                             ),
                           ),
-                          items: widget.getDesignationList.map((city) {
+                          items: widget.getActiveDesignationList.map((city) {
                                 return DropdownMenuItem<String>(
                                   value: city.tdsgid ?? '',
                                   child: Text(city.tdsgdsc ?? ''),

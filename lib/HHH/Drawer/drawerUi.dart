@@ -1,6 +1,7 @@
 import 'package:crystal_solutions/HHH/DrawerPages/Bank/getBankScreen.dart';
 import 'package:crystal_solutions/HHH/DrawerPages/City/getCity.dart';
 import 'package:crystal_solutions/HHH/DrawerPages/Collectors/getCollectors.dart';
+import 'package:crystal_solutions/HHH/DrawerPages/Customers%20Collections/getActiveCustomers.dart';
 import 'package:crystal_solutions/HHH/DrawerPages/Designation/getDesignation.dart';
 import 'package:crystal_solutions/HHH/DrawerPages/Reference/getReference.dart';
 import 'package:crystal_solutions/HHH/DrawerPages/Type/getType.dart';
@@ -377,7 +378,9 @@ class _DrawerUiState extends State<DrawerUi> {
                       SizedBox(
                         height: 39,
                         child: TextButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.push(context, MaterialPageRoute(builder: (context)=> CustomerCollectionScreen()));
+                            },
                             child: const Row(
                               children: [
                                 SizedBox(

@@ -5,24 +5,27 @@ import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../../../Model/City/GetActiveCity.dart';
 import '../../../Model/City/GetCityModel.dart';
 import '../../../Model/Collectors/GetCollectorsModel.dart';
+import '../../../Model/Reference/GetActiveReference.dart';
 import '../../../Model/Reference/GetReferenceModel.dart';
+import '../../../Model/Type/GetActiveType.dart';
 import '../../../Model/Type/GetType.dart';
 import '../../../apis.dart';
 import '../../../cosmos.dart';
 
 class AddCustomers extends StatefulWidget {
-  List<GetCityModel> getCityList = [];
-  List<GetReferenceModel> getReferenceList = [];
+  List<GetActiveCity> getActiveCityList = [];
+  List<GetActiveReference> getActiveReferenceList = [];
   List<GetCollectorsModel> getCollectorList = [];
-  List<GetType> getTypeList = [];
+  List<GetActiveType> getActiveTypeList = [];
 
   AddCustomers(
       {super.key,
-      required this.getCityList,
-      required this.getReferenceList,
-      required this.getTypeList,
+      required this.getActiveCityList,
+      required this.getActiveReferenceList,
+      required this.getActiveTypeList,
       required this.getCollectorList});
 
   @override
@@ -449,7 +452,7 @@ class _AddCustomersState extends State<AddCustomers> {
                               borderRadius: BorderRadius.circular(3),
                             ),
                           ),
-                          items: widget.getReferenceList.map((refernce) {
+                          items: widget.getActiveReferenceList.map((refernce) {
                                 return DropdownMenuItem<String>(
                                   value: refernce.trefid ?? '',
                                   child: Text(refernce.trefdsc ?? ''),
@@ -477,7 +480,7 @@ class _AddCustomersState extends State<AddCustomers> {
                               borderRadius: BorderRadius.circular(3),
                             ),
                           ),
-                          items: widget.getTypeList.map((type) {
+                          items: widget.getActiveTypeList.map((type) {
                                 return DropdownMenuItem<String>(
                                   value: type.ttypid ?? '',
                                   child: Text(type.ttypdsc ?? ''),
@@ -533,7 +536,7 @@ class _AddCustomersState extends State<AddCustomers> {
                               borderRadius: BorderRadius.circular(3),
                             ),
                           ),
-                          items: widget.getCityList.map((city) {
+                          items: widget.getActiveCityList.map((city) {
                                 return DropdownMenuItem<String>(
                                   value: city.tctyid ?? '',
                                   child: Text(city.tctydsc ?? ''),
