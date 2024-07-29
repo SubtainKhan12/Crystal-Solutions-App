@@ -4,7 +4,7 @@ import 'package:crystal_solutions/HHH/DrawerPages/Collectors/getCollectors.dart'
 import 'package:crystal_solutions/HHH/DrawerPages/Designation/getDesignation.dart';
 import 'package:crystal_solutions/HHH/DrawerPages/Reference/getReference.dart';
 import 'package:crystal_solutions/HHH/DrawerPages/Type/getType.dart';
-import 'package:crystal_solutions/HHH/DrawerPages/getEmployee.dart';
+import 'package:crystal_solutions/HHH/DrawerPages/Employee/getEmployee.dart';
 import 'package:crystal_solutions/HHH/Login/loginScreen.dart';
 import 'package:crystal_solutions/cosmos.dart';
 import 'package:flutter/material.dart';
