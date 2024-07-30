@@ -19,6 +19,7 @@ class CustomerCollectionScreen extends StatefulWidget {
 
 class _CustomerCollectionScreenState extends State<CustomerCollectionScreen> {
   final TextEditingController _amountController = TextEditingController();
+  final TextEditingController _remarksController = TextEditingController();
   List<GetActiveCustomersModel> _getActiveCustomerList = [];
   List<GetActiveCustomersModel> filterActiveCustomerList = [];
   List<GetActiveBank> _getActiveBankList = [];
@@ -45,10 +46,6 @@ class _CustomerCollectionScreenState extends State<CustomerCollectionScreen> {
         backgroundColor: Cosmic.app_color,
         iconTheme: IconThemeData(color: Cosmic.white_color),
       ),
-      // floatingActionButton: FloatingActionButton(
-      //   onPressed: () {},
-      //   child: const Icon(Icons.add),
-      // ),
       body: RefreshIndicator(
         onRefresh: get_ActiveCustomers,
         child: Padding(
@@ -489,31 +486,41 @@ class _CustomerCollectionScreenState extends State<CustomerCollectionScreen> {
                                   borderRadius: BorderRadius.circular(3))),
                         ),
                       ),
-                      // Uncomment the below code to include the dropdown for bank selection
-                      // SizedBox(height: 4),
-                      // Container(
-                      //   height: _height * 0.05,
-                      //   child: DropdownButtonFormField<String>(
-                      //     value: SelectBank,
-                      //     onChanged: (newValue) {
-                      //       setState(() {
-                      //         SelectBank = newValue;
-                      //       });
-                      //     },
-                      //     decoration: InputDecoration(
-                      //       labelText: "Bank",
-                      //       border: OutlineInputBorder(
-                      //         borderRadius: BorderRadius.circular(3),
-                      //       ),
-                      //     ),
-                      //     items: _getActiveBankList.map((collector) {
-                      //       return DropdownMenuItem<String>(
-                      //         value: collector.tbnkid ?? '',
-                      //         child: Text(collector.tbnkdsc ?? ''),
-                      //       );
-                      //     }).toList() ?? [],
-                      //   ),
-                      // ),
+                      SizedBox(height: 5),
+                      Container(
+                        height: _height * 0.05,
+                        child: TextField(
+                          controller: _remarksController,
+                          decoration: InputDecoration(
+                              labelText: 'Remarks',
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(3))),
+                        ),
+                      ),
+                      SizedBox(height: 5),
+                      Container(
+                        height: _height * 0.05,
+                        child: DropdownButtonFormField<String>(
+                          value: SelectBank,
+                          onChanged: (newValue) {
+                            setState(() {
+                              SelectBank = newValue;
+                            });
+                          },
+                          decoration: InputDecoration(
+                            labelText: "Bank",
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(3),
+                            ),
+                          ),
+                          items: _getActiveBankList.map((collector) {
+                            return DropdownMenuItem<String>(
+                              value: collector.tbnkid ?? '',
+                              child: Text(collector.tbnkdsc ?? ''),
+                            );
+                          }).toList() ?? [],
+                        ),
+                      ),
                     ],
                   ),
                 ],

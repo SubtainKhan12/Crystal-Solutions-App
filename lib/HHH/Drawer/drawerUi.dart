@@ -1,8 +1,8 @@
 import 'package:crystal_solutions/HHH/DrawerPages/Bank/getBankScreen.dart';
 import 'package:crystal_solutions/HHH/DrawerPages/City/getCity.dart';
 import 'package:crystal_solutions/HHH/DrawerPages/Collectors/getCollectors.dart';
-import 'package:crystal_solutions/HHH/DrawerPages/Customers%20Collections/getActiveCustomers.dart';
 import 'package:crystal_solutions/HHH/DrawerPages/Designation/getDesignation.dart';
+import 'package:crystal_solutions/HHH/DrawerPages/Payments/expensePayment.dart';
 import 'package:crystal_solutions/HHH/DrawerPages/Reference/getReference.dart';
 import 'package:crystal_solutions/HHH/DrawerPages/Type/getType.dart';
 import 'package:crystal_solutions/HHH/DrawerPages/Employee/getEmployee.dart';
@@ -11,6 +11,7 @@ import 'package:crystal_solutions/cosmos.dart';
 import 'package:flutter/material.dart';
 import '../DrawerPages/Customers/customersScreen.dart';
 import '../DrawerPages/Expense/getExpenseScreen.dart';
+import '../DrawerPages/Recipt/getActiveCustomers.dart';
 import '../DrawerPages/User Manegment/usersScreen.dart';
 
 class DrawerUi extends StatefulWidget {
@@ -420,7 +421,9 @@ class _DrawerUiState extends State<DrawerUi> {
                       SizedBox(
                         height: 39,
                         child: TextButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.push(context, MaterialPageRoute(builder: (context)=> ExpensePaymentScreen()));
+                            },
                             child: const Row(
                               children: [
                                 SizedBox(
