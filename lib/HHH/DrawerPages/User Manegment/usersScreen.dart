@@ -4,6 +4,7 @@ import 'package:http/http.dart' as http;
 import 'package:crystal_solutions/apis.dart';
 import 'package:crystal_solutions/cosmos.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../Model/Users/GetUsersModel.dart';
 import 'addUser.dart';
@@ -40,8 +41,10 @@ class _GetUsersScreenState extends State<GetUsersScreen> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => const AddUserScreen()))
+          Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const AddUserScreen()))
               .then((value) => get_Users());
         },
         child: const Icon(Icons.add),
@@ -53,7 +56,7 @@ class _GetUsersScreenState extends State<GetUsersScreen> {
           child: Column(
             children: [
               TextField(
-                onChanged: (value){
+                onChanged: (value) {
                   filterUsers(value);
                 },
                 decoration: InputDecoration(
@@ -74,7 +77,8 @@ class _GetUsersScreenState extends State<GetUsersScreen> {
                           return Padding(
                             padding: const EdgeInsets.symmetric(vertical: 1),
                             child: Card(
-                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(5)),
                               elevation: 2,
                               shadowColor: Cosmic.app_color,
                               borderOnForeground: true,
@@ -85,12 +89,13 @@ class _GetUsersScreenState extends State<GetUsersScreen> {
                                 child: ExpansionTile(
                                   minTileHeight: 20,
                                   title: Text(
-                                    filterUsersList[index]
-                                        .tUsrNam
-                                        .toString(),
+                                    filterUsersList[index].tUsrNam.toString(),
                                     style: const TextStyle(fontSize: 14),
                                   ),
-                                  subtitle: Text(filterUsersList[index].tusrTyp.toString(), style: const TextStyle(fontSize: 12),),
+                                  subtitle: Text(
+                                    filterUsersList[index].tusrTyp.toString(),
+                                    style: const TextStyle(fontSize: 12),
+                                  ),
                                   children: [
                                     Divider(
                                       thickness: 1,
@@ -138,7 +143,8 @@ class _GetUsersScreenState extends State<GetUsersScreen> {
                                                 )),
                                           ])),
                                           Row(
-                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
                                             children: [
                                               RichText(
                                                   text: TextSpan(children: [
@@ -161,11 +167,15 @@ class _GetUsersScreenState extends State<GetUsersScreen> {
                                                   Navigator.push(
                                                     context,
                                                     MaterialPageRoute(
-                                                      builder: (context) => UpdateUserScreen(
-                                                        getUsersModel: filterUsersList[index],
+                                                      builder: (context) =>
+                                                          UpdateUserScreen(
+                                                        getUsersModel:
+                                                            filterUsersList[
+                                                                index],
                                                       ),
                                                     ),
-                                                  ).then((value) => get_Users());
+                                                  ).then(
+                                                      (value) => get_Users());
                                                 },
                                                 child: Icon(
                                                   Icons.edit,
@@ -175,23 +185,32 @@ class _GetUsersScreenState extends State<GetUsersScreen> {
                                               ),
                                             ],
                                           ),
-
-                                          RichText(
-                                              text: TextSpan(children: [
-                                            const TextSpan(
-                                                text: 'Mobile: ',
-                                                style: TextStyle(
-                                                    color: Colors.black,
-                                                    fontWeight:
-                                                        FontWeight.bold)),
-                                            TextSpan(
-                                                text: filterUsersList[index]
-                                                    .tMobNum
-                                                    .toString(),
-                                                style: const TextStyle(
-                                                  color: Colors.black,
-                                                )),
-                                          ])),
+                                          InkWell(
+                                            onTap: () {
+                                              _showPhoneDialog(
+                                                  filterUsersList[index]
+                                                      .tMobNum
+                                                      .toString());
+                                            },
+                                            child: RichText(
+                                                text: TextSpan(children: [
+                                              const TextSpan(
+                                                  text: 'Mobile: ',
+                                                  style: TextStyle(
+                                                      color: Colors.black,
+                                                      fontWeight:
+                                                          FontWeight.bold)),
+                                              TextSpan(
+                                                  text: filterUsersList[index]
+                                                      .tMobNum
+                                                      .toString(),
+                                                  style: const TextStyle(
+                                                    color: Colors.blue,
+                                                    decoration: TextDecoration
+                                                        .underline,
+                                                  )),
+                                            ])),
+                                          ),
                                           RichText(
                                               text: TextSpan(children: [
                                             const TextSpan(
@@ -243,12 +262,76 @@ class _GetUsersScreenState extends State<GetUsersScreen> {
       });
     }
   }
+
   filterUsers(String query) {
     setState(() {
       filterUsersList = _getUsersListModel
           .where((element) =>
-          element.tUsrNam!.toLowerCase().contains(query.toLowerCase()))
+              element.tUsrNam!.toLowerCase().contains(query.toLowerCase()))
           .toList();
     });
+  }
+
+  ///------------------> Function to chose Call or whatsapp <---------------------///
+  Future<void> _showPhoneDialog(String phoneNumber) async {
+    var _height = MediaQuery.of(context).size.height;
+    var _width = MediaQuery.of(context).size.width;
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Choose an option'),
+          content: Text('Would you like to call or message on WhatsApp?'),
+          actions: <Widget>[
+            IconButton(
+              icon: Icon(Icons.phone,
+                  size: _height * 0.04,
+                  color: Color(0xff06D001)),
+              onPressed: () {
+                _makePhoneCall(phoneNumber);
+                Navigator.of(context).pop();
+              },
+            ),
+            SizedBox(width: 10,),
+            InkWell(
+              onTap: (){
+                _openWhatsApp(phoneNumber);
+                Navigator.of(context).pop();
+              },
+              child: Container(
+                height: _height * 0.04,
+                child: Image.asset('assets/whatsapplogo.png'),
+              ),
+            )
+          ],
+        );
+      },
+    );
+  }
+
+  ///-----------------------> Function to Navigate to phone dail <-----------------///
+  Future<void> _makePhoneCall(String phoneNumber) async {
+    final Uri launchUri = Uri(
+      scheme: 'tel',
+      path: phoneNumber,
+    );
+    if (await canLaunch(launchUri.toString())) {
+      await launch(launchUri.toString());
+    } else {
+      throw 'Could not launch $phoneNumber';
+    }
+  }
+
+  ///-------------------> Function to Navigate to whatsapp <------------------///
+  Future<void> _openWhatsApp(String phoneNumber) async {
+    final launchUri = Uri(
+      scheme: 'https',
+      path: 'wa.me/$phoneNumber',
+    );
+    if (await canLaunch(launchUri.toString())) {
+      await launch(launchUri.toString());
+    } else {
+      throw 'Could not launch WhatsApp for $phoneNumber';
+    }
   }
 }
