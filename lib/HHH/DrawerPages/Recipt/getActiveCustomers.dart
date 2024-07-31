@@ -24,7 +24,6 @@ class _CustomerCollectionScreenState extends State<CustomerCollectionScreen> {
   List<GetActiveCustomersModel> filterActiveCustomerList = [];
   List<GetActiveBank> _getActiveBankList = [];
 
-
   @override
   void initState() {
     // TODO: implement initState
@@ -35,7 +34,6 @@ class _CustomerCollectionScreenState extends State<CustomerCollectionScreen> {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -99,145 +97,135 @@ class _CustomerCollectionScreenState extends State<CustomerCollectionScreen> {
                                       padding: const EdgeInsets.symmetric(
                                           horizontal: 15, vertical: 10),
                                       child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
                                         children: [
                                           Row(
-                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
                                             children: [
                                               RichText(
-                                                 text: TextSpan(children: [
-                                                   const TextSpan(
-                                                     text: 'Mobile: ',
-                                                     style: TextStyle(
-                                                         color: Colors.black,
-                                                         fontWeight:
-                                                         FontWeight.bold),
-                                                   ),
-                                                   TextSpan(
-                                                     text:
-                                                     filterActiveCustomerList[
-                                                     index]
-                                                         .tMobNUm
-                                                         .toString(),
-                                                     style: const TextStyle(
-                                                       color: Colors.black,
-                                                     ),
-                                                   ),
-                                                 ])),
-                                              SizedBox(
-                                                width: 50,
-                                                height: 30,
-                                                child: PopupMenuButton<int>(
-                                                  itemBuilder: (context) => [
-                                                    PopupMenuItem(
-                                                      onTap: () {
-                                                        _showDialog(context, filterActiveCustomerList[index]);
-                                                      },
-                                                      value: 1,
-                                                      child: Text(
-                                                        "Update Status",
-                                                        style: TextStyle(fontSize: 14),
-                                                      ),
-                                                    ),
-                                                  ],
-                                                  offset: const Offset(0, 30),
-                                                  color: Colors.white,
-                                                  elevation: 2,
+                                                  text: TextSpan(children: [
+                                                const TextSpan(
+                                                  text: 'Mobile: ',
+                                                  style: TextStyle(
+                                                      color: Colors.black,
+                                                      fontWeight:
+                                                          FontWeight.bold),
                                                 ),
+                                                TextSpan(
+                                                  text:
+                                                      filterActiveCustomerList[
+                                                              index]
+                                                          .tMobNUm
+                                                          .toString(),
+                                                  style: const TextStyle(
+                                                    color: Colors.black,
+                                                  ),
+                                                ),
+                                              ])),
+                                              InkWell(
+                                                onTap: () {
+                                                  _showBottomSheet(
+                                                      context,
+                                                      filterActiveCustomerList[
+                                                          index]);
+                                                },
+                                                child: Icon(
+                                                    Icons.add_chart_outlined),
                                               ),
                                             ],
                                           ),
                                           RichText(
                                               text: TextSpan(children: [
-                                                const TextSpan(
-                                                  text: 'Monthly Charges: ',
-                                                  style: TextStyle(
-                                                      color: Colors.black,
-                                                      fontWeight: FontWeight.bold),
-                                                ),
-                                                TextSpan(
-                                                  text: filterActiveCustomerList[
-                                                  index]
-                                                      .tmthChg
-                                                      .toString(),
-                                                  style: const TextStyle(
-                                                    color: Colors.black,
-                                                  ),
-                                                ),
-                                              ])),
+                                            const TextSpan(
+                                              text: 'Monthly Charges: ',
+                                              style: TextStyle(
+                                                  color: Colors.black,
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                            TextSpan(
+                                              text: filterActiveCustomerList[
+                                                      index]
+                                                  .tmthChg
+                                                  .toString(),
+                                              style: const TextStyle(
+                                                color: Colors.black,
+                                              ),
+                                            ),
+                                          ])),
                                           RichText(
                                               text: TextSpan(children: [
-                                                const TextSpan(
-                                                  text: 'Address1: ',
-                                                  style: TextStyle(
-                                                      color: Colors.black,
-                                                      fontWeight: FontWeight.bold),
-                                                ),
-                                                TextSpan(
-                                                  text: filterActiveCustomerList[
-                                                  index]
-                                                      .tAdd001
-                                                      .toString(),
-                                                  style: const TextStyle(
-                                                    color: Colors.black,
-                                                  ),
-                                                ),
-                                              ])),
+                                            const TextSpan(
+                                              text: 'Address1: ',
+                                              style: TextStyle(
+                                                  color: Colors.black,
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                            TextSpan(
+                                              text: filterActiveCustomerList[
+                                                      index]
+                                                  .tAdd001
+                                                  .toString(),
+                                              style: const TextStyle(
+                                                color: Colors.black,
+                                              ),
+                                            ),
+                                          ])),
                                           RichText(
                                               text: TextSpan(children: [
-                                                const TextSpan(
-                                                  text: 'Email: ',
-                                                  style: TextStyle(
-                                                      color: Colors.black,
-                                                      fontWeight: FontWeight.bold),
-                                                ),
-                                                TextSpan(
-                                                  text: filterActiveCustomerList[
-                                                  index]
-                                                      .tEmlAdd
-                                                      .toString(),
-                                                  style: const TextStyle(
-                                                    color: Colors.black,
-                                                  ),
-                                                ),
-                                              ])),
+                                            const TextSpan(
+                                              text: 'Email: ',
+                                              style: TextStyle(
+                                                  color: Colors.black,
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                            TextSpan(
+                                              text: filterActiveCustomerList[
+                                                      index]
+                                                  .tEmlAdd
+                                                  .toString(),
+                                              style: const TextStyle(
+                                                color: Colors.black,
+                                              ),
+                                            ),
+                                          ])),
                                           RichText(
                                               text: TextSpan(children: [
-                                                const TextSpan(
-                                                  text: 'IP: ',
-                                                  style: TextStyle(
-                                                      color: Colors.black,
-                                                      fontWeight: FontWeight.bold),
-                                                ),
-                                                TextSpan(
-                                                  text: filterActiveCustomerList[
-                                                  index]
-                                                      .tSrvIp
-                                                      .toString(),
-                                                  style: const TextStyle(
-                                                    color: Colors.black,
-                                                  ),
-                                                ),
-                                              ])),
+                                            const TextSpan(
+                                              text: 'IP: ',
+                                              style: TextStyle(
+                                                  color: Colors.black,
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                            TextSpan(
+                                              text: filterActiveCustomerList[
+                                                      index]
+                                                  .tSrvIp
+                                                  .toString(),
+                                              style: const TextStyle(
+                                                color: Colors.black,
+                                              ),
+                                            ),
+                                          ])),
                                           RichText(
                                               text: TextSpan(children: [
-                                                const TextSpan(
-                                                  text: 'Shops: ',
-                                                  style: TextStyle(
-                                                      color: Colors.black,
-                                                      fontWeight: FontWeight.bold),
-                                                ),
-                                                TextSpan(
-                                                  text: filterActiveCustomerList[
-                                                  index]
-                                                      .tShpNum
-                                                      .toString(),
-                                                  style: const TextStyle(
-                                                    color: Colors.black,
-                                                  ),
-                                                ),
-                                              ])),
-
+                                            const TextSpan(
+                                              text: 'Shops: ',
+                                              style: TextStyle(
+                                                  color: Colors.black,
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                            TextSpan(
+                                              text: filterActiveCustomerList[
+                                                      index]
+                                                  .tShpNum
+                                                  .toString(),
+                                              style: const TextStyle(
+                                                color: Colors.black,
+                                              ),
+                                            ),
+                                          ])),
                                         ],
                                       ),
                                     ),
@@ -255,6 +243,40 @@ class _CustomerCollectionScreenState extends State<CustomerCollectionScreen> {
       ),
     );
   }
+
+  void _showBottomSheet(
+      BuildContext context, GetActiveCustomersModel customer) {
+    showModalBottomSheet(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+      context: context,
+      builder: (context) {
+        return Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 15.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              SizedBox(
+                height: 20,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  ElevatedButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                        _showDialog(context, customer);
+                      },
+                      child: Text('Update Collection')),
+                  ElevatedButton(onPressed: () {}, child: Text('Pdf')),
+                ],
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
   void _showDialog(BuildContext context, GetActiveCustomersModel customer) {
     var _width = MediaQuery.of(context).size.width;
     var _height = MediaQuery.of(context).size.height;
@@ -277,7 +299,7 @@ class _CustomerCollectionScreenState extends State<CustomerCollectionScreen> {
       }
     }
 
-    void _takePicture(StateSetter setState) async {
+    void _takePictureFromGallery(StateSetter setState) async {
       final picker = ImagePicker();
       final pickedFile = await picker.pickImage(source: ImageSource.gallery);
 
@@ -288,299 +310,352 @@ class _CustomerCollectionScreenState extends State<CustomerCollectionScreen> {
       }
     }
 
-    void _viewFullScreenImage(File image) {
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => FullScreenImage(image: image)),
+    void _takePictureFromCamera(StateSetter setState) async {
+      final picker = ImagePicker();
+      final pickedFile = await picker.pickImage(source: ImageSource.camera);
+
+      if (pickedFile != null) {
+        setState(() {
+          _localImage = File(pickedFile.path);
+        });
+      }
+    }
+
+    Future<void> _showDialogeCameraAndGallery(
+        BuildContext context, StateSetter setState) async {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Choose an option'),
+            actions: <Widget>[
+              InkWell(
+                onTap: () {
+                  _takePictureFromCamera(setState);
+                  Navigator.of(context).pop();
+                },
+                child: Container(
+                  height: _height * 0.04,
+                  child: Image.asset('assets/camera.png'),
+                ),
+              ),
+              SizedBox(
+                width: 10,
+              ),
+              InkWell(
+                onTap: () {
+                  _takePictureFromGallery(setState);
+                  Navigator.of(context).pop();
+                },
+                child: Container(
+                  height: _height * 0.04,
+                  child: Image.asset('assets/gallery.png'),
+                ),
+              )
+            ],
+          );
+        },
       );
     }
 
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        return StatefulBuilder(
-          builder: (context, setState) {
-            return AlertDialog(
-              title: Text('Update Collection Status', style: TextStyle(fontSize: 16)),
-              content: Stack(
-                children: [
-                  Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          InkWell(
-                            onTap: _localImage != null
-                                ? () => _viewFullScreenImage(_localImage!)
-                                : null,
-                            child: Container(
+        return SingleChildScrollView(
+          child: StatefulBuilder(
+            builder: (context, setState) {
+              return AlertDialog(
+                title: Text('Update Collection Status',
+                    style: TextStyle(fontSize: 16)),
+                content: Stack(
+                  children: [
+                    Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Container(
                               height: 100,
                               width: 100,
                               decoration: BoxDecoration(
                                 border: Border.all(color: Colors.black),
-                                borderRadius: BorderRadius.circular(8),
+                                borderRadius: BorderRadius.circular(5),
                               ),
                               child: _localImage == null
                                   ? const Center(child: Text(""))
-                                  : Image.file(
-                                _localImage!,
-                                fit: BoxFit.cover,
-                              ),
+                                  : ClipRRect(
+                                borderRadius: BorderRadius.circular(5),
+                                    child: Image.file(
+                                        _localImage!,
+                                        fit: BoxFit.cover,
+                                      ),
+                                  ),
                             ),
-                          ),
-                          const SizedBox(width: 10),
-                          InkWell(
-                            onTap: () => _takePicture(setState),
-                            child: Container(
-                              width: 100,
-                              height: 100,
-                              decoration: BoxDecoration(
-                                border: Border.all(color: Colors.black),
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              child: const Align(
-                                alignment: Alignment.center,
-                                child: Icon(
-                                  Icons.add,
-                                  size: 40,
-                                  color: Colors.red,
+                            const SizedBox(width: 10),
+                            InkWell(
+                              onTap: () {
+                                _showDialogeCameraAndGallery(context, setState);
+                              },
+                              child: Container(
+                                width: 100,
+                                height: 100,
+                                decoration: BoxDecoration(
+                                  border: Border.all(color: Colors.black),
+                                  borderRadius: BorderRadius.circular(5),
                                 ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: 5),
-                      InkWell(
-                        onTap: () => _selectDate(context, setState),
-                        child: Row(
-                          children: [
-                            Icon(Icons.calendar_today, color: Colors.blue),
-                            SizedBox(width: 8),
-                            Text(
-                              "${selectedDate.toLocal()}".split(' ')[0],
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 16,
+                                child: const Align(
+                                  alignment: Alignment.center,
+                                  child: Icon(
+                                    Icons.add,
+                                    size: 40,
+                                    color: Colors.red,
+                                  ),
+                                ),
                               ),
                             ),
                           ],
                         ),
-                      ),
-                      SizedBox(height: 10),
-                      RichText(
-                        text: TextSpan(children: [
-                          const TextSpan(
-                            text: 'Name: ',
-                            style: TextStyle(
-                                color: Colors.black, fontWeight: FontWeight.bold),
+                        SizedBox(height: 5),
+                        InkWell(
+                          onTap: () => _selectDate(context, setState),
+                          child: Row(
+                            children: [
+                              Icon(Icons.calendar_today, color: Colors.blue),
+                              SizedBox(width: 8),
+                              Text(
+                                "${selectedDate.toLocal()}".split(' ')[0],
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16,
+                                ),
+                              ),
+                            ],
                           ),
-                          TextSpan(
-                            text: customer.tCstDsc.toString(),
-                            style: const TextStyle(
-                              color: Colors.black,
+                        ),
+                        SizedBox(height: 10),
+                        RichText(
+                          text: TextSpan(children: [
+                            const TextSpan(
+                              text: 'Name: ',
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold),
                             ),
-                          ),
-                        ]),
-                      ),
-                      RichText(
-                        text: TextSpan(children: [
-                          const TextSpan(
-                            text: 'Server Charges: ',
-                            style: TextStyle(
-                                color: Colors.black, fontWeight: FontWeight.bold),
-                          ),
-                          TextSpan(
-                            text: customer.tsrvchg.toString(),
-                            style: const TextStyle(
-                              color: Colors.black,
+                            TextSpan(
+                              text: customer.tCstDsc.toString(),
+                              style: const TextStyle(
+                                color: Colors.black,
+                              ),
                             ),
-                          ),
-                        ]),
-                      ),
-                      RichText(
-                        text: TextSpan(children: [
-                          const TextSpan(
-                            text: 'Advance Charges: ',
-                            style: TextStyle(
-                                color: Colors.black, fontWeight: FontWeight.bold),
-                          ),
-                          TextSpan(
-                            text: customer.tadvchg.toString(),
-                            style: const TextStyle(
-                              color: Colors.black,
+                          ]),
+                        ),
+                        RichText(
+                          text: TextSpan(children: [
+                            const TextSpan(
+                              text: 'Server Charges: ',
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold),
                             ),
-                          ),
-                        ]),
-                      ),
-                      RichText(
-                        text: TextSpan(children: [
-                          const TextSpan(
-                            text: 'Sms Charges: ',
-                            style: TextStyle(
-                                color: Colors.black, fontWeight: FontWeight.bold),
-                          ),
-                          TextSpan(
-                            text: customer.tsmschg.toString(),
-                            style: const TextStyle(
-                              color: Colors.black,
+                            TextSpan(
+                              text: customer.tsrvchg.toString(),
+                              style: const TextStyle(
+                                color: Colors.black,
+                              ),
                             ),
-                          ),
-                        ]),
-                      ),
-                      RichText(
-                        text: TextSpan(children: [
-                          const TextSpan(
-                            text: 'Pso Charges: ',
-                            style: TextStyle(
-                                color: Colors.black, fontWeight: FontWeight.bold),
-                          ),
-                          TextSpan(
-                            text: customer.tposchg.toString(),
-                            style: const TextStyle(
-                              color: Colors.black,
+                          ]),
+                        ),
+                        RichText(
+                          text: TextSpan(children: [
+                            const TextSpan(
+                              text: 'Advance Charges: ',
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold),
                             ),
-                          ),
-                        ]),
-                      ),
-                      RichText(
-                        text: TextSpan(children: [
-                          const TextSpan(
-                            text: 'Monthly Charges: ',
-                            style: TextStyle(
-                                color: Colors.black, fontWeight: FontWeight.bold),
-                          ),
-                          TextSpan(
-                            text: customer.tmthChg.toString(),
-                            style: const TextStyle(
-                              color: Colors.black,
+                            TextSpan(
+                              text: customer.tadvchg.toString(),
+                              style: const TextStyle(
+                                color: Colors.black,
+                              ),
                             ),
-                          ),
-                        ]),
-                      ),
-                      RichText(
-                        text: TextSpan(children: [
-                          const TextSpan(
-                            text: 'Total Charges: ',
-                            style: TextStyle(
-                                color: Colors.black, fontWeight: FontWeight.bold),
-                          ),
-                          TextSpan(
-                            text: customer.ttotamt.toString(),
-                            style: const TextStyle(
-                              color: Colors.black,
+                          ]),
+                        ),
+                        RichText(
+                          text: TextSpan(children: [
+                            const TextSpan(
+                              text: 'Sms Charges: ',
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold),
                             ),
+                            TextSpan(
+                              text: customer.tsmschg.toString(),
+                              style: const TextStyle(
+                                color: Colors.black,
+                              ),
+                            ),
+                          ]),
+                        ),
+                        RichText(
+                          text: TextSpan(children: [
+                            const TextSpan(
+                              text: 'Pso Charges: ',
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                            TextSpan(
+                              text: customer.tposchg.toString(),
+                              style: const TextStyle(
+                                color: Colors.black,
+                              ),
+                            ),
+                          ]),
+                        ),
+                        RichText(
+                          text: TextSpan(children: [
+                            const TextSpan(
+                              text: 'Monthly Charges: ',
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                            TextSpan(
+                              text: customer.tmthChg.toString(),
+                              style: const TextStyle(
+                                color: Colors.black,
+                              ),
+                            ),
+                          ]),
+                        ),
+                        RichText(
+                          text: TextSpan(children: [
+                            const TextSpan(
+                              text: 'Total Charges: ',
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                            TextSpan(
+                              text: customer.ttotamt.toString(),
+                              style: const TextStyle(
+                                color: Colors.black,
+                              ),
+                            ),
+                          ]),
+                        ),
+                        SizedBox(height: 5),
+                        Container(
+                          height: _height * 0.06,
+                          child: TextField(
+                            controller: _amountController,
+                            decoration: InputDecoration(
+                                labelText: 'Enter Collection Amount',
+                                border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(3))),
                           ),
-                        ]),
-                      ),
-                      SizedBox(height: 5),
-                      Container(
-                        height: _height * 0.05,
-                        child: TextField(
-                          controller: _amountController,
-                          decoration: InputDecoration(
-                              labelText: 'Enter Collection Amount',
+                        ),
+                        SizedBox(height: 5),
+                        Container(
+                          height: _height * 0.06,
+                          child: TextField(
+                            controller: _remarksController,
+                            decoration: InputDecoration(
+                                labelText: 'Remarks',
+                                border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(3))),
+                          ),
+                        ),
+                        SizedBox(height: 5),
+                        Container(
+                          height: _height * 0.06,
+                          child: DropdownButtonFormField<String>(
+                            value: SelectBank,
+                            onChanged: (newValue) {
+                              setState(() {
+                                SelectBank = newValue;
+                              });
+                            },
+                            decoration: InputDecoration(
+                              labelText: "Bank",
                               border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(3))),
-                        ),
-                      ),
-                      SizedBox(height: 5),
-                      Container(
-                        height: _height * 0.05,
-                        child: TextField(
-                          controller: _remarksController,
-                          decoration: InputDecoration(
-                              labelText: 'Remarks',
-                              border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(3))),
-                        ),
-                      ),
-                      SizedBox(height: 5),
-                      Container(
-                        height: _height * 0.05,
-                        child: DropdownButtonFormField<String>(
-                          value: SelectBank,
-                          onChanged: (newValue) {
-                            setState(() {
-                              SelectBank = newValue;
-                            });
-                          },
-                          decoration: InputDecoration(
-                            labelText: "Bank",
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(3),
+                                borderRadius: BorderRadius.circular(3),
+                              ),
                             ),
+                            items: _getActiveBankList.map((collector) {
+                                  return DropdownMenuItem<String>(
+                                    value: collector.tbnkid ?? '',
+                                    child: Text(collector.tbnkdsc ?? ''),
+                                  );
+                                }).toList() ??
+                                [],
                           ),
-                          items: _getActiveBankList.map((collector) {
-                            return DropdownMenuItem<String>(
-                              value: collector.tbnkid ?? '',
-                              child: Text(collector.tbnkdsc ?? ''),
-                            );
-                          }).toList() ?? [],
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
+                  ],
+                ),
+                actions: [
+                  TextButton(
+                    child: Text('Cancel'),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                  TextButton(
+                    child: Text('Submit'),
+                    onPressed: () {
+                      // Handle submit logic here
+                      Navigator.of(context).pop();
+                    },
                   ),
                 ],
-              ),
-              actions: [
-                TextButton(
-                  child: Text('Cancel'),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                ),
-                TextButton(
-                  child: Text('Submit'),
-                  onPressed: () {
-                    // Handle submit logic here
-                    Navigator.of(context).pop();
-                  },
-                ),
-              ],
-            );
-          },
+              );
+            },
+          ),
         );
       },
     );
   }
 
-
-
-
-  Future get_ActiveCustomers() async {
-    var response = await http.post(Uri.parse(getActiveCust));
-    var result = jsonDecode(response.body);
+  Future<void> get_ActiveCustomers() async {
+    filterActiveCustomerList.clear();
+    var response = await http.get(Uri.parse(getActiveCust));
     if (response.statusCode == 200) {
-      _getActiveCustomerList.clear();
-      for (Map i in result) {
-        _getActiveCustomerList.add(GetActiveCustomersModel.fromJson(i));
-      }
+      var jsonData = jsonDecode(response.body);
+      _getActiveCustomerList = List<GetActiveCustomersModel>.from(
+          jsonData.map((model) => GetActiveCustomersModel.fromJson(model)));
       setState(() {
-        filterActiveCustomerList = List.from(_getActiveCustomerList);
+        filterActiveCustomerList = _getActiveCustomerList;
       });
-    }
-  }
-  Future get_ActiveBank() async {
-    var response = await http.post(Uri.parse(getActiveBank));
-    var result = jsonDecode(response.body);
-    if (response.statusCode == 200) {
-      _getActiveBankList.clear();
-      for (Map i in result) {
-        _getActiveBankList.add(GetActiveBank.fromJson(i));
-      }
-      setState(() {});
+    } else {
+      throw Exception('Failed to load data');
     }
   }
 
-  filterActiveCustomers(String query) {
+  Future<void> get_ActiveBank() async {
+    var response = await http.get(Uri.parse(getActiveBank));
+    if (response.statusCode == 200) {
+      var jsonData = jsonDecode(response.body);
+      _getActiveBankList = List<GetActiveBank>.from(
+          jsonData.map((model) => GetActiveBank.fromJson(model)));
+    } else {
+      throw Exception('Failed to load data');
+    }
+  }
+
+  void filterActiveCustomers(String query) {
+    List<GetActiveCustomersModel> filteredList = [];
+    for (var customer in _getActiveCustomerList) {
+      if (customer.tCstDsc!.toLowerCase().contains(query.toLowerCase())) {
+        filteredList.add(customer);
+      }
+    }
     setState(() {
-      filterActiveCustomerList = _getActiveCustomerList
-          .where((element) =>
-              element.tCstDsc!.toLowerCase().contains(query.toLowerCase()))
-          .toList();
+      filterActiveCustomerList = filteredList;
     });
   }
 }

@@ -120,53 +120,43 @@ class _AddCustomersState extends State<AddCustomers> {
                   child: Column(
                     // crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // const Text(
-                      //   "Fill the Fields",
-                      //   style: TextStyle(fontSize: 25),
-                      // ),
-                      // const SizedBox(
-                      //   height: 10,
-                      // ),
-                      // Row(
-                      //   mainAxisAlignment: MainAxisAlignment.center,
-                      //   children: [
-                      //     Container(
-                      //       height: 100,
-                      //       width: 100,
-                      //       decoration: BoxDecoration(
-                      //           border: Border.all(color: Colors.black),
-                      //           borderRadius: BorderRadius.circular(8)),
-                      //       // child: _image == null
-                      //       //     ? Image.network(
-                      //       //   "https://crystalsolutions.com.pk/khan_j/itemimage//${widget.itemModel.tItmPic.toString()}",
-                      //       //   fit: BoxFit.fill,
-                      //       // )
-                      //       //     : Image.file(
-                      //       //   _image!,
-                      //       //   fit: BoxFit.cover,
-                      //       // )
-                      //     ),
-                      //     const SizedBox(
-                      //       width: 10,
-                      //     ),
-                      //     InkWell(
-                      //       onTap: _takePicture,
-                      //       child: Container(
-                      //         height: 100,
-                      //         width: 100,
-                      //         decoration: BoxDecoration(
-                      //           borderRadius: BorderRadius.circular(8),
-                      //           border: Border.all(color: Colors.black),
-                      //         ),
-                      //         child: const Icon(
-                      //           Icons.add,
-                      //           color: Colors.red,
-                      //           size: 45,
-                      //         ),
-                      //       ),
-                      //     )
-                      //   ],
-                      // ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Container(
+                            height: 100,
+                            width: 100,
+                            decoration: BoxDecoration(
+                                border: Border.all(color: Colors.black),
+                                borderRadius: BorderRadius.circular(8)),
+                            child: _image == null
+                                ? const Center(child: Text(""))
+                                : Image.file(
+                              _image!,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          InkWell(
+                            onTap: _takePicture,
+                            child: Container(
+                              height: 100,
+                              width: 100,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8),
+                                border: Border.all(color: Colors.black),
+                              ),
+                              child: const Icon(
+                                Icons.add,
+                                color: Colors.red,
+                                size: 45,
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
                       SizedBox(
                         height: 10,
                       ),
@@ -605,79 +595,49 @@ class _AddCustomersState extends State<AddCustomers> {
     }
   }
 
-  // Future post_addCust() async {
-  //   var request = http.MultipartRequest('POST',
-  //       Uri.parse(addCust));
-  //   request.fields['FColId'] = _collectorController.text.toString();
-  //   request.fields['FCstDsc'] = _description.text.toString();
-  //   request.fields['FCstSts'] = 'Yes';
-  //   request.fields['FCntPer'] = _nameController.text.toString();
-  //   request.fields['FPhnNum'] = _phoneController.toString();
-  //   request.fields['FMobNum'] = _mobileController.text.toString();
-  //   request.fields['FAdd001'] = _address1Controller.text.toString();
-  //   request.fields['FAdd002'] = _address2Controller.text.toString();
-  //   request.fields['FEmlAdd'] = _emailController.text.toString();
-  //   request.fields['FShpNum'] = _shopController.text.toString();
-  //   request.fields['FMthChg'] = _monthlyChargesController.text.toString();
-  //   request.fields['FRefId'] = reference.toString();
-  //   request.fields['FTypId'] = _typeController.text.toString();
-  //   request.fields['FCtyId'] = _cityController.text.toString();
-  //   request.fields['FLatVal'] = _latitudeController.text.toString();
-  //   request.fields['FLngVal'] = _longitudeController.text.toString();
-  //   request.fields['FSrvIp'] = _ipController.text.toString();
-  //
-  //   // if (_image != null) {
-  //   //   var picture = await http.MultipartFile.fromPath('pic', _image!.path);
-  //   //   request.files.add(picture);
-  //   // }
-  //
-  //   final response = await http.Response.fromStream(await request.send());
-  //
-  //   var result = jsonDecode(response.body.toString());
-  //
-  //
-  //   if (result["error"] == 200) {
-  //     print(result["message"]);
-  //     Cosmos.snackBarToast(context, result["message"], 'ok', 2);
-  //     Navigator.pop(context);
-  //     Navigator.pop(context);
-  //   } else {
-  //     print(result["error"]);
-  //     Cosmos.snackBarToast(context, result["message"], 'ok', 2);
-  //   }
-  // }
   Future post_addCust() async {
-    var response = await http.post(Uri.parse(addCust), body: {
-      'FColId': SelectedCollector.toString(),
-      'FCstDsc': _description.text,
-      'FCstSts': 'Yes',
-      'FCntPer': _cntPersonController.text,
-      'FPhnNum': _phoneController.text,
-      'FMobNum': _mobileController.text,
-      'FAdd001': _address1Controller.text,
-      'FAdd002': _address2Controller.text,
-      'FEmlAdd': _emailController.text,
-      'FShpNum': _shopController.text,
-      'FMthChg': _monthlyChargesController.text.isEmpty ? '0' : _monthlyChargesController.text,
-      'FRefId': SelectedReference.toString(),
-      'FTypId': SelectedType.toString(),
-      'FCtyId': selectedCity.toString(),
-      'FLatVal': _latitudeController.text,
-      'FLngVal': _longitudeController.text,
-      'FSrvIp': _ipController.text,
-      'FSrvChg': _serverChargesController.text.isEmpty ? '0' : _serverChargesController.text,
-      'FSmsChg': _smsChargesController.text.isEmpty ? '0' : _smsChargesController.text,
-      'FAdvChg': _advanceChargesController.text.isEmpty ? '0' : _advanceChargesController.text,
-      'FPosChg': _posChargesController.text.isEmpty ? '0' : _posChargesController.text,
-    });
-    var result = jsonDecode(response.body);
-    if (result['error'] == 200) {
+    var request = http.MultipartRequest('POST',
+        Uri.parse(addCust));
+    request.fields['FColId'] = SelectedCollector.toString();
+    request.fields['FCstDsc'] = _description.text.toString();
+    request.fields['FCstSts'] = 'Yes';
+    request.fields['FCntPer'] = _cntPersonController.text.toString();
+    request.fields['FPhnNum'] = _phoneController.text.toString();
+    request.fields['FMobNum'] = _mobileController.text.toString();
+    request.fields['FAdd001'] = _address1Controller.text.toString();
+    request.fields['FAdd002'] = _address2Controller.text.toString();
+    request.fields['FEmlAdd'] = _emailController.text.toString();
+    request.fields['FShpNum'] = _shopController.text.toString();
+    request.fields['FMthChg'] = _monthlyChargesController.text.isEmpty ? '0' : _monthlyChargesController.text;
+    request.fields['FRefId'] = SelectedReference.toString();
+    request.fields['FTypId'] = SelectedType.toString();
+    request.fields['FCtyId'] = selectedCity.toString();
+    request.fields['FLatVal'] = _latitudeController.text.toString();
+    request.fields['FLngVal'] = _longitudeController.text.toString();
+    request.fields['FSrvIp'] = _ipController.text.toString();
+    request.fields['FSrvChg']= _serverChargesController.text.isEmpty ? '0' : _serverChargesController.text;
+    request.fields['FSmsChg'] = _smsChargesController.text.isEmpty ? '0' : _smsChargesController.text;
+    request.fields['FAdvChg'] = _advanceChargesController.text.isEmpty ? '0' : _advanceChargesController.text;
+    request.fields['FPosChg'] = _posChargesController.text.isEmpty ? '0' : _posChargesController.text;
+
+    if (_image != null) {
+      var picture = await http.MultipartFile.fromPath('FCstImg', _image!.path);
+      request.files.add(picture);
+    }
+
+    final response = await http.Response.fromStream(await request.send());
+
+    var result = jsonDecode(response.body.toString());
+
+
+    if (result["error"] == 200) {
+      print(result["message"]);
       Fluttertoast.showToast(msg: result['message']);
       Navigator.pop(context);
       Navigator.pop(context);
     } else {
+      print(result["error"]);
       Fluttertoast.showToast(msg: result['message']);
-      print(result['message']);
       Navigator.pop(context);
     }
   }

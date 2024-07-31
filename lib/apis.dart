@@ -1,6 +1,8 @@
+String baseUrl = 'https://crystalsolutions.com.pk/csnew';
 
 
 String login = '$baseUrl/login.php';
+
 
 String getUsers = '$baseUrl/getUsers.php';
 String addUser = '$baseUrl/addUser.php';
@@ -30,12 +32,10 @@ String getCol = '$baseUrl/getCol.php';
 String updateCol = '$baseUrl/updateCol.php';
 
 
-
 String getCust = '$baseUrl/getCust.php';
 String getActiveCust = '$baseUrl/getActiveCust.php';
 String addCust = '$baseUrl/addCust.php';
 String updateCust = '$baseUrl/updateCust.php';
-
 
 
 String getExp = '$baseUrl/getExp.php';
@@ -54,7 +54,6 @@ String getDesignation = '$baseUrl/getDesignation.php';
 String getActiveDesignation = '$baseUrl/getActiveDesignation.php';
 String addDesignation = '$baseUrl/addDesignation.php';
 String updateDesignation = '$baseUrl/updateDesignation.php';
-
 
 
 String getEmployee = '$baseUrl/getEmployee.php';

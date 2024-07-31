@@ -40,7 +40,9 @@ class _AddEmployeeState extends State<AddEmployee> {
   // String? SelectedCollector;
   // String? SelectedReference;
   // String? SelectedType;
-  File? _image;
+  File? _frontCnic;
+  File? backCnic;
+  File? _cvPic;
 
   // String? dropDown_selectArea;
   // String? dropDown_collector;
@@ -113,56 +115,6 @@ class _AddEmployeeState extends State<AddEmployee> {
                   child: Column(
                     // crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // const Text(
-                      //   "Fill the Fields",
-                      //   style: TextStyle(fontSize: 25),
-                      // ),
-                      // const SizedBox(
-                      //   height: 10,
-                      // ),
-                      // Row(
-                      //   mainAxisAlignment: MainAxisAlignment.center,
-                      //   children: [
-                      //     Container(
-                      //       height: 100,
-                      //       width: 100,
-                      //       decoration: BoxDecoration(
-                      //           border: Border.all(color: Colors.black),
-                      //           borderRadius: BorderRadius.circular(8)),
-                      //       // child: _image == null
-                      //       //     ? Image.network(
-                      //       //   "https://crystalsolutions.com.pk/khan_j/itemimage//${widget.itemModel.tItmPic.toString()}",
-                      //       //   fit: BoxFit.fill,
-                      //       // )
-                      //       //     : Image.file(
-                      //       //   _image!,
-                      //       //   fit: BoxFit.cover,
-                      //       // )
-                      //     ),
-                      //     const SizedBox(
-                      //       width: 10,
-                      //     ),
-                      //     InkWell(
-                      //       onTap: _takePicture,
-                      //       child: Container(
-                      //         height: 100,
-                      //         width: 100,
-                      //         decoration: BoxDecoration(
-                      //           borderRadius: BorderRadius.circular(8),
-                      //           border: Border.all(color: Colors.black),
-                      //         ),
-                      //         child: const Icon(
-                      //           Icons.add,
-                      //           color: Colors.red,
-                      //           size: 45,
-                      //         ),
-                      //       ),
-                      //     )
-                      //   ],
-                      // ),
-                      SizedBox(
-                        height: 10,
-                      ),
                       Container(
                         height: _height / 16,
                         width: _width / 0.3,
@@ -392,11 +344,101 @@ class _AddEmployeeState extends State<AddEmployee> {
                                   child: Text(city.tdsgdsc ?? ''),
                                 );
                               }).toList() ??
-                            [],
+                              [],
                         ),
                       ),
                       const SizedBox(
                         height: 5,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            InkWell(
+                              onTap: _showDialogeForFrontCnic,
+                              child: Container(
+                                height: 100,
+                                width: 150,
+                                decoration: BoxDecoration(
+                                    border: Border.all(color: Colors.black),
+                                    borderRadius: BorderRadius.circular(5)),
+                                child: _frontCnic == null
+                                    ? Center(
+                                    child: ClipRRect(
+                                        borderRadius:
+                                        BorderRadius.circular(5),
+                                        child: Image.asset(
+                                          'assets/fronCnic.jpg',
+                                          height: 200,
+                                          fit: BoxFit.cover,
+                                        )))
+                                    : ClipRRect(
+                                  borderRadius: BorderRadius.circular(5),
+                                  child: Image.file(
+                                    _frontCnic!,
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            InkWell(
+                              onTap: _showDialogeForBackCnic,
+                              child: Container(
+                                height: 100,
+                                width: 150,
+                                decoration: BoxDecoration(
+                                    border: Border.all(color: Colors.black),
+                                    borderRadius: BorderRadius.circular(5)),
+                                child: backCnic == null
+                                    ? Center(
+                                    child: ClipRRect(
+                                        borderRadius:
+                                        BorderRadius.circular(5),
+                                        child: Image.asset(
+                                          'assets/backCnic.jpg',
+                                          height: 200,
+                                          fit: BoxFit.cover,
+                                        )))
+                                    : ClipRRect(
+                                  borderRadius: BorderRadius.circular(5),
+                                  child: Image.file(
+                                    backCnic!,
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      InkWell(
+                        onTap: _showDialogeForCv,
+                        child: Container(
+                          height: 100,
+                          width: 150,
+                          decoration: BoxDecoration(
+                              border: Border.all(color: Colors.black),
+                              borderRadius: BorderRadius.circular(5)),
+                          child: _cvPic == null
+                              ?  Center(child: ClipRRect(
+                              borderRadius: BorderRadius.circular(5),
+                              child: Text("")))
+                              : ClipRRect(
+                            borderRadius: BorderRadius.circular(5),
+
+                            child: Image.file(
+                              _cvPic!,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10,
                       ),
                       SizedBox(
                         height: _height / 16,
@@ -427,84 +469,221 @@ class _AddEmployeeState extends State<AddEmployee> {
   }
 
   ///-------------------> Image Picker Function <------------------///
-  void _takePicture() async {
+  void FrontCnic() async {
     final picker = ImagePicker();
     final pickedFile = await picker.pickImage(source: ImageSource.gallery);
 
     if (pickedFile != null) {
       setState(() {
-        _image = File(pickedFile.path);
+        _frontCnic = File(pickedFile.path);
       });
     }
   }
 
-  // Future post_addCust() async {
-  //   var request = http.MultipartRequest('POST',
-  //       Uri.parse(addCust));
-  //   request.fields['FColId'] = _collectorController.text.toString();
-  //   request.fields['FCstDsc'] = _description.text.toString();
-  //   request.fields['FCstSts'] = 'Yes';
-  //   request.fields['FCntPer'] = _nameController.text.toString();
-  //   request.fields['FPhnNum'] = _phoneController.toString();
-  //   request.fields['FMobNum'] = _mobileController.text.toString();
-  //   request.fields['FAdd001'] = _address1Controller.text.toString();
-  //   request.fields['FAdd002'] = _address2Controller.text.toString();
-  //   request.fields['FEmlAdd'] = _emailController.text.toString();
-  //   request.fields['FShpNum'] = _shopController.text.toString();
-  //   request.fields['FMthChg'] = _monthlyChargesController.text.toString();
-  //   request.fields['FRefId'] = reference.toString();
-  //   request.fields['FTypId'] = _typeController.text.toString();
-  //   request.fields['FCtyId'] = _cityController.text.toString();
-  //   request.fields['FLatVal'] = _latitudeController.text.toString();
-  //   request.fields['FLngVal'] = _longitudeController.text.toString();
-  //   request.fields['FSrvIp'] = _ipController.text.toString();
-  //
-  //   // if (_image != null) {
-  //   //   var picture = await http.MultipartFile.fromPath('pic', _image!.path);
-  //   //   request.files.add(picture);
-  //   // }
-  //
-  //   final response = await http.Response.fromStream(await request.send());
-  //
-  //   var result = jsonDecode(response.body.toString());
-  //
-  //
-  //   if (result["error"] == 200) {
-  //     print(result["message"]);
-  //     Cosmos.snackBarToast(context, result["message"], 'ok', 2);
-  //     Navigator.pop(context);
-  //     Navigator.pop(context);
-  //   } else {
-  //     print(result["error"]);
-  //     Cosmos.snackBarToast(context, result["message"], 'ok', 2);
-  //   }
-  // }
+  void BackCnic() async {
+    final picker = ImagePicker();
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+
+    if (pickedFile != null) {
+      setState(() {
+        backCnic = File(pickedFile.path);
+      });
+    }
+  }
+
+  void CvImage() async {
+    final picker = ImagePicker();
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+
+    if (pickedFile != null) {
+      setState(() {
+        _cvPic = File(pickedFile.path);
+      });
+    }
+  }
+
+  void FrontCnicFromCamera() async {
+    final picker = ImagePicker();
+    final pickedFile = await picker.pickImage(source: ImageSource.camera);
+
+    if (pickedFile != null) {
+      setState(() {
+        _frontCnic = File(pickedFile.path);
+      });
+    }
+  }
+
+  void BackCnicFromCamera() async {
+    final picker = ImagePicker();
+    final pickedFile = await picker.pickImage(source: ImageSource.camera);
+
+    if (pickedFile != null) {
+      setState(() {
+        backCnic = File(pickedFile.path);
+      });
+    }
+  }
+
+  void CvImageFromCamera() async {
+    final picker = ImagePicker();
+    final pickedFile = await picker.pickImage(source: ImageSource.camera);
+
+    if (pickedFile != null) {
+      setState(() {
+        _cvPic = File(pickedFile.path);
+      });
+    }
+  }
+  Future<void> _showDialogeForFrontCnic() async {
+    var _height = MediaQuery.of(context).size.height;
+    var _width = MediaQuery.of(context).size.width;
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Choose an option'),
+          actions: <Widget>[
+            InkWell(
+              onTap: (){
+                FrontCnicFromCamera();
+                Navigator.of(context).pop();
+              },
+              child: Container(
+                height: _height * 0.04,
+                child: Image.asset('assets/camera.png'),
+              ),
+            ),
+            SizedBox(width: 10,),
+            InkWell(
+              onTap: (){
+                FrontCnic();
+                Navigator.of(context).pop();
+              },
+              child: Container(
+                height: _height * 0.04,
+                child: Image.asset('assets/gallery.png'),
+              ),
+            )
+          ],
+        );
+      },
+    );
+  }
+  Future<void> _showDialogeForBackCnic() async {
+    var _height = MediaQuery.of(context).size.height;
+    var _width = MediaQuery.of(context).size.width;
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Choose an option'),
+          actions: <Widget>[
+            InkWell(
+              onTap: (){
+                BackCnicFromCamera();
+                Navigator.of(context).pop();
+              },
+              child: Container(
+                height: _height * 0.04,
+                child: Image.asset('assets/camera.png'),
+              ),
+            ),
+            SizedBox(width: 10,),
+            InkWell(
+              onTap: (){
+                BackCnic();
+                Navigator.of(context).pop();
+              },
+              child: Container(
+                height: _height * 0.04,
+                child: Image.asset('assets/gallery.png'),
+              ),
+            )
+          ],
+        );
+      },
+    );
+  }
+  Future<void> _showDialogeForCv() async {
+    var _height = MediaQuery.of(context).size.height;
+    var _width = MediaQuery.of(context).size.width;
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Choose an option'),
+          actions: <Widget>[
+            InkWell(
+              onTap: (){
+                CvImageFromCamera();
+                Navigator.of(context).pop();
+              },
+              child: Container(
+                height: _height * 0.04,
+                child: Image.asset('assets/camera.png'),
+              ),
+            ),
+            SizedBox(width: 10,),
+            InkWell(
+              onTap: (){
+                CvImage();
+                Navigator.of(context).pop();
+              },
+              child: Container(
+                height: _height * 0.04,
+                child: Image.asset('assets/gallery.png'),
+              ),
+            )
+          ],
+        );
+      },
+    );
+  }
+
+
+
   Future post_addEmployee() async {
-    var response = await http.post(Uri.parse(addEmployee), body: {
-      'FEmpNam': _nameController.text,
-      'FEmpSts': 'Yes',
-      'FFthNam': _fatherNameController.text,
-      'FMobNum': _mobileController.text,
-      'FAdd001': _address1Controller.text,
-      'FAdd002': _address2Controller.text,
-      'FEmlAdd': _emailController.text,
-      'FNicNum': _cnicController.text,
-      'FBnkNam': _bankAccountController.text,
-      'FBnkAcc':
-          _bankAccountNumber.text.isEmpty ? '0' : _bankAccountNumber.text,
-      'FEmpSal': _salaryController.text.isEmpty ? '0' : _salaryController.text,
-      'FDsgId': designationIdDropDown.toString(),
-      'FAccTtl': _accountTitleController.text,
-    });
-    var result = jsonDecode(response.body);
-    if (result['error'] == 200) {
+    var request = http.MultipartRequest('POST', Uri.parse(addEmployee));
+    request.fields['FEmpNam'] = _nameController.text;
+    request.fields['FEmpSts'] = 'Yes';
+    request.fields['FFthNam'] = _fatherNameController.text.toString();
+    request.fields['FMobNum'] = _mobileController.text.toString();
+    request.fields['FAdd001'] = _address1Controller.text.toString();
+    request.fields['FAdd002'] = _address2Controller.text.toString();
+    request.fields['FEmlAdd'] = _emailController.text.toString();
+    request.fields['FNicNum'] = _cnicController.text.toString();
+    request.fields['FBnkNam'] = _bankAccountController.text.toString();
+    request.fields['FBnkAcc'] = _bankAccountNumber.text.toString();
+    request.fields['FEmpSal'] = _salaryController.text.toString();
+    request.fields['FDsgId'] = designationIdDropDown.toString();
+    request.fields['FAccTtl'] = _accountTitleController.text.toString();
+
+    if (_frontCnic != null) {
+      var picture =
+          await http.MultipartFile.fromPath('FCFront', _frontCnic!.path);
+      request.files.add(picture);
+    }
+    if (backCnic != null) {
+      var picture = await http.MultipartFile.fromPath('FCBack', backCnic!.path);
+      request.files.add(picture);
+    }
+    if (_cvPic != null) {
+      var picture = await http.MultipartFile.fromPath('FEmpCv', _cvPic!.path);
+      request.files.add(picture);
+    }
+
+    final response = await http.Response.fromStream(await request.send());
+
+    var result = jsonDecode(response.body.toString());
+
+    if (result["error"] == 200) {
+      print(result["message"]);
       Fluttertoast.showToast(msg: result['message']);
       Navigator.pop(context);
       Navigator.pop(context);
     } else {
+      print(result["error"]);
       Fluttertoast.showToast(msg: result['message']);
-      print(result['message']);
-      Navigator.pop(context);
     }
   }
 }

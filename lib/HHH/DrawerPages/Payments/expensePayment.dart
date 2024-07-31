@@ -92,12 +92,31 @@ class _ExpensePaymentScreenState extends State<ExpensePaymentScreen> {
                                               .toString(),
                                           style: const TextStyle(fontSize: 14),
                                         ),
-                                        InkWell(
-                                            onTap: () {
-                                              _showBottomSheet(context);
-                                            },
-                                            child: Icon(
-                                                Icons.align_vertical_bottom)),
+                                        SizedBox(
+                                          width: 50,
+                                          height: 30,
+                                          child: PopupMenuButton<int>(
+                                            itemBuilder: (context) => [
+                                              PopupMenuItem(
+                                                onTap: () {
+                                                  _showDialog(
+                                                      context,
+                                                      filterActiveExpenseList[
+                                                          index]);
+                                                },
+                                                value: 1,
+                                                child: Text(
+                                                  'Add Expense',
+                                                  style:
+                                                      TextStyle(fontSize: 14),
+                                                ),
+                                              ),
+                                            ],
+                                            offset: const Offset(0, 30),
+                                            color: Colors.white,
+                                            elevation: 2,
+                                          ),
+                                        ),
                                       ],
                                     ),
                                     Text(
@@ -126,10 +145,30 @@ class _ExpensePaymentScreenState extends State<ExpensePaymentScreen> {
     );
   }
 
-  void _showBottomSheet(BuildContext context) {
+  void _showDialog(BuildContext context, GetActiveExpense remarks) {
+    final TextEditingController _remarksConroller = TextEditingController();
+    var _width = MediaQuery.of(context).size.width;
+    var _height = MediaQuery.of(context).size.height;
+    String? SelectBank;
+    DateTime selectedDate = DateTime.now(); // Default date
+    final TextEditingController _amountController = TextEditingController();
     File? _localImage;
 
-    void _takePicture(StateSetter setState) async {
+    Future<void> _selectDate(BuildContext context, StateSetter setState) async {
+      final DateTime? picked = await showDatePicker(
+        context: context,
+        initialDate: selectedDate,
+        firstDate: DateTime(2000),
+        lastDate: DateTime(2101),
+      );
+      if (picked != null && picked != selectedDate) {
+        setState(() {
+          selectedDate = picked;
+        });
+      }
+    }
+
+    void _takePictureFromGallery(StateSetter setState) async {
       final picker = ImagePicker();
       final pickedFile = await picker.pickImage(source: ImageSource.gallery);
 
@@ -139,126 +178,221 @@ class _ExpensePaymentScreenState extends State<ExpensePaymentScreen> {
         });
       }
     }
-    var _height = MediaQuery.of(context).size.height;
-    var _width = MediaQuery.of(context).size.width;
-    showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      builder: (context) {
-        return Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: SingleChildScrollView(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  'Add Expense Details',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+
+    void _takePictureFromCamera(StateSetter setState) async {
+      final picker = ImagePicker();
+      final pickedFile = await picker.pickImage(source: ImageSource.camera);
+
+      if (pickedFile != null) {
+        setState(() {
+          _localImage = File(pickedFile.path);
+        });
+      }
+    }
+
+    Future _showDialogeCameraAndGallery1(StateSetter setState) async {
+      var _height = MediaQuery.of(context).size.height;
+      var _width = MediaQuery.of(context).size.width;
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Choose an option'),
+            actions: <Widget>[
+              InkWell(
+                onTap: () {
+                  _takePictureFromCamera(setState);
+                  Navigator.of(context).pop();
+                },
+                child: Container(
+                  height: _height * 0.04,
+                  child: Image.asset(
+                    'assets/camera.png',
+                  ),
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    InkWell(
-                      child: Container(
-                        height: 100,
-                        width: 100,
-                        decoration: BoxDecoration(
-                          border: Border.all(color: Colors.black),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        child: _localImage == null
-                            ? const Center(child: Text(""))
-                            : Image.file(
-                          _localImage!,
-                          fit: BoxFit.cover,
+              ),
+              SizedBox(
+                width: 10,
+              ),
+              InkWell(
+                onTap: () {
+                  _takePictureFromGallery(setState);
+                  Navigator.of(context).pop();
+                },
+                child: Container(
+                  height: _height * 0.04,
+                  child: Image.asset('assets/gallery.png'),
+                ),
+              ),
+            ],
+          );
+        },
+      );
+    }
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return StatefulBuilder(
+          builder: (context, setState) {
+            return AlertDialog(
+              title: Text('Add Expense',
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+              content: Stack(
+                children: [
+                  Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Container(
+                            height: 100,
+                            width: 100,
+                            decoration: BoxDecoration(
+                              border: Border.all(color: Colors.black),
+                              borderRadius: BorderRadius.circular(5),
+                            ),
+                            child: _localImage == null
+                                ? const Center(child: Text(""))
+                                : ClipRRect(
+                              borderRadius: BorderRadius.circular(5),
+                                  child: Image.file(
+                                      _localImage!,
+                                      fit: BoxFit.cover,
+                                    ),
+                                ),
+                          ),
+                          const SizedBox(width: 10),
+                          InkWell(
+                            onTap: () {
+                              _showDialogeCameraAndGallery1(setState);
+                            },
+                            child: Container(
+                              width: 100,
+                              height: 100,
+                              decoration: BoxDecoration(
+                                border: Border.all(color: Colors.black),
+                                borderRadius: BorderRadius.circular(5),
+                              ),
+                              child: const Align(
+                                alignment: Alignment.center,
+                                child: Icon(
+                                  Icons.add,
+                                  size: 40,
+                                  color: Colors.red,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 5),
+                      InkWell(
+                        onTap: () => _selectDate(context, setState),
+                        child: Row(
+                          children: [
+                            Icon(Icons.calendar_today, color: Colors.blue),
+                            SizedBox(width: 8),
+                            Text(
+                              "${selectedDate.toLocal()}".split(' ')[0],
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                    ),
-                    const SizedBox(width: 10),
-                    InkWell(
-                      onTap: () => _takePicture(setState),
-                      child: Container(
-                        width: 100,
-                        height: 100,
-                        decoration: BoxDecoration(
-                          border: Border.all(color: Colors.black),
-                          borderRadius: BorderRadius.circular(8),
+                      SizedBox(height: 10),
+                      RichText(
+                          text: TextSpan(children: [
+                        TextSpan(
+                          text: 'Dsc: ',
+                          style: TextStyle(
+                              color: Colors.black, fontWeight: FontWeight.bold),
                         ),
-                        child: const Align(
-                          alignment: Alignment.center,
-                          child: Icon(
-                            Icons.add,
-                            size: 40,
-                            color: Colors.red,
+                        TextSpan(
+                          text: remarks.texpdsc.toString(),
+                          style: const TextStyle(
+                            color: Colors.black,
                           ),
                         ),
+                      ])),
+                      SizedBox(
+                        height: 5,
                       ),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 5),
-                Container(
-                  height: _height * 0.05,
-                  child: TextField(
-                    decoration: InputDecoration(
-                      labelText: 'Remarks',
-                      border: OutlineInputBorder(),
-                    ),
-                  ),
-                ),
-                SizedBox(height: 5),
-                Container(
-                  height: _height * 0.05,
-                  child: DropdownButtonFormField<String>(
-                    value: SelectBank,
-                    onChanged: (newValue) {
-                      setState(() {
-                        SelectBank = newValue;
-                      });
-                    },
-                    decoration: InputDecoration(
-                      labelText: "Bank",
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(3),
+                      Container(
+                        height: _height * 0.05,
+                        child: TextField(
+                          controller: _amountController,
+                          decoration: InputDecoration(
+                              labelText: 'Add Amount',
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(3))),
+                        ),
                       ),
-                    ),
-                    items: _getActiveBankList.map((collector) {
-                          return DropdownMenuItem<String>(
-                            value: collector.tbnkid ?? '',
-                            child: Text(collector.tbnkdsc ?? ''),
-                          );
-                        }).toList() ??
-                        [],
+                      SizedBox(height: 5),
+                      Container(
+                        height: _height * 0.05,
+                        child: DropdownButtonFormField<String>(
+                          value: SelectBank,
+                          onChanged: (newValue) {
+                            setState(() {
+                              SelectBank = newValue;
+                            });
+                          },
+                          decoration: InputDecoration(
+                            labelText: "Bank",
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(3),
+                            ),
+                          ),
+                          items: _getActiveBankList.map((collector) {
+                                return DropdownMenuItem<String>(
+                                  value: collector.tbnkid ?? '',
+                                  child: Text(collector.tbnkdsc ?? ''),
+                                );
+                              }).toList() ??
+                              [],
+                        ),
+                      ),
+                      SizedBox(height: 5),
+                      Container(
+                        height: _height * 0.05,
+                        child: TextField(
+                          controller: _remarksConroller,
+                          decoration: InputDecoration(
+                              labelText: 'Remarks',
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(3))),
+                        ),
+                      ),
+                    ],
                   ),
-                ),
-                SizedBox(height: 5),
-                Container(
-                  height: _height * 0.05,
-                  child: TextField(
-                    decoration: InputDecoration(
-                      labelText: 'Amount',
-                      border: OutlineInputBorder(),
-                    ),
-                    keyboardType: TextInputType.number,
-                  ),
-                ),
-                SizedBox(height: 5),
-                ElevatedButton(
+                ],
+              ),
+              actions: [
+                TextButton(
+                  child: Text('Cancel'),
                   onPressed: () {
-                    // Handle the save action
-                    Navigator.pop(context);
+                    Navigator.of(context).pop();
                   },
-                  child: Text('Save'),
+                ),
+                TextButton(
+                  child: Text('Submit'),
+                  onPressed: () {
+                    // Handle submit logic here
+                    Navigator.of(context).pop();
+                  },
                 ),
               ],
-            ),
-          ),
+            );
+          },
         );
       },
     );
   }
-
-
 
   Future get_ActiveExp() async {
     var response = await http.post(Uri.parse(getActiveExp));
