@@ -7,7 +7,9 @@ import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 import '../../../Model/Customers/GetActiveCustomersModel.dart';
 import '../../../cosmos.dart';
+import '../Customers/Customer PDF/pdf_file_handle.dart';
 import 'Full Screen Image/fullScreenImage.dart';
+import 'Reciept Pdf/customerReciept_Pdf.dart';
 
 class CustomerCollectionScreen extends StatefulWidget {
   const CustomerCollectionScreen({super.key});
@@ -267,7 +269,10 @@ class _CustomerCollectionScreenState extends State<CustomerCollectionScreen> {
                         _showDialog(context, customer);
                       },
                       child: Text('Update Collection')),
-                  ElevatedButton(onPressed: () {}, child: Text('Pdf')),
+                  ElevatedButton(onPressed: () async{
+                    final pdfFile = await CustomerReciept_PDF.generate(customer);
+                    PdfFileHandle.openFile(pdfFile);
+                  }, child: Text('Pdf')),
                 ],
               ),
             ],

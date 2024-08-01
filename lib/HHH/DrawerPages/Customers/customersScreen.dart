@@ -14,6 +14,8 @@ import '../../../Model/Reference/GetReferenceModel.dart';
 import '../../../Model/Type/GetActiveType.dart';
 import '../../../Model/Type/GetType.dart';
 import '../../../cosmos.dart';
+import 'Customer PDF/customer_pdf.dart';
+import 'Customer PDF/pdf_file_handle.dart';
 
 class GetCustomersScreen extends StatefulWidget {
   const GetCustomersScreen({super.key});
@@ -53,6 +55,18 @@ class _GetCustomersScreenState extends State<GetCustomersScreen> {
         centerTitle: true,
         backgroundColor: Cosmic.app_color,
         iconTheme: IconThemeData(color: Cosmic.white_color),
+        actions: [
+          InkWell(
+            onTap: () async{
+              final pdfFile = await Customer_PDF.generate(filterCustomerList);
+              PdfFileHandle.openFile(pdfFile);
+            },
+            child: Padding(
+              padding: const EdgeInsets.only(right: 10),
+              child: Icon(Icons.picture_as_pdf),
+            ),
+          )
+        ],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {

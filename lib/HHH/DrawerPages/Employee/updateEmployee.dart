@@ -620,14 +620,17 @@ class _UpdateEmployeeState extends State<UpdateEmployee> {
         return AlertDialog(
           title: Text('Choose an option'),
           actions: <Widget>[
-            IconButton(
-              icon: Icon(Icons.phone,
-                  size: _height * 0.04, color: Color(0xff06D001)),
-              onPressed: () {
+            InkWell(
+              onTap: () {
                 FrontCnicFromCamera();
                 Navigator.of(context).pop();
               },
+              child: Container(
+                height: _height * 0.04,
+                child: Image.asset('assets/camera.png'),
+              ),
             ),
+
             SizedBox(
               width: 10,
             ),
@@ -638,7 +641,7 @@ class _UpdateEmployeeState extends State<UpdateEmployee> {
               },
               child: Container(
                 height: _height * 0.04,
-                child: Image.asset('assets/whatsapplogo.png'),
+                child: Image.asset('assets/gallery.png'),
               ),
             )
           ],
@@ -656,14 +659,17 @@ class _UpdateEmployeeState extends State<UpdateEmployee> {
         return AlertDialog(
           title: Text('Choose an option'),
           actions: <Widget>[
-            IconButton(
-              icon: Icon(Icons.phone,
-                  size: _height * 0.04, color: Color(0xff06D001)),
-              onPressed: () {
+            InkWell(
+              onTap: () {
                 BackCnicFromCamera();
                 Navigator.of(context).pop();
               },
+              child: Container(
+                height: _height * 0.04,
+                child: Image.asset('assets/camera.png'),
+              ),
             ),
+
             SizedBox(
               width: 10,
             ),
@@ -674,7 +680,7 @@ class _UpdateEmployeeState extends State<UpdateEmployee> {
               },
               child: Container(
                 height: _height * 0.04,
-                child: Image.asset('assets/whatsapplogo.png'),
+                child: Image.asset('assets/gallery.png'),
               ),
             )
           ],
@@ -692,14 +698,17 @@ class _UpdateEmployeeState extends State<UpdateEmployee> {
         return AlertDialog(
           title: Text('Choose an option'),
           actions: <Widget>[
-            IconButton(
-              icon: Icon(Icons.phone,
-                  size: _height * 0.04, color: Color(0xff06D001)),
-              onPressed: () {
+            InkWell(
+              onTap: () {
                 CvImageFromCamera();
                 Navigator.of(context).pop();
               },
+              child: Container(
+                height: _height * 0.04,
+                child: Image.asset('assets/camera.png'),
+              ),
             ),
+
             SizedBox(
               width: 10,
             ),
@@ -710,7 +719,7 @@ class _UpdateEmployeeState extends State<UpdateEmployee> {
               },
               child: Container(
                 height: _height * 0.04,
-                child: Image.asset('assets/whatsapplogo.png'),
+                child: Image.asset('assets/gallery.png'),
               ),
             )
           ],
