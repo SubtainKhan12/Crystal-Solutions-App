@@ -59,3 +59,9 @@ String getEmployee = '$baseUrl/getEmployee.php';
 String getActiveEmployee = '$baseUrl/getActiveEmployee.php';
 String addEmployee = '$baseUrl/addEmployee.php';
 String updateEmployee = '$baseUrl/updateEmployee.php';
+
+
+String newCollection = '$baseUrl/newCollection.php';
+
+
+String newExp = '$baseUrl/newExp.php';

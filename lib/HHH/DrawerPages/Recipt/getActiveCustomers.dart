@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:crystal_solutions/Model/Bank/GetActiveBank.dart';
 import 'package:crystal_solutions/apis.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 import '../../../Model/Customers/GetActiveCustomersModel.dart';
@@ -25,6 +26,9 @@ class _CustomerCollectionScreenState extends State<CustomerCollectionScreen> {
   List<GetActiveCustomersModel> _getActiveCustomerList = [];
   List<GetActiveCustomersModel> filterActiveCustomerList = [];
   List<GetActiveBank> _getActiveBankList = [];
+  DateTime selectedDate = DateTime.now();
+  String? selectBank;
+  File? _localImage;
 
   @override
   void initState() {
@@ -247,15 +251,16 @@ class _CustomerCollectionScreenState extends State<CustomerCollectionScreen> {
   }
 
   void _showBottomSheet(
-      BuildContext context, GetActiveCustomersModel customer) {
+      BuildContext context, GetActiveCustomersModel getActiveCustomersModel) {
     showModalBottomSheet(
+      showDragHandle: true,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       context: context,
       builder: (context) {
         return Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15.0),
           child: Column(
-            mainAxisSize: MainAxisSize.max,
+            mainAxisSize: MainAxisSize.min,
             children: [
               SizedBox(
                 height: 20,
@@ -266,13 +271,32 @@ class _CustomerCollectionScreenState extends State<CustomerCollectionScreen> {
                   ElevatedButton(
                       onPressed: () {
                         Navigator.pop(context);
-                        _showDialog(context, customer);
+                        _showDialog(context, getActiveCustomersModel);
                       },
-                      child: Text('Update Collection')),
-                  ElevatedButton(onPressed: () async{
-                    final pdfFile = await CustomerReciept_PDF.generate(customer);
-                    PdfFileHandle.openFile(pdfFile);
-                  }, child: Text('Pdf')),
+                      child: Text('Add Collection')),
+                  ElevatedButton(
+                      onPressed: () async {
+                        final pdfFile = await CustomerReciept_PDF.generate(
+                            getActiveCustomersModel);
+                        PdfFileHandle.openFile(pdfFile);
+                      },
+                      child: Text('Pdf')),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  ElevatedButton(
+                      onPressed: () {}, child: Text('Generate Bill')),
+                  ElevatedButton(onPressed: () async {}, child: Text('Ledger')),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  ElevatedButton(onPressed: () {}, child: Text('Complaints')),
+                  ElevatedButton(
+                      onPressed: () async {}, child: Text('Profile')),
                 ],
               ),
             ],
@@ -282,13 +306,10 @@ class _CustomerCollectionScreenState extends State<CustomerCollectionScreen> {
     );
   }
 
-  void _showDialog(BuildContext context, GetActiveCustomersModel customer) {
+  void _showDialog(
+      BuildContext context, GetActiveCustomersModel getActiveCustomersModel) {
     var _width = MediaQuery.of(context).size.width;
     var _height = MediaQuery.of(context).size.height;
-    String? SelectBank;
-    DateTime selectedDate = DateTime.now(); // Default date
-    final TextEditingController _amountController = TextEditingController();
-    File? _localImage;
 
     Future<void> _selectDate(BuildContext context, StateSetter setState) async {
       final DateTime? picked = await showDatePicker(
@@ -370,8 +391,7 @@ class _CustomerCollectionScreenState extends State<CustomerCollectionScreen> {
           child: StatefulBuilder(
             builder: (context, setState) {
               return AlertDialog(
-                title: Text('Update Collection Status',
-                    style: TextStyle(fontSize: 16)),
+                title: Text('Add Collection', style: TextStyle(fontSize: 16)),
                 content: Stack(
                   children: [
                     Column(
@@ -391,12 +411,12 @@ class _CustomerCollectionScreenState extends State<CustomerCollectionScreen> {
                               child: _localImage == null
                                   ? const Center(child: Text(""))
                                   : ClipRRect(
-                                borderRadius: BorderRadius.circular(5),
-                                    child: Image.file(
+                                      borderRadius: BorderRadius.circular(5),
+                                      child: Image.file(
                                         _localImage!,
                                         fit: BoxFit.cover,
                                       ),
-                                  ),
+                                    ),
                             ),
                             const SizedBox(width: 10),
                             InkWell(
@@ -449,7 +469,7 @@ class _CustomerCollectionScreenState extends State<CustomerCollectionScreen> {
                                   fontWeight: FontWeight.bold),
                             ),
                             TextSpan(
-                              text: customer.tCstDsc.toString(),
+                              text: getActiveCustomersModel.tCstDsc.toString(),
                               style: const TextStyle(
                                 color: Colors.black,
                               ),
@@ -465,7 +485,7 @@ class _CustomerCollectionScreenState extends State<CustomerCollectionScreen> {
                                   fontWeight: FontWeight.bold),
                             ),
                             TextSpan(
-                              text: customer.tsrvchg.toString(),
+                              text: getActiveCustomersModel.tsrvchg.toString(),
                               style: const TextStyle(
                                 color: Colors.black,
                               ),
@@ -481,7 +501,7 @@ class _CustomerCollectionScreenState extends State<CustomerCollectionScreen> {
                                   fontWeight: FontWeight.bold),
                             ),
                             TextSpan(
-                              text: customer.tadvchg.toString(),
+                              text: getActiveCustomersModel.tadvchg.toString(),
                               style: const TextStyle(
                                 color: Colors.black,
                               ),
@@ -497,7 +517,7 @@ class _CustomerCollectionScreenState extends State<CustomerCollectionScreen> {
                                   fontWeight: FontWeight.bold),
                             ),
                             TextSpan(
-                              text: customer.tsmschg.toString(),
+                              text: getActiveCustomersModel.tsmschg.toString(),
                               style: const TextStyle(
                                 color: Colors.black,
                               ),
@@ -513,7 +533,7 @@ class _CustomerCollectionScreenState extends State<CustomerCollectionScreen> {
                                   fontWeight: FontWeight.bold),
                             ),
                             TextSpan(
-                              text: customer.tposchg.toString(),
+                              text: getActiveCustomersModel.tposchg.toString(),
                               style: const TextStyle(
                                 color: Colors.black,
                               ),
@@ -529,7 +549,7 @@ class _CustomerCollectionScreenState extends State<CustomerCollectionScreen> {
                                   fontWeight: FontWeight.bold),
                             ),
                             TextSpan(
-                              text: customer.tmthChg.toString(),
+                              text: getActiveCustomersModel.tmthChg.toString(),
                               style: const TextStyle(
                                 color: Colors.black,
                               ),
@@ -545,7 +565,7 @@ class _CustomerCollectionScreenState extends State<CustomerCollectionScreen> {
                                   fontWeight: FontWeight.bold),
                             ),
                             TextSpan(
-                              text: customer.ttotamt.toString(),
+                              text: getActiveCustomersModel.ttotamt.toString(),
                               style: const TextStyle(
                                 color: Colors.black,
                               ),
@@ -578,10 +598,10 @@ class _CustomerCollectionScreenState extends State<CustomerCollectionScreen> {
                         Container(
                           height: _height * 0.06,
                           child: DropdownButtonFormField<String>(
-                            value: SelectBank,
+                            value: selectBank,
                             onChanged: (newValue) {
                               setState(() {
-                                SelectBank = newValue;
+                                selectBank = newValue;
                               });
                             },
                             decoration: InputDecoration(
@@ -608,13 +628,20 @@ class _CustomerCollectionScreenState extends State<CustomerCollectionScreen> {
                     child: Text('Cancel'),
                     onPressed: () {
                       Navigator.of(context).pop();
+                      setState(() {
+                        selectedDate = DateTime.now();
+                        _amountController.clear();
+                        _remarksController.clear();
+                        selectBank = null;
+                        _localImage = null;
+                      });
                     },
                   ),
                   TextButton(
                     child: Text('Submit'),
                     onPressed: () {
-                      // Handle submit logic here
-                      Navigator.of(context).pop();
+                      post_newCollection(getActiveCustomersModel);
+                      Cosmos.waitingDialog(context, '         Please wait');
                     },
                   ),
                 ],
@@ -624,6 +651,52 @@ class _CustomerCollectionScreenState extends State<CustomerCollectionScreen> {
         );
       },
     );
+  }
+
+  Future post_newCollection(
+      GetActiveCustomersModel getActiveCustomersModel) async {
+    var request = http.MultipartRequest('POST', Uri.parse(newCollection));
+    request.fields['FTrnDat'] = selectedDate.toString();
+    request.fields['FCstId'] = getActiveCustomersModel.tcstid.toString();
+    request.fields['FTrnTot'] = _amountController.text.toString();
+    request.fields['FTrnDsc'] = _remarksController.text.toString();
+    request.fields['FBnkId'] = selectBank.toString();
+
+    if (_localImage != null) {
+      var picture =
+          await http.MultipartFile.fromPath('ColImg', _localImage!.path);
+      request.files.add(picture);
+    }
+
+    final response = await http.Response.fromStream(await request.send());
+
+    var result = jsonDecode(response.body.toString());
+
+    if (result["error"] == 200) {
+      print(getActiveCustomersModel.tcstid.toString());
+      print(result["message"]);
+      Fluttertoast.showToast(msg: result['message']);
+      Navigator.pop(context);
+      Navigator.pop(context);
+      setState(() {
+        selectedDate = DateTime.now();
+        _amountController.clear();
+        _remarksController.clear();
+        selectBank = null;
+        _localImage = null;
+      });
+    } else {
+      print(result["error"]);
+      Fluttertoast.showToast(msg: result['message']);
+      Navigator.pop(context);
+      setState(() {
+        selectedDate = DateTime.now();
+        _amountController.clear();
+        _remarksController.clear();
+        selectBank = null;
+        _localImage = null;
+      });
+    }
   }
 
   Future<void> get_ActiveCustomers() async {

@@ -16,6 +16,9 @@ class CustomerReciept_PDF {
     ByteData image2 = await rootBundle.load('assets/Tc.jpg');
 
     Uint8List imageData2 = (image2).buffer.asUint8List();
+    ByteData image3 = await rootBundle.load('assets/UrduText.png');
+
+    Uint8List urduText = (image3).buffer.asUint8List();
 
     final pdf = pw.Document(
         // pageMode: PdfPageMode.fullscreen,
@@ -48,8 +51,8 @@ class CustomerReciept_PDF {
       // for (int i = 0; i < getActiveCustomersModel.length; i++)
       [
         // i + 1,
-        getActiveCustomersModel.tCstDsc.toString().trim(),
-        getActiveCustomersModel.tCntPer.toString().trim(),
+        // getActiveCustomersModel.tCstDsc.toString().trim(),
+        // getActiveCustomersModel.tCntPer.toString().trim(),
         // getActiveCustomersModel[i].tMobNUm.toString().trim(),
         // getActiveCustomersModel[i].tPhnNum.toString(),
         // getActiveCustomersModel[i].tAdd001.toString(),
@@ -96,7 +99,7 @@ class CustomerReciept_PDF {
                     )),
                 pw.Divider(thickness: 1, height: 0),
                 pw.Divider(
-                  height: 7,
+                  height: 5,
                   thickness: 1,
                 ),
                 pw.Text(
@@ -107,8 +110,8 @@ class CustomerReciept_PDF {
                     mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
                     children: [
                       pw.Container(
-                        height: 50,
-                        width: 250,
+                        height: 90,
+                        width: 350,
                         decoration: pw.BoxDecoration(
                             borderRadius: pw.BorderRadius.circular(10),
                             border: pw.Border.all(
@@ -121,7 +124,7 @@ class CustomerReciept_PDF {
                                 getActiveCustomersModel.tCstDsc.toString())),
                       ),
                       pw.Padding(
-                        padding: pw.EdgeInsets.only(top: 30),
+                        padding: pw.EdgeInsets.only(top: 80),
                         child: pw.Container(
                           child: pw.Text('14-02-274'),
                         ),
@@ -129,11 +132,55 @@ class CustomerReciept_PDF {
                       pw.Align(
                         alignment: pw.Alignment.topRight,
                         child: pw.Padding(
-                          padding: pw.EdgeInsets.only(right: 50),
+                          padding: pw.EdgeInsets.only(right: 50,top: 50),
                           child: pw.Column(children: [
-                            pw.Text('Invoice # : 000067'),
-                            pw.Text('Date  : 01/07/2024'),
-                            pw.Text('Date      : 14:52:36'),
+                            pw.RichText(
+                                text: pw.TextSpan(children: [
+                                  pw.TextSpan(
+                                    text: 'Invoice: ',
+                                    style: pw.TextStyle(
+                                        color: PdfColors.black,
+                                        fontWeight:  pw.FontWeight.bold),
+                                  ),
+                                  pw.TextSpan(
+                                    text: '  000067',
+                                    style: const pw.TextStyle(
+                                      color: PdfColors.black,
+                                    ),
+                                  ),
+                                ])),
+                            pw.RichText(
+                                text: pw.TextSpan(children: [
+                                  pw.TextSpan(
+                                    text: 'Date: ',
+                                    style: pw.TextStyle(
+                                        color: PdfColors.black,
+                                        fontWeight:  pw.FontWeight.bold),
+                                  ),
+                                  pw.TextSpan(
+                                    text: ':10/07/2024',
+                                    style: const pw.TextStyle(
+                                      color: PdfColors.black,
+                                    ),
+                                  ),
+                                ])),pw.RichText(
+                                text: pw.TextSpan(children: [
+                                  pw.TextSpan(
+                                    text: 'Time: ',
+                                    style: pw.TextStyle(
+                                        color: PdfColors.black,
+                                        fontWeight:  pw.FontWeight.bold),
+                                  ),
+                                  pw.TextSpan(
+                                    text: '    14:52:36',
+                                    style: const pw.TextStyle(
+                                      color: PdfColors.black,
+                                    ),
+                                  ),
+                                ])),
+                            // pw.Text('Invoice # : 000067'),
+                            // pw.Text('Date  : 01/07/2024'),
+                            // pw.Text('Time      : 14:52:36'),
                           ]),
                         ),
                       ),
@@ -143,19 +190,19 @@ class CustomerReciept_PDF {
                 ),
                 pw.Divider(thickness: 1, height: 0),
                 pw.Divider(
-                  height: 7,
+                  height: 5,
                   thickness: 1,
                 ),
                 pw.Container(
                   // color: PdfColors.blue,
-                  width: 300,
+                  width: 330,
                   child: pw.Row(
                     mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
                     children: [
                       pw.Text('   Sr#',
                           style: pw.TextStyle(
                               fontWeight: pw.FontWeight.bold, fontSize: 14)),
-                      pw.Text('PARTICULAR',
+                      pw.Text('PARTICULARS',
                           style: pw.TextStyle(
                               fontWeight: pw.FontWeight.bold, fontSize: 14)),
                       pw.Text('Amount Rs.',
@@ -170,155 +217,112 @@ class CustomerReciept_PDF {
                   thickness: 1,
                 ),
                 pw.SizedBox(height: 5),
-                pw.Row(
-                    mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
-                    children: [
-                      pw.Container(
-                        child: pw.Column(children: [
-                          pw.Container(
-                            width: 300,
-                            child: pw.Row(
-                              mainAxisAlignment:
-                                  pw.MainAxisAlignment.spaceBetween,
-                              children: [
-                                pw.Text('   1.',
-                                    style: pw.TextStyle(
-                                        fontWeight: pw.FontWeight.bold,
-                                        fontSize: 14)),
-                                pw.Text('Arear',
-                                    style: pw.TextStyle(
-                                        fontWeight: pw.FontWeight.bold,
-                                        fontSize: 14)),
-                                pw.Text('0', style: pw.TextStyle(fontSize: 14)),
-                              ],
-                            ),
-                          ),
-                          pw.Container(
-                            // color: PdfColors.blue,
-                            width: 300,
-                            child: pw.Row(
-                              mainAxisAlignment:
-                                  pw.MainAxisAlignment.spaceBetween,
-                              children: [
-                                pw.Text('   2.',
-                                    style: pw.TextStyle(
-                                        fontWeight: pw.FontWeight.bold,
-                                        fontSize: 14)),
-                                pw.Text('Server Charges',
-                                    style: pw.TextStyle(
-                                        fontWeight: pw.FontWeight.bold,
-                                        fontSize: 14)),
-                                pw.Text('0', style: pw.TextStyle(fontSize: 14)),
-                              ],
-                            ),
-                          ),
-                          pw.Container(
-                            // color: PdfColors.blue,
-                            width: 300,
-                            child: pw.Row(
-                              mainAxisAlignment:
-                                  pw.MainAxisAlignment.spaceBetween,
-                              children: [
-                                pw.Text('   3.',
-                                    style: pw.TextStyle(
-                                        fontWeight: pw.FontWeight.bold,
-                                        fontSize: 14)),
-                                pw.Text('Sms Charges',
-                                    style: pw.TextStyle(
-                                        fontWeight: pw.FontWeight.bold,
-                                        fontSize: 14)),
-                                pw.Text('0', style: pw.TextStyle(fontSize: 14)),
-                              ],
-                            ),
-                          ),
-                          pw.Container(
-                            // color: PdfColors.blue,
-                            width: 300,
-                            child: pw.Row(
-                              mainAxisAlignment:
-                                  pw.MainAxisAlignment.spaceBetween,
-                              children: [
-                                pw.Text('   4.',
-                                    style: pw.TextStyle(
-                                        fontWeight: pw.FontWeight.bold,
-                                        fontSize: 14)),
-                                pw.Text('Advance',
-                                    style: pw.TextStyle(
-                                        fontWeight: pw.FontWeight.bold,
-                                        fontSize: 14)),
-                                pw.Text('0', style: pw.TextStyle(fontSize: 14)),
-                              ],
-                            ),
-                          ),
-                          pw.Container(
-                            // color: PdfColors.blue,
-                            width: 300,
-                            child: pw.Row(
-                              mainAxisAlignment:
-                                  pw.MainAxisAlignment.spaceBetween,
-                              children: [
-                                pw.Text('   5.',
-                                    style: pw.TextStyle(
-                                        fontWeight: pw.FontWeight.bold,
-                                        fontSize: 14)),
-                                pw.Text('Monthly Charges',
-                                    style: pw.TextStyle(
-                                        fontWeight: pw.FontWeight.bold,
-                                        fontSize: 14)),
-                                pw.Text('0', style: pw.TextStyle(fontSize: 14)),
-                              ],
-                            ),
-                          ),
-                          pw.Container(
-                            // color: PdfColors.blue,
-                            width: 300,
-                            child: pw.Row(
-                              mainAxisAlignment:
-                                  pw.MainAxisAlignment.spaceBetween,
-                              children: [
-                                pw.Text('   6.',
-                                    style: pw.TextStyle(
-                                        fontWeight: pw.FontWeight.bold,
-                                        fontSize: 14)),
-                                pw.Text('Other Charges',
-                                    style: pw.TextStyle(
-                                        fontWeight: pw.FontWeight.bold,
-                                        fontSize: 14)),
-                                pw.Text('0', style: pw.TextStyle(fontSize: 14)),
-                              ],
-                            ),
-                          ),
-                          pw.Container(
-                            // color: PdfColors.blue,
-                            width: 300,
-                            child: pw.Row(
-                              mainAxisAlignment:
-                                  pw.MainAxisAlignment.spaceBetween,
-                              children: [
-                                pw.Text('TOTAL:',
-                                    style: pw.TextStyle(
-                                        fontWeight: pw.FontWeight.bold,
-                                        fontSize: 14)),
-                                pw.Text('0', style: pw.TextStyle(fontSize: 14)),
-                              ],
-                            ),
-                          ),
-                        ]),
+                pw.Stack(
+                  children: [
+                    pw.Container(
+                      child: pw.Padding(
+                        padding: pw.EdgeInsets.only(left: 20),
+                        child: pw.Column(
+                            children: [
+                              pw.Text('1.', style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
+                              pw.Text('2.', style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
+                              pw.Text('3.', style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
+                              pw.Text('4.', style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
+                              pw.Text('5.', style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
+                              pw.Text('6.', style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
+                            ]
+                        )
                       ),
-                      pw.Padding(
-                        padding: pw.EdgeInsets.only(right: 30),
+                    ),
+                    pw.Container(
+                      child: pw.Padding(
+                          padding: pw.EdgeInsets.only(left: 90),
+                          child: pw.Column(
+                            crossAxisAlignment: pw.CrossAxisAlignment.start,
+                              children: [
+                                pw.Text('Arear', style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
+                                pw.Text('Server Charges', style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
+                                pw.Text('SMS Charges', style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
+                                pw.Text('Advance', style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
+                                pw.Text('Monthly Charges', style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
+                                pw.Text('Other Charges', style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
+                              ]
+                          )
+                      ),
+
+                    ),
+                    pw.Container(
+                      child: pw.Padding(
+                          padding: pw.EdgeInsets.only(left: 290),
+                          child: pw.Column(
+                              crossAxisAlignment: pw.CrossAxisAlignment.end,
+                              children: [
+                                pw.Text('0.00', style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
+                                pw.Text(getActiveCustomersModel.tsrvchg.toString(), style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
+                                pw.Text(getActiveCustomersModel.tsmschg.toString(), style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
+                                pw.Text(getActiveCustomersModel.tadvchg.toString(), style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
+                                pw.Text(getActiveCustomersModel.tmthChg.toString(), style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
+                                pw.Text('0.00', style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
+                              ]
+                          )
+                      ),
+                    ),
+                    pw.Padding(
+                      padding: pw.EdgeInsets.only(top:  100),
+                      child: pw.Container(
+                        width: 350,
+                        child: pw.Divider(thickness: 1, height: 5),
+                      ),
+
+                    ),
+                    pw.Padding(
+                        padding: pw.EdgeInsets.only(top:  103),
                         child: pw.Container(
-                          height: 350,
-                          width: 300,
-                          child: pw.Image(pw.MemoryImage(imageData2)),
+                          width: 350,
+                          child: pw.Divider(thickness: 1, height: 5),
                         ),
+                    ),
+                    pw.Padding(
+                      padding: pw.EdgeInsets.only(top:  110, left: 200),
+                      child: pw.Text('TOTAL', style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
+                    ),
+                    pw.Padding(
+                      padding: pw.EdgeInsets.only(top:  110, left: 310),
+                      child: pw.Text(getActiveCustomersModel.ttotamt.toString(),textAlign: pw.TextAlign.right,style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
+                    ),
+                    pw.Padding(
+                      padding: pw.EdgeInsets.only(left: 450),
+                      child: pw.Container(
+                        height: 250,
+                        width: 300,
+                        child: pw.Image(pw.MemoryImage(imageData2)),
                       ),
-                    ]),
-                pw.Divider(thickness: 1, height: 7),
-                pw.Divider(
-                  height: 0,
-                  thickness: 1,
+                    ),
+                  ]
                 ),
+                pw.Padding(
+                  padding: pw.EdgeInsets.only(left:  50),
+                  child: pw.Container(
+                    width: 150,
+                    child: pw.Divider(thickness: 1, height: 5),
+                  ),
+                ),
+            pw.Row(
+                mainAxisAlignment:
+                pw.MainAxisAlignment.spaceBetween,
+              children: [
+                pw.Padding(
+                  padding: pw.EdgeInsets.only(left: 100),
+                  child:    pw.Text('(Signature)'),),
+                pw.Container(
+                  width: 580,
+                  child: pw.Image(pw.MemoryImage(urduText)),
+                )
+
+              ]
+            )
+
+
               ],
             ),
           );
