@@ -257,12 +257,12 @@ class CustomerReciept_PDF {
                           child: pw.Column(
                               crossAxisAlignment: pw.CrossAxisAlignment.end,
                               children: [
-                                pw.Text('0.00', style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
+                                pw.Text(getActiveCustomersModel.tarrchg.toString(), style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
                                 pw.Text(getActiveCustomersModel.tsrvchg.toString(), style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
                                 pw.Text(getActiveCustomersModel.tsmschg.toString(), style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
                                 pw.Text(getActiveCustomersModel.tadvchg.toString(), style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
                                 pw.Text(getActiveCustomersModel.tmthChg.toString(), style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
-                                pw.Text('0.00', style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
+                                pw.Text(getActiveCustomersModel.tothchg.toString(), style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
                               ]
                           )
                       ),

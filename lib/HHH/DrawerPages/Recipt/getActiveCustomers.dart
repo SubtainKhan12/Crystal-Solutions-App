@@ -268,27 +268,58 @@ class _CustomerCollectionScreenState extends State<CustomerCollectionScreen> {
               SizedBox(
                 height: 20,
               ),
-              TextButton(
-                  onPressed: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=> BillGenerationUi(getActiveCustomersList: getActiveCustomersModel)));
-                  }, child: Text('Monthly Bill Generation',style: TextStyle(fontSize: 20),)),
-              TextButton(
-                  onPressed: () async {
-                    final pdfFile = await CustomerReciept_PDF.generate(
-                        getActiveCustomersModel);
-                    PdfFileHandle.openFile(pdfFile);
-                  },
-                  child: Text('PDF Bill', style: TextStyle(fontSize: 20),)),
-              TextButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                    _showDialog(context, getActiveCustomersModel);
-                  },
-                  child: Text('Add Collection',style: TextStyle(fontSize: 20),)),
-              TextButton(onPressed: () async {}, child: Text('Ledger',style: TextStyle(fontSize: 20),)),
-              TextButton(onPressed: () {}, child: Text('Complaints',style: TextStyle(fontSize: 20),)),
-              TextButton(
-                  onPressed: () async {}, child: Text('Profile',style: TextStyle(fontSize: 20),)),
+              Row(
+                children: [
+                  Image.asset('assets/bill.png',height: 20,),
+                  TextButton(
+                      onPressed: () {
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=> BillGenerationUi(getActiveCustomersList: getActiveCustomersModel)));
+                      }, child: Text('Monthly Bill Generation',style: TextStyle(fontSize: 20),)),
+                ],
+              ),
+              Row(
+                children: [
+                  Image.asset('assets/pdf.png', height: 20,),
+                  TextButton(
+                      onPressed: () async {
+                        final pdfFile = await CustomerReciept_PDF.generate(
+                            getActiveCustomersModel);
+                        PdfFileHandle.openFile(pdfFile);
+                      },
+                      child: Text('PDF Bill', style: TextStyle(fontSize: 20),)),
+                ],
+              ),
+              Row(
+                children: [
+                  Image.asset('assets/add.png',height: 20,),
+                  TextButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                        _showDialog(context, getActiveCustomersModel);
+                      },
+                      child: Text('Add Collection',style: TextStyle(fontSize: 20),)),
+                ],
+              ),
+              Row(
+                children: [
+                  Image.asset('assets/ledger.png',height: 20,),
+
+                  TextButton(onPressed: () async {}, child: Text('Ledger',style: TextStyle(fontSize: 20),)),
+                ],
+              ),
+              Row(
+                children: [
+                  Image.asset('assets/report.png',height: 20,),
+                  TextButton(onPressed: () {}, child: Text('Complaints',style: TextStyle(fontSize: 20),)),
+                ],
+              ),
+              Row(
+                children: [
+                  Image.asset('assets/user.png',height: 20,),
+                  TextButton(
+                      onPressed: () async {}, child: Text('Profile',style: TextStyle(fontSize: 20),)),
+                ],
+              ),
             ],
           ),
         );
@@ -469,6 +500,22 @@ class _CustomerCollectionScreenState extends State<CustomerCollectionScreen> {
                         RichText(
                           text: TextSpan(children: [
                             const TextSpan(
+                              text: 'Arrear Charges: ',
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                            TextSpan(
+                              text: getActiveCustomersModel.tarrchg.toString(),
+                              style: const TextStyle(
+                                color: Colors.black,
+                              ),
+                            ),
+                          ]),
+                        ),
+                        RichText(
+                          text: TextSpan(children: [
+                            const TextSpan(
                               text: 'Server Charges: ',
                               style: TextStyle(
                                   color: Colors.black,
@@ -540,6 +587,22 @@ class _CustomerCollectionScreenState extends State<CustomerCollectionScreen> {
                             ),
                             TextSpan(
                               text: getActiveCustomersModel.tmthChg.toString(),
+                              style: const TextStyle(
+                                color: Colors.black,
+                              ),
+                            ),
+                          ]),
+                        ),
+                        RichText(
+                          text: TextSpan(children: [
+                            const TextSpan(
+                              text: 'Other Charges: ',
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                            TextSpan(
+                              text: getActiveCustomersModel.tothchg.toString(),
                               style: const TextStyle(
                                 color: Colors.black,
                               ),

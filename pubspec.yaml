@@ -42,6 +42,7 @@ dependencies:
   pdf: ^3.11.0
   path_provider: ^2.1.4
   open_file: ^3.3.2
+  dropdown_button2: ^2.3.9
 
 
 dev_dependencies:

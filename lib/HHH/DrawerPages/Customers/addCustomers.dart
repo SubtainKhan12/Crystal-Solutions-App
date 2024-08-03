@@ -50,6 +50,8 @@ class _AddCustomersState extends State<AddCustomers> {
   TextEditingController _smsChargesController = TextEditingController();
   TextEditingController _posChargesController = TextEditingController();
   TextEditingController _advanceChargesController = TextEditingController();
+  TextEditingController _arrearChargesController = TextEditingController();
+  TextEditingController _otherChargesController = TextEditingController();
 
 
   String? status;
@@ -307,6 +309,23 @@ class _AddCustomersState extends State<AddCustomers> {
                         height: _height / 16,
                         width: _width / 0.3,
                         child: TextFormField(
+                          controller: _arrearChargesController,
+                          keyboardType: TextInputType.number,
+                          decoration: InputDecoration(
+                            labelText: "Arrear Charges",
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(3),
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      Container(
+                        height: _height / 16,
+                        width: _width / 0.3,
+                        child: TextFormField(
                           controller: _serverChargesController,
                           keyboardType: TextInputType.number,
                           decoration: InputDecoration(
@@ -379,6 +398,23 @@ class _AddCustomersState extends State<AddCustomers> {
                           keyboardType: TextInputType.number,
                           decoration: InputDecoration(
                             labelText: "Monthly Charges",
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(3),
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      Container(
+                        height: _height / 16,
+                        width: _width / 0.3,
+                        child: TextField(
+                          controller: _otherChargesController,
+                          keyboardType: TextInputType.number,
+                          decoration: InputDecoration(
+                            labelText: "Other Charges",
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(3),
                             ),
@@ -619,6 +655,8 @@ class _AddCustomersState extends State<AddCustomers> {
     request.fields['FSmsChg'] = _smsChargesController.text.isEmpty ? '0' : _smsChargesController.text;
     request.fields['FAdvChg'] = _advanceChargesController.text.isEmpty ? '0' : _advanceChargesController.text;
     request.fields['FPosChg'] = _posChargesController.text.isEmpty ? '0' : _posChargesController.text;
+    request.fields['FArrChg'] = _arrearChargesController.text.isEmpty ? '0' : _arrearChargesController.text;
+    request.fields['FOthChg'] = _otherChargesController.text.isEmpty ? '0' : _otherChargesController.text;
 
     if (_image != null) {
       var picture = await http.MultipartFile.fromPath('FCstImg', _image!.path);

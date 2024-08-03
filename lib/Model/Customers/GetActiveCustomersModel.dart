@@ -8,11 +8,13 @@
 /// TAdd002 : "Test"
 /// TEmlAdd : "Test1234@gmail.com"
 /// TShpNum : "2"
-/// tsrvchg : null
+/// tarrchg : "0.00"
+/// tsrvchg : "0.00"
 /// TmthChg : "4000.00"
-/// tsmschg : null
-/// tadvchg : null
-/// tposchg : null
+/// tsmschg : "0.00"
+/// tadvchg : "0.00"
+/// tposchg : "0.00"
+/// tothchg : "0.00"
 /// ttotamt : null
 /// TLatVal : "1"
 /// TLngVal : "1"
@@ -35,11 +37,13 @@ class GetActiveCustomersModel {
       String? tAdd002, 
       String? tEmlAdd, 
       String? tShpNum, 
-      dynamic tsrvchg, 
+      String? tarrchg, 
+      String? tsrvchg, 
       String? tmthChg, 
-      dynamic tsmschg, 
-      dynamic tadvchg, 
-      dynamic tposchg, 
+      String? tsmschg, 
+      String? tadvchg, 
+      String? tposchg, 
+      String? tothchg, 
       dynamic ttotamt, 
       String? tLatVal, 
       String? tLngVal, 
@@ -59,11 +63,13 @@ class GetActiveCustomersModel {
     _tAdd002 = tAdd002;
     _tEmlAdd = tEmlAdd;
     _tShpNum = tShpNum;
+    _tarrchg = tarrchg;
     _tsrvchg = tsrvchg;
     _tmthChg = tmthChg;
     _tsmschg = tsmschg;
     _tadvchg = tadvchg;
     _tposchg = tposchg;
+    _tothchg = tothchg;
     _ttotamt = ttotamt;
     _tLatVal = tLatVal;
     _tLngVal = tLngVal;
@@ -86,11 +92,13 @@ class GetActiveCustomersModel {
     _tAdd002 = json['TAdd002'];
     _tEmlAdd = json['TEmlAdd'];
     _tShpNum = json['TShpNum'];
+    _tarrchg = json['tarrchg'];
     _tsrvchg = json['tsrvchg'];
     _tmthChg = json['TmthChg'];
     _tsmschg = json['tsmschg'];
     _tadvchg = json['tadvchg'];
     _tposchg = json['tposchg'];
+    _tothchg = json['tothchg'];
     _ttotamt = json['ttotamt'];
     _tLatVal = json['TLatVal'];
     _tLngVal = json['TLngVal'];
@@ -111,11 +119,13 @@ class GetActiveCustomersModel {
   String? _tAdd002;
   String? _tEmlAdd;
   String? _tShpNum;
-  dynamic _tsrvchg;
+  String? _tarrchg;
+  String? _tsrvchg;
   String? _tmthChg;
-  dynamic _tsmschg;
-  dynamic _tadvchg;
-  dynamic _tposchg;
+  String? _tsmschg;
+  String? _tadvchg;
+  String? _tposchg;
+  String? _tothchg;
   dynamic _ttotamt;
   String? _tLatVal;
   String? _tLngVal;
@@ -135,11 +145,13 @@ GetActiveCustomersModel copyWith({  String? tcstid,
   String? tAdd002,
   String? tEmlAdd,
   String? tShpNum,
-  dynamic tsrvchg,
+  String? tarrchg,
+  String? tsrvchg,
   String? tmthChg,
-  dynamic tsmschg,
-  dynamic tadvchg,
-  dynamic tposchg,
+  String? tsmschg,
+  String? tadvchg,
+  String? tposchg,
+  String? tothchg,
   dynamic ttotamt,
   String? tLatVal,
   String? tLngVal,
@@ -159,11 +171,13 @@ GetActiveCustomersModel copyWith({  String? tcstid,
   tAdd002: tAdd002 ?? _tAdd002,
   tEmlAdd: tEmlAdd ?? _tEmlAdd,
   tShpNum: tShpNum ?? _tShpNum,
+  tarrchg: tarrchg ?? _tarrchg,
   tsrvchg: tsrvchg ?? _tsrvchg,
   tmthChg: tmthChg ?? _tmthChg,
   tsmschg: tsmschg ?? _tsmschg,
   tadvchg: tadvchg ?? _tadvchg,
   tposchg: tposchg ?? _tposchg,
+  tothchg: tothchg ?? _tothchg,
   ttotamt: ttotamt ?? _ttotamt,
   tLatVal: tLatVal ?? _tLatVal,
   tLngVal: tLngVal ?? _tLngVal,
@@ -184,11 +198,13 @@ GetActiveCustomersModel copyWith({  String? tcstid,
   String? get tAdd002 => _tAdd002;
   String? get tEmlAdd => _tEmlAdd;
   String? get tShpNum => _tShpNum;
-  dynamic get tsrvchg => _tsrvchg;
+  String? get tarrchg => _tarrchg;
+  String? get tsrvchg => _tsrvchg;
   String? get tmthChg => _tmthChg;
-  dynamic get tsmschg => _tsmschg;
-  dynamic get tadvchg => _tadvchg;
-  dynamic get tposchg => _tposchg;
+  String? get tsmschg => _tsmschg;
+  String? get tadvchg => _tadvchg;
+  String? get tposchg => _tposchg;
+  String? get tothchg => _tothchg;
   dynamic get ttotamt => _ttotamt;
   String? get tLatVal => _tLatVal;
   String? get tLngVal => _tLngVal;
@@ -211,11 +227,13 @@ GetActiveCustomersModel copyWith({  String? tcstid,
     map['TAdd002'] = _tAdd002;
     map['TEmlAdd'] = _tEmlAdd;
     map['TShpNum'] = _tShpNum;
+    map['tarrchg'] = _tarrchg;
     map['tsrvchg'] = _tsrvchg;
     map['TmthChg'] = _tmthChg;
     map['tsmschg'] = _tsmschg;
     map['tadvchg'] = _tadvchg;
     map['tposchg'] = _tposchg;
+    map['tothchg'] = _tothchg;
     map['ttotamt'] = _ttotamt;
     map['TLatVal'] = _tLatVal;
     map['TLngVal'] = _tLngVal;

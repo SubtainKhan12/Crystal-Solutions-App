@@ -332,6 +332,8 @@ class _BillGenerationUiState extends State<BillGenerationUi> {
     _posChargesController.text = widget.getActiveCustomersList.tposchg.toString() ?? '';
     _advanceChargesController.text = widget.getActiveCustomersList.tadvchg.toString() ?? '';
     _monthlyChargesController.text = widget.getActiveCustomersList.tmthChg.toString() ?? '';
+    _arrearChargesController.text = widget.getActiveCustomersList.tarrchg.toString() ?? '';
+    _otherChargesController.text = widget.getActiveCustomersList.tothchg.toString() ?? '';
   }
 
   Future<void> _selectDate(BuildContext context, StateSetter setState) async {

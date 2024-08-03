@@ -52,6 +52,8 @@ class _UpdateCustomersScreenState extends State<UpdateCustomersScreen> {
   TextEditingController _smsChargesController = TextEditingController();
   TextEditingController _posChargesController = TextEditingController();
   TextEditingController _advanceChargesController = TextEditingController();
+  TextEditingController _arrearChargesController = TextEditingController();
+  TextEditingController _otherChargesController = TextEditingController();
 
   String? status;
   File? _image;
@@ -319,6 +321,23 @@ class _UpdateCustomersScreenState extends State<UpdateCustomersScreen> {
                         height: _height / 16,
                         width: _width / 0.3,
                         child: TextField(
+                          controller: _arrearChargesController,
+                          keyboardType: TextInputType.number,
+                          decoration: InputDecoration(
+                            labelText: "Arrer Charges",
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(3),
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      Container(
+                        height: _height / 16,
+                        width: _width / 0.3,
+                        child: TextField(
                           controller: _serverChargesController,
                           keyboardType: TextInputType.number,
                           decoration: InputDecoration(
@@ -391,6 +410,23 @@ class _UpdateCustomersScreenState extends State<UpdateCustomersScreen> {
                           keyboardType: TextInputType.number,
                           decoration: InputDecoration(
                             labelText: "Monthly Charges",
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(3),
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      Container(
+                        height: _height / 16,
+                        width: _width / 0.3,
+                        child: TextField(
+                          controller: _otherChargesController,
+                          keyboardType: TextInputType.number,
+                          decoration: InputDecoration(
+                            labelText: "Other Charges",
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(3),
                             ),
@@ -727,6 +763,8 @@ class _UpdateCustomersScreenState extends State<UpdateCustomersScreen> {
     _advanceChargesController.text = widget.getCustomersModel.tadvchg ?? '';
     _serverChargesController.text = widget.getCustomersModel.tsrvchg ?? '';
     _smsChargesController.text = widget.getCustomersModel.tsmschg ?? '';
+    _otherChargesController.text = widget.getCustomersModel.tothchg ?? '';
+    _arrearChargesController.text = widget.getCustomersModel.tarrchg ?? '';
   }
   Future post_updateCust() async {
     var request = http.MultipartRequest('POST',
@@ -753,6 +791,8 @@ class _UpdateCustomersScreenState extends State<UpdateCustomersScreen> {
     request.fields['FSmsChg'] = _smsChargesController.text.isEmpty ? '0' : _smsChargesController.text;
     request.fields['FAdvChg'] = _advanceChargesController.text.isEmpty ? '0' : _advanceChargesController.text;
     request.fields['FPosChg'] = _posChargesController.text.isEmpty ? '0' : _posChargesController.text;
+    request.fields['FArrChg'] = _arrearChargesController.text.isEmpty ? '0' : _arrearChargesController.text;
+    request.fields['FOthChg'] = _otherChargesController.text.isEmpty ? '0' : _otherChargesController.text;
     request.fields['imgname'] = widget.getCustomersModel.tCstPic.toString();
     if (_image != null) {
       var picture = await http.MultipartFile.fromPath('FCstImg', _image!.path);

@@ -10,6 +10,7 @@ class DashboardPage extends StatefulWidget {
 }
 
 class _DashboardPageState extends State<DashboardPage> {
+  String? costomerList;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,28 +26,32 @@ class _DashboardPageState extends State<DashboardPage> {
       drawer: DrawerUi(),
       body: Stack(
         children: [
-          Positioned(
-            top: 150,
-            right: 0,
-            bottom: 0,
-            left: 0,
+          SingleChildScrollView(
             child: Opacity(
               opacity: 0.3, // Adjust the opacity as needed
-              child: Center(
+              child: Padding(
+                padding:  EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.1),
                 child: Column(
                   children: [
                     Image.asset('assets/Crystal-Solutions-logo-removebg-preview.png'),
-                    Text('Crystal Solutions', style: TextStyle(
-                      fontSize: 30,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.grey, // Adjust the color as needed
-                    ),),
-
+                    Text('Crystal Solutions',style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),)
                   ],
                 ),
               ),
             ),
           ),
+          Padding(padding: EdgeInsets.symmetric(horizontal: 15),
+          child: Column(
+            children: [
+              Row(
+                children: [
+                  //Tap bar bnani hai
+                ],
+              )
+
+            ],
+          ),)
+
         ],
       ),
     );
