@@ -62,6 +62,7 @@ String updateEmployee = '$baseUrl/updateEmployee.php';
 
 
 String newCollection = '$baseUrl/newCollection.php';
+String newBill = '$baseUrl/newBill.php';
 
 
 String newExp = '$baseUrl/newExp.php';

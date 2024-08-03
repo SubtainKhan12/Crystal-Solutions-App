@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:crystal_solutions/HHH/DrawerPages/Recipt/Generate%20Bill/generateBill.dart';
 import 'package:crystal_solutions/Model/Bank/GetActiveBank.dart';
 import 'package:crystal_solutions/apis.dart';
 import 'package:flutter/material.dart';
@@ -261,44 +262,33 @@ class _CustomerCollectionScreenState extends State<CustomerCollectionScreen> {
           padding: const EdgeInsets.symmetric(horizontal: 15.0),
           child: Column(
             mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+
             children: [
               SizedBox(
                 height: 20,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  ElevatedButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                        _showDialog(context, getActiveCustomersModel);
-                      },
-                      child: Text('Add Collection')),
-                  ElevatedButton(
-                      onPressed: () async {
-                        final pdfFile = await CustomerReciept_PDF.generate(
-                            getActiveCustomersModel);
-                        PdfFileHandle.openFile(pdfFile);
-                      },
-                      child: Text('Pdf')),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  ElevatedButton(
-                      onPressed: () {}, child: Text('Generate Bill')),
-                  ElevatedButton(onPressed: () async {}, child: Text('Ledger')),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  ElevatedButton(onPressed: () {}, child: Text('Complaints')),
-                  ElevatedButton(
-                      onPressed: () async {}, child: Text('Profile')),
-                ],
-              ),
+              TextButton(
+                  onPressed: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=> BillGenerationUi(getActiveCustomersList: getActiveCustomersModel)));
+                  }, child: Text('Monthly Bill Generation',style: TextStyle(fontSize: 20),)),
+              TextButton(
+                  onPressed: () async {
+                    final pdfFile = await CustomerReciept_PDF.generate(
+                        getActiveCustomersModel);
+                    PdfFileHandle.openFile(pdfFile);
+                  },
+                  child: Text('PDF Bill', style: TextStyle(fontSize: 20),)),
+              TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                    _showDialog(context, getActiveCustomersModel);
+                  },
+                  child: Text('Add Collection',style: TextStyle(fontSize: 20),)),
+              TextButton(onPressed: () async {}, child: Text('Ledger',style: TextStyle(fontSize: 20),)),
+              TextButton(onPressed: () {}, child: Text('Complaints',style: TextStyle(fontSize: 20),)),
+              TextButton(
+                  onPressed: () async {}, child: Text('Profile',style: TextStyle(fontSize: 20),)),
             ],
           ),
         );
