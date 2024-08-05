@@ -43,6 +43,7 @@ dependencies:
   path_provider: ^2.1.4
   open_file: ^3.3.2
   dropdown_button2: ^2.3.9
+  share_plus: ^6.0.0
 
 
 dev_dependencies:

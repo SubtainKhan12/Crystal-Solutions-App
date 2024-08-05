@@ -25,9 +25,9 @@ class CustomerReciept_PDF {
         );
 
     final tableHeaders = [
-      'Sr#',
-      'PARTICULARS',
-      'Amount Rs',
+      // 'Sr#',
+      // 'PARTICULARS',
+      // 'Amount Rs',
       // 'Mobile',
       // 'Phone',
       // 'Add 1',
@@ -344,9 +344,9 @@ class CustomerReciept_PDF {
                 fontSize: 8,
               ),
               cellAlignments: {
-                0: pw.Alignment.center,
-                1: pw.Alignment.center,
-                2: pw.Alignment.center,
+                // 0: pw.Alignment.center,
+                // 1: pw.Alignment.center,
+                // 2: pw.Alignment.center,
                 //   3: pw.Alignment.center,
                 //   4: pw.Alignment.center,
                 //   5: pw.Alignment.center,
@@ -367,9 +367,9 @@ class CustomerReciept_PDF {
                 //   20: pw.Alignment.center,
               },
               columnWidths: {
-                0: pw.FlexColumnWidth(.2),
-                1: pw.FlexColumnWidth(.3),
-                2: pw.FlexColumnWidth(.3),
+                // 0: pw.FlexColumnWidth(.2),
+                // 1: pw.FlexColumnWidth(.3),
+                // 2: pw.FlexColumnWidth(.3),
                 // 3: pw.FlexColumnWidth(.35),
                 // 4: pw.FlexColumnWidth(.35),
                 // 5: pw.FlexColumnWidth(.25),
@@ -388,6 +388,6 @@ class CustomerReciept_PDF {
       ),
     );
 
-    return PdfFileHandle.saveDocument(name: 'Receipt.pdf', pdf: pdf);
+    return PdfFileHandle.saveDocument(name: '${getActiveCustomersModel.tCstDsc}.pdf', pdf: pdf);
   }
 }
