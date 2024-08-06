@@ -662,12 +662,8 @@ class _AddCustomersState extends State<AddCustomers> {
       var picture = await http.MultipartFile.fromPath('FCstImg', _image!.path);
       request.files.add(picture);
     }
-
     final response = await http.Response.fromStream(await request.send());
-
     var result = jsonDecode(response.body.toString());
-
-
     if (result["error"] == 200) {
       print(result["message"]);
       Fluttertoast.showToast(msg: result['message']);

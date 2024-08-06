@@ -237,9 +237,6 @@ class _CustomerCollectionScreenState extends State<CustomerCollectionScreen> {
                                               ),
                                             ),
                                           ])),
-                                          TextButton(onPressed: (){
-
-                                          }, child: Text("Text")),
                                         ],
                                       ),
                                     ),
@@ -260,7 +257,6 @@ class _CustomerCollectionScreenState extends State<CustomerCollectionScreen> {
 
   void _showBottomSheet(
       BuildContext context, GetActiveCustomersModel getActiveCustomersModel) {
-
     showModalBottomSheet(
       showDragHandle: true,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
@@ -269,19 +265,23 @@ class _CustomerCollectionScreenState extends State<CustomerCollectionScreen> {
         Future<void> _sharePdfFileAndOpenWhatsApp(String phoneNumber) async {
           try {
             // Generate the PDF file (assuming this method returns the file path)
-            final pdfFile = await CustomerReciept_PDF.generate(getActiveCustomersModel);
+            final pdfFile =
+                await CustomerReciept_PDF.generate(getActiveCustomersModel);
 
             // Save the PDF file to a temporary directory
             final directory = await getTemporaryDirectory();
-            final filePath = '${directory.path}/${getActiveCustomersModel.tCstDsc}Billing Reciept.pdf';
+            final filePath =
+                '${directory.path}/${getActiveCustomersModel.tCstDsc}Billing Reciept.pdf';
             final file = File(filePath);
             await file.writeAsBytes(await pdfFile.readAsBytes());
 
-
-             Share.shareFiles([filePath], text: 'Hi ${getActiveCustomersModel.tCstDsc}, Here\'s your receipt:');
+            Share.shareFiles([filePath],
+                text:
+                    'Hi ${getActiveCustomersModel.tCstDsc}, Here\'s your receipt:');
 
             // Open WhatsApp with the specified phone number
-            final launchUri = Uri.parse('https://wa.me/$phoneNumber?text=${Uri.encodeFull(filePath)}');
+            final launchUri = Uri.parse(
+                'https://wa.me/$phoneNumber?text=${Uri.encodeFull(filePath)}');
 
             if (await canLaunchUrl(launchUri)) {
               await launchUrl(launchUri);
@@ -292,76 +292,130 @@ class _CustomerCollectionScreenState extends State<CustomerCollectionScreen> {
             print('Error: $e');
           }
         }
+
         return Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15.0),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
-
             children: [
               SizedBox(
                 height: 20,
               ),
               Row(
                 children: [
-                  Image.asset('assets/bill.png',height: 20,),
+                  Image.asset(
+                    'assets/bill.png',
+                    height: 20,
+                  ),
                   TextButton(
                       onPressed: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context)=> BillGenerationUi(getActiveCustomersList: getActiveCustomersModel)));
-                      }, child: Text('Monthly Bill Generation',style: TextStyle(fontSize: 20),)),
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => BillGenerationUi(
+                                    getActiveCustomersList:
+                                        getActiveCustomersModel)));
+                      },
+                      child: Text(
+                        'Monthly Bill Generation',
+                        style: TextStyle(fontSize: 20),
+                      )),
                 ],
               ),
               Row(
                 children: [
-                  Image.asset('assets/pdf.png', height: 20,),
+                  Image.asset(
+                    'assets/pdf.png',
+                    height: 20,
+                  ),
                   TextButton(
                       onPressed: () async {
                         final pdfFile = await CustomerReciept_PDF.generate(
                             getActiveCustomersModel);
                         PdfFileHandle.openFile(pdfFile);
                       },
-                      child: Text('PDF Bill', style: TextStyle(fontSize: 20),)),
+                      child: Text(
+                        'PDF Bill',
+                        style: TextStyle(fontSize: 20),
+                      )),
                 ],
               ),
               Row(
                 children: [
-                  Image.asset('assets/whatsapplogo.png',height: 20,),
+                  Image.asset(
+                    'assets/whatsapplogo.png',
+                    height: 20,
+                  ),
                   TextButton(
                       onPressed: () async {
-                        _sharePdfFileAndOpenWhatsApp(getActiveCustomersModel.tMobNUm.toString(),);
+                        _sharePdfFileAndOpenWhatsApp(
+                          getActiveCustomersModel.tMobNUm.toString(),
+                        );
                       },
-                      child: Text('Send Pdf to Whatsapp',style: TextStyle(fontSize: 20),)),
+                      child: Text(
+                        'Send Pdf to Whatsapp',
+                        style: TextStyle(fontSize: 20),
+                      )),
                 ],
               ),
               Row(
                 children: [
-                  Image.asset('assets/add.png',height: 20,),
+                  Image.asset(
+                    'assets/add.png',
+                    height: 20,
+                  ),
                   TextButton(
                       onPressed: () {
                         Navigator.pop(context);
                         _showDialog(context, getActiveCustomersModel);
                       },
-                      child: Text('Add Collection',style: TextStyle(fontSize: 20),)),
+                      child: Text(
+                        'Add Collection',
+                        style: TextStyle(fontSize: 20),
+                      )),
                 ],
               ),
               Row(
                 children: [
-                  Image.asset('assets/ledger.png',height: 20,),
-
-                  TextButton(onPressed: () async {}, child: Text('Ledger',style: TextStyle(fontSize: 20),)),
-                ],
-              ),
-              Row(
-                children: [
-                  Image.asset('assets/report.png',height: 20,),
-                  TextButton(onPressed: () {}, child: Text('Complaints',style: TextStyle(fontSize: 20),)),
-                ],
-              ),
-              Row(
-                children: [
-                  Image.asset('assets/user.png',height: 20,),
+                  Image.asset(
+                    'assets/ledger.png',
+                    height: 20,
+                  ),
                   TextButton(
-                      onPressed: () async {}, child: Text('Profile',style: TextStyle(fontSize: 20),)),
+                      onPressed: () async {},
+                      child: Text(
+                        'Ledger',
+                        style: TextStyle(fontSize: 20),
+                      )),
+                ],
+              ),
+              Row(
+                children: [
+                  Image.asset(
+                    'assets/report.png',
+                    height: 20,
+                  ),
+                  TextButton(
+                      onPressed: () {},
+                      child: Text(
+                        'Complaints',
+                        style: TextStyle(fontSize: 20),
+                      )),
+                ],
+              ),
+              Row(
+                children: [
+                  Image.asset(
+                    'assets/user.png',
+                    height: 20,
+                  ),
+                  TextButton(
+                      onPressed: () async {},
+                      child: Text(
+                        'Profile',
+                        style: TextStyle(fontSize: 20),
+                      )),
                 ],
               ),
             ],
@@ -369,9 +423,7 @@ class _CustomerCollectionScreenState extends State<CustomerCollectionScreen> {
         );
       },
     );
-
   }
-
 
   void _showDialog(
       BuildContext context, GetActiveCustomersModel getActiveCustomersModel) {
@@ -751,7 +803,6 @@ class _CustomerCollectionScreenState extends State<CustomerCollectionScreen> {
       },
     );
   }
-
 
   Future post_newCollection(
       GetActiveCustomersModel getActiveCustomersModel) async {

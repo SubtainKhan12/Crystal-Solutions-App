@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart'as http;
 
+import '../../Office Panel/officeDashboard.dart';
 import '../dashboard.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -107,7 +108,15 @@ class _LoginScreenState extends State<LoginScreen> {
           MaterialPageRoute(builder: (context) => DashboardPage()));
       Fluttertoast.showToast(msg: result['message']);
 
-    } else {
+    } else if (result['error'] == 201){
+      Navigator.pop(context);
+      Navigator.pushReplacement(context,
+          MaterialPageRoute(builder: (context) => OfficeDashboardUI()));
+      Fluttertoast.showToast(msg: result['message']);
+
+    }
+
+    else {
       Navigator.pop(context);
       Fluttertoast.showToast(msg: result['message']);
       _passwordController.clear();

@@ -66,3 +66,11 @@ String newBill = '$baseUrl/newBill.php';
 
 
 String newExp = '$baseUrl/newExp.php';
+
+
+
+///-----------------Office Panel--------------///
+String addBill = '$baseUrl/addBill.php';
+String getBill = '$baseUrl/getBill.php';
+String addCollection = '$baseUrl/addCollection.php';
+String getCollection = '$baseUrl/getCollection.php';

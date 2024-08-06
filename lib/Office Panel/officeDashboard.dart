@@ -59,38 +59,43 @@ class _OfficeDashboardUIState extends State<OfficeDashboardUI> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      Material(
-                        borderRadius: BorderRadius.circular(20),
-                        elevation: 10,
-                        shadowColor: Color(0xffFFAD60),
-                        child: Container(
-                          height: _height * 0.06,
-                          width: _width * 0.45,
-                          decoration: BoxDecoration(
-                            color: Color(0xffFFAD60),
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              SizedBox(
-                                width: _width * 0.03,
-                              ),
-                              Image.asset(
-                                'assets/customers.png',
-                                height: 30,
-                              ),
-                              VerticalDivider(
-                                color: Colors.white,
-                                thickness: 1,
-                              ),
-                              // SizedBox(width: 20,),
-                              Text(
-                                'Customers',
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w500, fontSize: 18),
-                              ),
-                            ],
+                      InkWell(
+                        onTap: (){
+                          Navigator.push(context, MaterialPageRoute(builder: (context)=>CustomersUI()));
+                        },
+                        child: Material(
+                          borderRadius: BorderRadius.circular(20),
+                          elevation: 10,
+                          shadowColor: Color(0xffFFAD60),
+                          child: Container(
+                            height: _height * 0.06,
+                            width: _width * 0.45,
+                            decoration: BoxDecoration(
+                              color: Color(0xffFFAD60),
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                SizedBox(
+                                  width: _width * 0.03,
+                                ),
+                                Image.asset(
+                                  'assets/customers.png',
+                                  height: 30,
+                                ),
+                                VerticalDivider(
+                                  color: Colors.white,
+                                  thickness: 1,
+                                ),
+                                // SizedBox(width: 20,),
+                                Text(
+                                  'Customers',
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w500, fontSize: 18),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ),
