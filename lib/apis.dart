@@ -74,3 +74,4 @@ String addBill = '$baseUrl/addBill.php';
 String getBill = '$baseUrl/getBill.php';
 String addCollection = '$baseUrl/addCollection.php';
 String getCollection = '$baseUrl/getCollection.php';
+String customerLedger = '$baseUrl/customerLedger.php';

@@ -45,6 +45,7 @@ dependencies:
   dropdown_button2: ^2.3.9
   share_plus: ^6.0.0
   intl:
+  whatsapp_share: ^2.0.2
 
 
 dev_dependencies:

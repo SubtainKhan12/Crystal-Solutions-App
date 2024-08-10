@@ -6,12 +6,14 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart'as http;
 import 'package:image_picker/image_picker.dart';
+import '../../../../Model/Bill/GetBillModel.dart';
 import '../../../../Model/Customers/GetActiveCustomersModel.dart';
 import '../../../../apis.dart';
 
 class AddCollectionUI extends StatefulWidget {
-  GetActiveCustomersModel getActiveCustomersList;
-  AddCollectionUI({super.key,required this.getActiveCustomersList});
+  GetActiveCustomersModel getActiveCustomersModel;
+  GetBillModel getBillList;
+  AddCollectionUI({super.key,required this.getBillList, required this.getActiveCustomersModel});
 
   @override
   State<AddCollectionUI> createState() => _AddCollectionUIState();
@@ -369,14 +371,14 @@ class _AddCollectionUIState extends State<AddCollectionUI> {
   }
 
   setCustomerData(){
-    _nameController.text = widget.getActiveCustomersList.tCstDsc.toString() ?? '';
-    _serverChargesController.text = widget.getActiveCustomersList.tsrvchg.toString() ?? '';
-    _smsChargesController.text = widget.getActiveCustomersList.tsmschg.toString() ?? '';
-    _posChargesController.text = widget.getActiveCustomersList.tposchg.toString() ?? '';
-    _advanceChargesController.text = widget.getActiveCustomersList.tadvchg.toString() ?? '';
-    _monthlyChargesController.text = widget.getActiveCustomersList.tmthChg.toString() ?? '';
-    _arrearChargesController.text = widget.getActiveCustomersList.tarrchg.toString() ?? '';
-    _otherChargesController.text = widget.getActiveCustomersList.tothchg.toString() ?? '';
+    _nameController.text = widget.getBillList.description.toString() ?? '';
+    _serverChargesController.text = widget.getBillList.serverChg.toString() ?? '';
+    _smsChargesController.text = widget.getBillList.sMSChg.toString() ?? '';
+    _posChargesController.text = widget.getBillList.pSOChg.toString() ?? '';
+    _advanceChargesController.text = widget.getBillList.advacneChg.toString() ?? '';
+    _monthlyChargesController.text = widget.getBillList.monthlyChg.toString() ?? '';
+    _arrearChargesController.text = widget.getBillList.arrear.toString() ?? '';
+    _otherChargesController.text = widget.getBillList.otherChg.toString() ?? '';
   }
 
   Future<void> _selectDate(BuildContext context, StateSetter setState) async {
@@ -408,8 +410,8 @@ class _AddCollectionUIState extends State<AddCollectionUI> {
     var request = http.MultipartRequest('POST',
         Uri.parse(addCollection));
     request.fields['FTrnDat'] = selectedDate.toString();
-    request.fields['FRefId'] = widget.getActiveCustomersList.tRefId.toString();
-    request.fields['FCstId'] = widget.getActiveCustomersList.tcstid.toString();
+    request.fields['FRefId'] = widget.getActiveCustomersModel.tRefId.toString();
+    request.fields['FCstId'] = widget.getBillList.custId.toString();
     request.fields['FTrnDsc'] = _billDescriptionController.text;
     request.fields['FArrChg'] = _arrearChargesController.text.isEmpty? '0.00': _arrearChargesController.text;
     request.fields['FSrvChg'] = _serverChargesController.text;

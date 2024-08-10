@@ -1,17 +1,11 @@
 import 'dart:convert';
-
 import 'package:crystal_solutions/Office%20Panel/Dashboard%20Screen/Customers/Add%20Bill/getBill.dart';
 import 'package:crystal_solutions/Office%20Panel/Dashboard%20Screen/Customers/Collection/getCollection.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import '../../../HHH/DrawerPages/Customers/Customer PDF/pdf_file_handle.dart';
 import '../../../Model/Customers/GetActiveCustomersModel.dart';
 import '../../../apis.dart';
 import '../../../cosmos.dart';
-import 'Add Bill/addBill.dart';
-import 'Collection/addCollection.dart';
-import 'Ledger/customerLedger.dart';
-import 'PDF/officeCustomerPdf.dart';
 
 class CustomersUI extends StatefulWidget {
   const CustomersUI({super.key});
@@ -125,10 +119,11 @@ class _CustomersUIState extends State<CustomersUI> {
                                               ])),
                                               InkWell(
                                                 onTap: () {
-                                                  _showBottomSheet(
-                                                      context,
-                                                      filterActiveCustomerList[
-                                                          index]);
+                                                  // _showBottomSheet(
+                                                  //     context,
+                                                  //     filterActiveCustomerList[
+                                                  //         index]);
+                                                  Navigator.push(context, MaterialPageRoute(builder: (context)=> GetBillUI(getActiveCustomersList: _getActiveCustomerList[index])));
                                                 },
                                                 child: Icon(
                                                     Icons.add_chart_outlined),
@@ -270,34 +265,12 @@ class _CustomersUIState extends State<CustomersUI> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => AddBillUI(
-                                      getActiveCustomersList:
-                                          getActiveCustomersModel)));
-                        },
-                        child: Text(
-                          'Add Bill',
-                          style: TextStyle(fontSize: 20),
-                        )),
-
-                  ],
-                ),
-                Row(
-                  children: [
-                    Image.asset(
-                      'assets/bill.png',
-                      height: 20,
-                    ),
-                    TextButton(
-                        onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
                                   builder: (context) => GetBillUI(
                                       getActiveCustomersList:
                                       getActiveCustomersModel)));
                         },
                         child: Text(
-                          'Get Bill',
+                          'Bill',
                           style: TextStyle(fontSize: 20),
                         )),
                   ],
@@ -310,12 +283,6 @@ class _CustomersUIState extends State<CustomersUI> {
                     ),
                     TextButton(
                         onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => AddCollectionUI(
-                                      getActiveCustomersList:
-                                      getActiveCustomersModel)));
                         },
                         child: Text(
                           'Add Collection',
@@ -350,10 +317,6 @@ class _CustomersUIState extends State<CustomersUI> {
                     ),
                     TextButton(
                         onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => CustomerLedgerUI()));
                         },
                         child: Text(
                           'Customer Ledger',

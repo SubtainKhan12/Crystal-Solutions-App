@@ -1,14 +1,21 @@
 import 'dart:io';
 import 'package:flutter/services.dart';
+import 'package:intl/intl.dart';
 import 'package:pdf/pdf.dart';
 import '../../../../HHH/DrawerPages/Customers/Customer PDF/pdf_file_handle.dart';
 import '../../../../Model/Bill/GetBillModel.dart';
 import '../../../../Model/Customers/GetActiveCustomersModel.dart';
 import 'package:pdf/widgets.dart' as pw;
 
+import '../Add Bill/getBill.dart';
+
 class OfficeCustomerReciept_PDF {
-  static Future<File> generate(
-      GetBillModel filterBillList) async {
+  static Future<File> generate(GetBillModel filterBillList) async {
+
+    DateTime parsedDate = DateTime.parse(
+        filterBillList.date.toString());
+    String formattedDate =
+    DateFormat('dd-MM-yyyy').format(parsedDate);
     ByteData image = await rootBundle.load('assets/CrystalSolutions.jpg');
 
     Uint8List imageData = (image).buffer.asUint8List();
@@ -19,6 +26,7 @@ class OfficeCustomerReciept_PDF {
     ByteData image3 = await rootBundle.load('assets/UrduText.png');
 
     Uint8List urduText = (image3).buffer.asUint8List();
+
 
     final pdf = pw.Document(
         // pageMode: PdfPageMode.fullscreen,
@@ -74,10 +82,21 @@ class OfficeCustomerReciept_PDF {
       ],
     ];
 
+    double arrear = double.tryParse(filterBillList.arrear.toString()) ?? 0.0;
+    double serverChg = double.tryParse(filterBillList.serverChg.toString()) ?? 0.0;
+    double sMSChg = double.tryParse(filterBillList.sMSChg.toString()) ?? 0.0;
+    double advacneChg = double.tryParse(filterBillList.advacneChg.toString()) ?? 0.0;
+    double monthlyChg = double.tryParse(filterBillList.monthlyChg.toString()) ?? 0.0;
+    double posChg = double.tryParse(filterBillList.pSOChg.toString()) ?? 0.0;
+    double otherChg = double.tryParse(filterBillList.otherChg.toString()) ?? 0.0;
+
+    // Calculate the total charges
+    double total = arrear + serverChg + sMSChg + advacneChg + monthlyChg + posChg + otherChg;
+
     pdf.addPage(
       pw.MultiPage(
         pageFormat: PdfPageFormat.a4,
-        orientation: pw.PageOrientation.landscape,
+        orientation: pw.PageOrientation.portrait,
         margin:
             const pw.EdgeInsets.only(left: 25, right: 25, bottom: 0, top: 0),
         header: (context) {
@@ -105,16 +124,15 @@ class OfficeCustomerReciept_PDF {
                 pw.Center(
                   child: pw.Text(
                       '15-D, AL-Makkah Colony, Near Butt Chowk, College Road, Lahore. Ph : 0304-4770075, 0302-8427221, 04235184078',
-                      style: pw.TextStyle(fontSize: 13.5)),
+                      style: pw.TextStyle(fontSize: 13)),
                 ),
-
                 pw.SizedBox(height: 10),
                 pw.Row(
                     mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
                     children: [
                       pw.Container(
                         height: 90,
-                        width: 350,
+                        width: 300,
                         decoration: pw.BoxDecoration(
                             borderRadius: pw.BorderRadius.circular(10),
                             border: pw.Border.all(
@@ -124,78 +142,72 @@ class OfficeCustomerReciept_PDF {
                             padding: pw.EdgeInsets.symmetric(
                                 horizontal: 5, vertical: 5),
                             child: pw.Column(
-                              crossAxisAlignment: pw.CrossAxisAlignment.start,
-                              children: [
-                                pw.Text(
-                                    filterBillList.customerName.toString()),
-                                pw.Text(
-                                    filterBillList.mobile.toString()),
-                                pw.Text(
-                                    filterBillList.email.toString()),
-                                pw.Text(
-                                    filterBillList.address1.toString()),
-                                pw.Text(
-                                    filterBillList.address2.toString()),
-
-
-                              ]
-                            )),
+                                crossAxisAlignment: pw.CrossAxisAlignment.start,
+                                children: [
+                                  pw.Text(
+                                      filterBillList.customerName.toString()),
+                                  pw.Text(filterBillList.mobile.toString()),
+                                  pw.Text(filterBillList.email.toString()),
+                                  pw.Text(filterBillList.address1.toString()),
+                                  pw.Text(filterBillList.address2.toString()),
+                                ])),
                       ),
-                      pw.Padding(
-                        padding: pw.EdgeInsets.only(top: 80),
-                        child: pw.Container(
-                          child: pw.Text(filterBillList.date.toString()),
-                        ),
-                      ),
+                      // pw.Padding(
+                      //   padding: pw.EdgeInsets.only(top: 80),
+                      //   child: pw.Container(
+                      //     child: pw.Text(filterBillList.date.toString()),
+                      //   ),
+                      // ),
                       pw.Align(
                         alignment: pw.Alignment.topLeft,
                         child: pw.Padding(
-                          padding: pw.EdgeInsets.only(right: 50,top: 50),
+                          padding: pw.EdgeInsets.only(right: 10, top: 50),
                           child: pw.Column(children: [
                             pw.RichText(
                                 text: pw.TextSpan(children: [
-                                  pw.TextSpan(
-                                    text: 'Invoice:',
-                                    style: pw.TextStyle(
-                                        color: PdfColors.black,
-                                        fontWeight:  pw.FontWeight.bold),
-                                  ),
-                                  pw.TextSpan(
-                                    text: '${filterBillList.inv.toString()}',
-                                    style: const pw.TextStyle(
-                                      color: PdfColors.black,
-                                    ),
-                                  ),
-                                ])),
+                              pw.TextSpan(
+                                text: 'Invoice:',
+                                style: pw.TextStyle(
+                                    color: PdfColors.black,
+                                    fontWeight: pw.FontWeight.bold),
+                              ),
+                              pw.TextSpan(
+                                text: '${filterBillList.inv.toString()}',
+                                style: const pw.TextStyle(
+                                  color: PdfColors.black,
+                                ),
+                              ),
+                            ])),
                             pw.RichText(
                                 text: pw.TextSpan(children: [
-                                  pw.TextSpan(
-                                    text: 'Date: ',
-                                    style: pw.TextStyle(
-                                        color: PdfColors.black,
-                                        fontWeight:  pw.FontWeight.bold),
-                                  ),
-                                  pw.TextSpan(
-                                    text: filterBillList.date.toString(),
-                                    style: const pw.TextStyle(
-                                      color: PdfColors.black,
-                                    ),
-                                  ),
-                                ])),pw.RichText(
+                              pw.TextSpan(
+                                text: 'Date: ',
+                                style: pw.TextStyle(
+                                    color: PdfColors.black,
+                                    fontWeight: pw.FontWeight.bold),
+                              ),
+                              pw.TextSpan(
+                                text: formattedDate,
+                                style: const pw.TextStyle(
+                                  color: PdfColors.black,
+                                ),
+                              ),
+                            ])),
+                            pw.RichText(
                                 text: pw.TextSpan(children: [
-                                  pw.TextSpan(
-                                    text: 'Time: ',
-                                    style: pw.TextStyle(
-                                        color: PdfColors.black,
-                                        fontWeight:  pw.FontWeight.bold),
-                                  ),
-                                  pw.TextSpan(
-                                    text: '    14:52:36',
-                                    style: const pw.TextStyle(
-                                      color: PdfColors.black,
-                                    ),
-                                  ),
-                                ])),
+                              pw.TextSpan(
+                                text: 'Time: ',
+                                style: pw.TextStyle(
+                                    color: PdfColors.black,
+                                    fontWeight: pw.FontWeight.bold),
+                              ),
+                              pw.TextSpan(
+                                text: '    14:52:36',
+                                style: const pw.TextStyle(
+                                  color: PdfColors.black,
+                                ),
+                              ),
+                            ])),
                           ]),
                         ),
                       ),
@@ -210,7 +222,7 @@ class OfficeCustomerReciept_PDF {
                 ),
                 pw.Container(
                   // color: PdfColors.blue,
-                  width: 330,
+                  width: 280,
                   child: pw.Row(
                     mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
                     children: [
@@ -232,125 +244,160 @@ class OfficeCustomerReciept_PDF {
                   thickness: 1,
                 ),
                 pw.SizedBox(height: 5),
-                pw.Stack(
-                  children: [
-                    pw.Container(
-                      child: pw.Padding(
+                pw.Stack(children: [
+                  pw.Container(
+                    child: pw.Padding(
                         padding: pw.EdgeInsets.only(left: 20),
+                        child: pw.Column(children: [
+                          pw.Text('1.',
+                              style:
+                                  pw.TextStyle(fontWeight: pw.FontWeight.bold)),
+                          pw.Text('2.',
+                              style:
+                                  pw.TextStyle(fontWeight: pw.FontWeight.bold)),
+                          pw.Text('3.',
+                              style:
+                                  pw.TextStyle(fontWeight: pw.FontWeight.bold)),
+                          pw.Text('4.',
+                              style:
+                                  pw.TextStyle(fontWeight: pw.FontWeight.bold)),
+                          pw.Text('5.',
+                              style:
+                                  pw.TextStyle(fontWeight: pw.FontWeight.bold)),
+                          pw.Text('6.',
+                              style:
+                                  pw.TextStyle(fontWeight: pw.FontWeight.bold)),
+                          pw.Text('7.',
+                              style:
+                                  pw.TextStyle(fontWeight: pw.FontWeight.bold)),
+                        ])),
+                  ),
+                  pw.Container(
+                    child: pw.Padding(
+                        padding: pw.EdgeInsets.only(left: 70),
                         child: pw.Column(
-                            children: [
-                              pw.Text('1.', style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
-                              pw.Text('2.', style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
-                              pw.Text('3.', style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
-                              pw.Text('4.', style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
-                              pw.Text('5.', style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
-                              pw.Text('6.', style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
-                              pw.Text('7.', style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
-                            ]
-                        )
-                      ),
-                    ),
-                    pw.Container(
-                      child: pw.Padding(
-                          padding: pw.EdgeInsets.only(left: 90),
-                          child: pw.Column(
                             crossAxisAlignment: pw.CrossAxisAlignment.start,
-                              children: [
-                                pw.Text('Arear', style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
-                                pw.Text('Server Charges', style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
-                                pw.Text('SMS Charges', style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
-                                pw.Text('Advance Charges', style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
-                                pw.Text('Monthly Charges', style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
-                                pw.Text('POS Charges', style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
-                                pw.Text('Other Charges', style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
-                              ]
-                          )
-                      ),
-
+                            children: [
+                              pw.Text('Arear',
+                                  style: pw.TextStyle(
+                                      fontWeight: pw.FontWeight.bold)),
+                              pw.Text('Server Charges',
+                                  style: pw.TextStyle(
+                                      fontWeight: pw.FontWeight.bold)),
+                              pw.Text('SMS Charges',
+                                  style: pw.TextStyle(
+                                      fontWeight: pw.FontWeight.bold)),
+                              pw.Text('Advance Charges',
+                                  style: pw.TextStyle(
+                                      fontWeight: pw.FontWeight.bold)),
+                              pw.Text('Monthly Charges',
+                                  style: pw.TextStyle(
+                                      fontWeight: pw.FontWeight.bold)),
+                              pw.Text('POS Charges',
+                                  style: pw.TextStyle(
+                                      fontWeight: pw.FontWeight.bold)),
+                              pw.Text('Other Charges',
+                                  style: pw.TextStyle(
+                                      fontWeight: pw.FontWeight.bold)),
+                            ])),
+                  ),
+                  pw.Container(
+                    child: pw.Padding(
+                        padding: pw.EdgeInsets.only(left: 240),
+                        child: pw.Column(
+                            crossAxisAlignment: pw.CrossAxisAlignment.end,
+                            children: [
+                              pw.Text(filterBillList.arrear.toString(),
+                                  style: pw.TextStyle(
+                                      fontWeight: pw.FontWeight.bold)),
+                              pw.Text(filterBillList.serverChg.toString(),
+                                  style: pw.TextStyle(
+                                      fontWeight: pw.FontWeight.bold)),
+                              pw.Text(filterBillList.sMSChg.toString(),
+                                  style: pw.TextStyle(
+                                      fontWeight: pw.FontWeight.bold)),
+                              pw.Text(filterBillList.advacneChg.toString(),
+                                  style: pw.TextStyle(
+                                      fontWeight: pw.FontWeight.bold)),
+                              pw.Text(filterBillList.monthlyChg.toString(),
+                                  style: pw.TextStyle(
+                                      fontWeight: pw.FontWeight.bold)),
+                              pw.Text(filterBillList.pSOChg.toString(),
+                                  style: pw.TextStyle(
+                                      fontWeight: pw.FontWeight.bold)),
+                              pw.Text(filterBillList.otherChg.toString(),
+                                  style: pw.TextStyle(
+                                      fontWeight: pw.FontWeight.bold)),
+                            ])),
+                  ),
+                  pw.Padding(
+                    padding: pw.EdgeInsets.only(top: 100),
+                    child: pw.Container(
+                      width: 300,
+                      child: pw.Divider(thickness: 1, height: 5),
                     ),
-                    pw.Container(
-                      child: pw.Padding(
-                          padding: pw.EdgeInsets.only(left: 290),
-                          child: pw.Column(
-                              crossAxisAlignment: pw.CrossAxisAlignment.end,
-                              children: [
-                                pw.Text(filterBillList.arrear.toString(), style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
-                                pw.Text(filterBillList.serverChg.toString(), style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
-                                pw.Text(filterBillList.sMSChg.toString(), style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
-                                pw.Text(filterBillList.advacneChg.toString(), style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
-                                pw.Text(filterBillList.monthlyChg.toString(), style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
-                                pw.Text(filterBillList.pSOChg.toString(), style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
-                                pw.Text(filterBillList.otherChg.toString(), style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
-                              ]
-                          )
-                      ),
+                  ),
+                  pw.Padding(
+                    padding: pw.EdgeInsets.only(top: 103),
+                    child: pw.Container(
+                      width: 300,
+                      child: pw.Divider(thickness: 1, height: 5),
                     ),
-                    pw.Padding(
-                      padding: pw.EdgeInsets.only(top:  100),
-                      child: pw.Container(
-                        width: 350,
-                        child: pw.Divider(thickness: 1, height: 5),
-                      ),
-
-                    ),
-                    pw.Padding(
-                        padding: pw.EdgeInsets.only(top:  103),
-                        child: pw.Container(
-                          width: 350,
-                          child: pw.Divider(thickness: 1, height: 5),
-                        ),
-                    ),
-                    pw.Padding(
-                      padding: pw.EdgeInsets.only(top:  110, left: 200),
-                      child: pw.Text('TOTAL', style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
-                    ),
-                    pw.Padding(
-                      padding: pw.EdgeInsets.only(top:  110, left: 310),
-                      child: pw.Text('0000',textAlign: pw.TextAlign.right,style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
-                    ),
-                    pw.Padding(
-                      padding: pw.EdgeInsets.only(left: 450),
-                      child: pw.Container(
-                        height: 250,
+                  ),
+                  pw.Padding(
+                    padding: pw.EdgeInsets.only(top: 110, left: 160),
+                    child: pw.Text('TOTAL',
+                        style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
+                  ),
+                  pw.Padding(
+                    padding: pw.EdgeInsets.only(top: 110, left: 240),
+                    child: pw.Text(total.toStringAsFixed(2),
+                        textAlign: pw.TextAlign.right,
+                        style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
+                  ),
+                  pw.Padding(
+                    padding: pw.EdgeInsets.only(left: 330),
+                    child: pw.Container(
+                        height: 200,
                         width: 300,
                         child: pw.Column(
-                          crossAxisAlignment: pw.CrossAxisAlignment.start,
-          children: [
-            pw.Text('CRYSTAL SOLUTIONS',style: pw.TextStyle(fontSize: 16, fontWeight: pw.FontWeight.bold)),
-            pw.Text('Meezan Bank, Akbar Chowk'),
-            pw.Text('IBAN No: PK32MEZN0002060109804512'),
-            pw.SizedBox(height: 10),
-            pw.Text('JAZZ CASH',style: pw.TextStyle(fontSize: 16, fontWeight: pw.FontWeight.bold)),
-            pw.Text('03218811400'),
-            pw.Text('Abdul Razzaq Ghauri'),
-          ]
-          )),
-                      ),
-                  ]
-                ),
+                            crossAxisAlignment: pw.CrossAxisAlignment.start,
+                            children: [
+                              pw.Text('CRYSTAL SOLUTIONS',
+                                  style: pw.TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: pw.FontWeight.bold)),
+                              pw.Text('Meezan Bank, Akbar Chowk'),
+                              pw.Text('IBAN No: PK32MEZN0002060109804512'),
+                              pw.SizedBox(height: 10),
+                              pw.Text('JAZZ CASH',
+                                  style: pw.TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: pw.FontWeight.bold)),
+                              pw.Text('03218811400'),
+                              pw.Text('Abdul Razzaq Ghauri'),
+                            ])),
+                  ),
+                ]),
                 pw.Padding(
-                  padding: pw.EdgeInsets.only(left:  50),
+                  padding: pw.EdgeInsets.only(left: 30),
                   child: pw.Container(
                     width: 150,
                     child: pw.Divider(thickness: 1, height: 5),
                   ),
                 ),
-            pw.Row(
-                mainAxisAlignment:
-                pw.MainAxisAlignment.spaceBetween,
-              children: [
-                pw.Padding(
-                  padding: pw.EdgeInsets.only(left: 100),
-                  child:    pw.Text('(Signature)'),),
-                pw.Container(
-                  width: 580,
-                  child: pw.Image(pw.MemoryImage(urduText)),
-                )
-
-              ]
-            )
-
-
+                pw.Row(
+                    mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+                    children: [
+                      pw.Padding(
+                        padding: pw.EdgeInsets.only(left: 100),
+                        child: pw.Text('(Signature)'),
+                      ),
+                      pw.Container(
+                        width: 370,
+                        child: pw.Image(pw.MemoryImage(urduText)),
+                      )
+                    ])
               ],
             ),
           );
@@ -416,6 +463,7 @@ class OfficeCustomerReciept_PDF {
       ),
     );
 
-    return PdfFileHandle.saveDocument(name: '${filterBillList.customerName}.pdf', pdf: pdf);
+    return PdfFileHandle.saveDocument(
+        name: '${filterBillList.customerName}.pdf', pdf: pdf);
   }
 }

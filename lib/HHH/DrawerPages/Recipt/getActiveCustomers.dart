@@ -10,6 +10,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:whatsapp_share/whatsapp_share.dart';
 import '../../../Model/Customers/GetActiveCustomersModel.dart';
 import '../../../cosmos.dart';
 import '../Customers/Customer PDF/pdf_file_handle.dart';
@@ -262,6 +263,20 @@ class _CustomerCollectionScreenState extends State<CustomerCollectionScreen> {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       context: context,
       builder: (context) {
+        // sahreOnWhatsapp(String phoneNumber) async {
+        //   final pdfFile = await CustomerReciept_PDF.generate(getActiveCustomersModel);
+        //   final directory = (await getApplicationDocumentsDirectory()).path;
+        //   final docPath = await File('$directory/share.pdf').create();
+        //   await docPath.writeAsBytes(await pdfFile.readAsBytes());
+        //
+        //   if (pdfFile.path.isNotEmpty) {
+        //     await WhatsappShare.shareFile(
+        //       // text: 'Whatsapp share text',
+        //       phone: phoneNumber,
+        //       filePath: [docPath.path],
+        //     );
+        //   }
+        // }
         Future<void> _sharePdfFileAndOpenWhatsApp(String phoneNumber) async {
           try {
             // Generate the PDF file (assuming this method returns the file path)
@@ -271,7 +286,7 @@ class _CustomerCollectionScreenState extends State<CustomerCollectionScreen> {
             // Save the PDF file to a temporary directory
             final directory = await getTemporaryDirectory();
             final filePath =
-                '${directory.path}/${getActiveCustomersModel.tCstDsc}Billing Reciept.pdf';
+                '${directory.path}/${getActiveCustomersModel.tCstDsc} Billing Reciept.pdf';
             final file = File(filePath);
             await file.writeAsBytes(await pdfFile.readAsBytes());
 
@@ -280,18 +295,25 @@ class _CustomerCollectionScreenState extends State<CustomerCollectionScreen> {
                     'Hi ${getActiveCustomersModel.tCstDsc}, Here\'s your receipt:');
 
             // Open WhatsApp with the specified phone number
-            final launchUri = Uri.parse(
-                'https://wa.me/$phoneNumber?text=${Uri.encodeFull(filePath)}');
-
-            if (await canLaunchUrl(launchUri)) {
-              await launchUrl(launchUri);
-            } else {
-              throw 'Could not launch WhatsApp for $phoneNumber';
+            if(file.path.isNotEmpty){
+              await WhatsappShare.shareFile(
+                phone: phoneNumber,
+                filePath: [pdfFile.path],
+              );
             }
+            // final launchUri = Uri.parse(
+            //     'https://wa.me/$phoneNumber?text=${Uri.encodeFull(filePath)}');
+            //
+            // if (await canLaunchUrl(launchUri)) {
+            //   await launchUrl(launchUri);
+            // } else {
+            //   throw 'Could not launch WhatsApp for $phoneNumber';
+            // }
           } catch (e) {
             print('Error: $e');
           }
         }
+
 
         return Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15.0),

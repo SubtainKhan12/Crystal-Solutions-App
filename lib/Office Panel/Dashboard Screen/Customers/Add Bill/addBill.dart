@@ -70,7 +70,7 @@ class _AddBillUIState extends State<AddBillUI> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Monthly Bill Generation',style: TextStyle(color: Cosmic.white_color),),
+        title: Text('Add Bill',style: TextStyle(color: Cosmic.white_color),),
         centerTitle: true,
         backgroundColor: Cosmic.app_color,
         iconTheme: IconThemeData(color: Cosmic.white_color),
