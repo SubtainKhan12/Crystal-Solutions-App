@@ -313,8 +313,6 @@ class _CustomerCollectionScreenState extends State<CustomerCollectionScreen> {
             print('Error: $e');
           }
         }
-
-
         return Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15.0),
           child: Column(

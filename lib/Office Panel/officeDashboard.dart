@@ -3,6 +3,8 @@ import 'package:crystal_solutions/Office%20Panel/Dashboard%20Screen/Expense/expe
 import 'package:crystal_solutions/cosmos.dart';
 import 'package:flutter/material.dart';
 
+import 'DrawerUI/drawerUi.dart';
+
 class OfficeDashboardUI extends StatefulWidget {
   const OfficeDashboardUI({super.key});
 
@@ -29,7 +31,7 @@ class _OfficeDashboardUIState extends State<OfficeDashboardUI> {
           backgroundColor: Cosmic.app_color,
           iconTheme: IconThemeData(color: Cosmic.white_color),
         ),
-        // drawer: DrawerUi(),
+        drawer: OfficeDrawerUI(),
         body: Stack(
           children: [
             SingleChildScrollView(
