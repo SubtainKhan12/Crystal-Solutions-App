@@ -1,8 +1,5 @@
 import 'dart:convert';
-
-
 import 'package:crystal_solutions/Model/BillRegister/BillRegisterModel.dart';
-import 'package:crystal_solutions/Model/RegisterCollection/CollectionsRegisters.dart';
 import 'package:http/http.dart'as http;
 import 'package:crystal_solutions/cosmos.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +15,7 @@ class BillRegisterUi extends StatefulWidget {
 
 class _BillRegisterUiState extends State<BillRegisterUi> {
   BillRegisterModel? billRegisterModel;
-  // CollectionsRegistersModel? searchModel;
+  List<Detail>? _filteredDetails = [];
   DateTime selectedInitialDate = DateTime.now();
   DateTime selectedFinalDate = DateTime.now();
   double tableFontSize = 12;
@@ -73,17 +70,20 @@ class _BillRegisterUiState extends State<BillRegisterUi> {
                             height: _height * 0.04,
                             width: _width * 0.45,
                             child: TextField(
+                              onChanged: (query) {
+                                search(query);
+                              },
                               decoration: InputDecoration(
                                 labelText: "Search",
                                 labelStyle: TextStyle(
                                   fontSize: _height *
-                                      0.02, // Adjust font size relative to TextField height
+                                      0.02,
                                 ),
                                 contentPadding: EdgeInsets.symmetric(
                                   vertical: _height * 0.01,
-                                  // Adjust vertical padding
+
                                   horizontal:
-                                  _width * 0.02, // Adjust horizontal padding
+                                  _width * 0.02,
                                 ),
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(0),
@@ -224,7 +224,7 @@ class _BillRegisterUiState extends State<BillRegisterUi> {
                       ],
                     ),
                     for (var i = 0;
-                    i < (billRegisterModel?.detail?.length ?? 0);
+                    i < (_filteredDetails?.length ?? 0);
                     i++)
                       TableRow(
                         // Header row
@@ -246,7 +246,7 @@ class _BillRegisterUiState extends State<BillRegisterUi> {
                             child: Padding(
                               padding: const EdgeInsets.only(top: 3.0, left: 1),
                               child: Text(
-                                  billRegisterModel!.detail![i].customer
+                                  _filteredDetails![i].customer
                                       .toString(),
                                   textAlign: TextAlign.left,
                                   style: TextStyle(
@@ -258,7 +258,7 @@ class _BillRegisterUiState extends State<BillRegisterUi> {
                             child: Padding(
                               padding: const EdgeInsets.only(top: 3.0, right: 1),
                               child: Text(
-                                  billRegisterModel!.detail![i].trn.toString(),
+                                  _filteredDetails![i].trn.toString(),
                                   textAlign: TextAlign.right,
                                   style: TextStyle(
                                       fontSize: tableFontSize,
@@ -269,7 +269,7 @@ class _BillRegisterUiState extends State<BillRegisterUi> {
                             child: Padding(
                               padding: const EdgeInsets.only(top: 3.0, right: 1),
                               child: Text(
-                                  billRegisterModel!.detail![i].amount
+                                  _filteredDetails![i].amount
                                       .toString(),
                                   textAlign: TextAlign.right,
                                   style: TextStyle(
@@ -327,10 +327,21 @@ class _BillRegisterUiState extends State<BillRegisterUi> {
       billRegisterModel = BillRegisterModel.fromJson(result);
 
       setState(() {
+        _filteredDetails = billRegisterModel?.detail;
       });
     } else {
       throw Exception('Failed to load data');
     }
   }
-
+  void search(String query) {
+    if (query.isEmpty) {
+      _filteredDetails = billRegisterModel?.detail;
+    } else {
+      _filteredDetails = billRegisterModel?.detail?.where((detail) {
+        return detail.customer?.toLowerCase().contains(query.toLowerCase()) ?? false;
+      }).toList();
+    }
+    setState(() {
+    });
+  }
 }

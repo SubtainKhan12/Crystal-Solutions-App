@@ -1,11 +1,13 @@
 import 'dart:convert';
-
 import 'package:crystal_solutions/Model/RegisterCollection/CollectionsRegisters.dart';
 import 'package:http/http.dart' as http;
 import 'package:crystal_solutions/cosmos.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import '../../../apis.dart';
+
+
+
 
 class CollectionRegisterUI extends StatefulWidget {
   const CollectionRegisterUI({super.key});
@@ -16,7 +18,7 @@ class CollectionRegisterUI extends StatefulWidget {
 
 class _CollectionRegisterUIState extends State<CollectionRegisterUI> {
   CollectionsRegistersModel? collectionsRegisters;
-  CollectionsRegistersModel? searchModel;
+  List<Detail>? _filteredDetails = [];
   DateTime selectedInitialDate = DateTime.now();
   DateTime selectedFinalDate = DateTime.now();
   double tableFontSize = 12;
@@ -71,17 +73,17 @@ class _CollectionRegisterUIState extends State<CollectionRegisterUI> {
                             height: _height * 0.04,
                             width: _width * 0.45,
                             child: TextField(
+                              onChanged: (query) {
+                                   search(query);
+                              },
                               decoration: InputDecoration(
                                 labelText: "Search",
                                 labelStyle: TextStyle(
-                                  fontSize: _height *
-                                      0.02, // Adjust font size relative to TextField height
+                                  fontSize: _height * 0.02,
                                 ),
                                 contentPadding: EdgeInsets.symmetric(
                                   vertical: _height * 0.01,
-                                  // Adjust vertical padding
-                                  horizontal:
-                                      _width * 0.02, // Adjust horizontal padding
+                                  horizontal: _width * 0.02,
                                 ),
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(0),
@@ -140,7 +142,8 @@ class _CollectionRegisterUIState extends State<CollectionRegisterUI> {
                                 Icon(Icons.calendar_today, color: Colors.blue),
                                 SizedBox(width: 8),
                                 Text(
-                                  "${selectedFinalDate.toLocal()}".split(' ')[0],
+                                  "${selectedFinalDate.toLocal()}"
+                                      .split(' ')[0],
                                   style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     fontSize: 16,
@@ -154,7 +157,8 @@ class _CollectionRegisterUIState extends State<CollectionRegisterUI> {
                     ),
                     Text(
                       "Total Amount: ${collectionsRegisters?.totalAmount ?? '0'} PKR",
-                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                      style:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                     ),
                   ],
                 ),
@@ -222,17 +226,18 @@ class _CollectionRegisterUIState extends State<CollectionRegisterUI> {
                       ],
                     ),
                     for (var i = 0;
-                        i < (collectionsRegisters?.detail?.length ?? 0);
+                        i < (_filteredDetails?.length ?? 0);
                         i++)
                       TableRow(
                         // Header row
-                        decoration: BoxDecoration(border: Border.all(width: 0.5)),
+                        decoration:
+                            BoxDecoration(border: Border.all(width: 0.5)),
                         children: [
                           TableCell(
                             child: Padding(
                               padding: const EdgeInsets.only(top: 3.0, left: 1),
                               child: Text(
-                                  collectionsRegisters!.detail![i].date
+                                  _filteredDetails![i].date
                                       .toString(),
                                   textAlign: TextAlign.left,
                                   style: TextStyle(
@@ -244,7 +249,7 @@ class _CollectionRegisterUIState extends State<CollectionRegisterUI> {
                             child: Padding(
                               padding: const EdgeInsets.only(top: 3.0, left: 1),
                               child: Text(
-                                  collectionsRegisters!.detail![i].customer
+                                  _filteredDetails![i].customer
                                       .toString(),
                                   textAlign: TextAlign.left,
                                   style: TextStyle(
@@ -254,9 +259,11 @@ class _CollectionRegisterUIState extends State<CollectionRegisterUI> {
                           ),
                           TableCell(
                             child: Padding(
-                              padding: const EdgeInsets.only(top: 3.0, right: 1),
+                              padding:
+                                  const EdgeInsets.only(top: 3.0, right: 1),
                               child: Text(
-                                  collectionsRegisters!.detail![i].trn.toString(),
+                                  collectionsRegisters!.detail![i].trn
+                                      .toString(),
                                   textAlign: TextAlign.right,
                                   style: TextStyle(
                                       fontSize: tableFontSize,
@@ -265,9 +272,10 @@ class _CollectionRegisterUIState extends State<CollectionRegisterUI> {
                           ),
                           TableCell(
                             child: Padding(
-                              padding: const EdgeInsets.only(top: 3.0, right: 1),
+                              padding:
+                                  const EdgeInsets.only(top: 3.0, right: 1),
                               child: Text(
-                                  collectionsRegisters!.detail![i].collection
+                                  _filteredDetails![i].collection
                                       .toString(),
                                   textAlign: TextAlign.right,
                                   style: TextStyle(
@@ -329,9 +337,23 @@ class _CollectionRegisterUIState extends State<CollectionRegisterUI> {
       collectionsRegisters?.detail?.clear();
       collectionsRegisters = CollectionsRegistersModel.fromJson(result);
 
-      setState(() {});
+
+      setState(() {
+        _filteredDetails = collectionsRegisters?.detail;
+      });
     } else {
       throw Exception('Failed to load data');
     }
+  }
+  void search(String query) {
+    if (query.isEmpty) {
+      _filteredDetails = collectionsRegisters?.detail;
+    } else {
+      _filteredDetails = collectionsRegisters?.detail?.where((detail) {
+        return detail.customer?.toLowerCase().contains(query.toLowerCase()) ?? false;
+      }).toList();
+    }
+    setState(() {
+    });
   }
 }
