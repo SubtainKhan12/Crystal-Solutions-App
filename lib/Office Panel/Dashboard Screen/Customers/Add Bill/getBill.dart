@@ -62,7 +62,7 @@ class _GetBillUIState extends State<GetBillUI> {
               context,
               MaterialPageRoute(
                   builder: (context) => AddBillUI(
-                      getActiveCustomersList: widget.getActiveCustomersList)));
+                      getActiveCustomersList: widget.getActiveCustomersList))).then((value)=> post_getBill());
         },
         child: Icon(Icons.add),
       ),
@@ -466,23 +466,5 @@ class _GetBillUIState extends State<GetBillUI> {
     setState(() {
       filterBillList = filteredList;
     });
-  }
-
-  double calculateTotalCharges(GetBillModel bill) {
-    double monthlyChg = double.tryParse(bill.monthlyChg.toString()) ?? 0;
-    double arrear = double.tryParse(bill.arrear.toString()) ?? 0;
-    double serverChg = double.tryParse(bill.serverChg.toString()) ?? 0;
-    double sMSChg = double.tryParse(bill.sMSChg.toString()) ?? 0;
-    double pSOChg = double.tryParse(bill.pSOChg.toString()) ?? 0;
-    double advacneChg = double.tryParse(bill.advacneChg.toString()) ?? 0;
-    double otherChg = double.tryParse(bill.otherChg.toString()) ?? 0;
-
-    return monthlyChg +
-        arrear +
-        serverChg +
-        sMSChg +
-        pSOChg +
-        advacneChg +
-        otherChg;
   }
 }
