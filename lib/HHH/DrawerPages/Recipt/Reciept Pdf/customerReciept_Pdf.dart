@@ -19,6 +19,9 @@ class CustomerReciept_PDF {
     ByteData image3 = await rootBundle.load('assets/UrduText.png');
 
     Uint8List urduText = (image3).buffer.asUint8List();
+    ByteData image4 = await rootBundle.load('assets/Sign1.jpg');
+
+    Uint8List sign = (image4).buffer.asUint8List();
 
     final pdf = pw.Document(
         // pageMode: PdfPageMode.fullscreen,
@@ -298,7 +301,16 @@ class CustomerReciept_PDF {
                         child: pw.Image(pw.MemoryImage(imageData2)),
                       ),
                     ),
+
                   ]
+                ),
+                pw.Padding(
+                  padding: pw.EdgeInsets.only(left: 50),
+                  child: pw.Container(
+                    height: 50,
+                    width: 150,
+                    child: pw.Image(pw.MemoryImage(sign)),
+                  ),
                 ),
                 pw.Padding(
                   padding: pw.EdgeInsets.only(left:  50),
@@ -307,6 +319,7 @@ class CustomerReciept_PDF {
                     child: pw.Divider(thickness: 1, height: 5),
                   ),
                 ),
+
             pw.Row(
                 mainAxisAlignment:
                 pw.MainAxisAlignment.spaceBetween,

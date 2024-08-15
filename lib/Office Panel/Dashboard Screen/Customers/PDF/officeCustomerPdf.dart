@@ -20,12 +20,14 @@ class OfficeCustomerReciept_PDF {
 
     Uint8List imageData = (image).buffer.asUint8List();
 
-    ByteData image2 = await rootBundle.load('assets/Tc.jpg');
+    ByteData image2 = await rootBundle.load('assets/Sign1.jpg');
 
     Uint8List imageData2 = (image2).buffer.asUint8List();
     ByteData image3 = await rootBundle.load('assets/UrduText.png');
 
     Uint8List urduText = (image3).buffer.asUint8List();
+
+
 
 
     final pdf = pw.Document(
@@ -379,10 +381,18 @@ class OfficeCustomerReciept_PDF {
                             ])),
                   ),
                 ]),
+                pw.Padding(padding: pw.EdgeInsets.only(left: 30),
+                child: pw.Container(
+                  width: 150,
+                  height: 40,
+                  child: pw.Image(pw.MemoryImage(imageData2)),
+                ),),
+
                 pw.Padding(
                   padding: pw.EdgeInsets.only(left: 30),
                   child: pw.Container(
                     width: 150,
+                    height: 50,
                     child: pw.Divider(thickness: 1, height: 5),
                   ),
                 ),

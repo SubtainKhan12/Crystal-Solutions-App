@@ -4,7 +4,9 @@ import 'package:http/http.dart' as http;
 import 'package:crystal_solutions/cosmos.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import '../../../HHH/DrawerPages/Customers/Customer PDF/pdf_file_handle.dart';
 import '../../../apis.dart';
+import 'collectionRegister_pdf.dart';
 
 
 
@@ -23,6 +25,11 @@ class _CollectionRegisterUIState extends State<CollectionRegisterUI> {
   DateTime selectedFinalDate = DateTime.now();
   double tableFontSize = 12;
   var f = NumberFormat("###,###.#", "en_US");
+  final numberFormat = NumberFormat('#,###');
+  String formatCollection(String amount) {
+    final doubleAmount = double.tryParse(amount)?? 0.00;
+    return numberFormat.format(doubleAmount);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,12 +38,18 @@ class _CollectionRegisterUIState extends State<CollectionRegisterUI> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Collection Register',
+          'Crystal Solution',
           style: TextStyle(color: Cosmic.white_color),
         ),
         centerTitle: true,
         backgroundColor: Cosmic.app_color,
         iconTheme: IconThemeData(color: Cosmic.white_color),
+        actions: [
+          IconButton(onPressed: () async{
+            final pdfFile = await CollectionRegister_Pdf.generate(collectionsRegisters,selectedInitialDate,selectedFinalDate);
+            PdfFileHandle.openFile(pdfFile);
+          }, icon: Icon(Icons.picture_as_pdf))
+        ],
       ),
       body: RefreshIndicator(
         onRefresh: post_CollectionRegister,
@@ -64,73 +77,31 @@ class _CollectionRegisterUIState extends State<CollectionRegisterUI> {
                             fontWeight: FontWeight.bold),
                       )),
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(left: 5.0, top: 5),
-                          child: Container(
-                            height: _height * 0.04,
-                            width: _width * 0.45,
-                            child: TextField(
-                              onChanged: (query) {
-                                   search(query);
-                              },
-                              decoration: InputDecoration(
-                                labelText: "Search",
-                                labelStyle: TextStyle(
-                                  fontSize: _height * 0.02,
-                                ),
-                                contentPadding: EdgeInsets.symmetric(
-                                  vertical: _height * 0.01,
-                                  horizontal: _width * 0.02,
-                                ),
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(0),
-                                ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 10),
+                      child: InkWell(
+                        onTap: () => _intSelectDate(context, setState),
+                        child: Row(
+                          children: [
+                            SizedBox(width: 8),
+                            Text('From: ', style: TextStyle(fontWeight: FontWeight.bold)),
+                            Text(
+                              DateFormat('dd-MM-yyyy').format(selectedInitialDate),
+
+                              style: TextStyle(
+                                // fontWeight: FontWeight.bold,
+                                fontSize: 16,
                               ),
                             ),
-                          ),
+                            Icon(Icons.calendar_today, color: Colors.green),
+
+                          ],
                         ),
-                        Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 10),
-                          child: InkWell(
-                            onTap: () => _intSelectDate(context, setState),
-                            child: Row(
-                              children: [
-                                Icon(Icons.calendar_today, color: Colors.green),
-                                SizedBox(width: 8),
-                                Text(
-                                  "${selectedInitialDate.toLocal()}"
-                                      .split(' ')[0],
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 16,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ],
+                      ),
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 5.0),
-                          child: ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(
-                                      5), // Makes the button rectangular
-                                ),
-                              ),
-                              onPressed: () {
-                                post_CollectionRegister();
-                              },
-                              child: Text('Submit')),
-                        ),
                         Padding(
                           padding: EdgeInsets.symmetric(horizontal: 10),
                           child: InkWell(
@@ -139,46 +110,60 @@ class _CollectionRegisterUIState extends State<CollectionRegisterUI> {
                             },
                             child: Row(
                               children: [
-                                Icon(Icons.calendar_today, color: Colors.blue),
+
                                 SizedBox(width: 8),
+                                Text('     To: ', style: TextStyle(fontWeight: FontWeight.bold),),
                                 Text(
-                                  "${selectedFinalDate.toLocal()}"
-                                      .split(' ')[0],
+                                  DateFormat('dd-MM-yyyy').format(selectedFinalDate),
                                   style: TextStyle(
-                                    fontWeight: FontWeight.bold,
+                                    // fontWeight: FontWeight.bold,
                                     fontSize: 16,
                                   ),
                                 ),
+                                Icon(Icons.calendar_today, color: Colors.blue),
                               ],
                             ),
                           ),
                         ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                          child: Container(
+                            height: _height * 0.035,
+                            child: ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: Color(0xffF58634),
+
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(
+                                        5), // Makes the button rectangular
+                                  ),
+                                ),
+                                onPressed: () {
+                                  post_CollectionRegister();
+                                },
+                                child: Text('Submit',style: TextStyle(color: Cosmic.app_color),)),
+
+                          ),
+
+                        ),
+
                       ],
                     ),
-                    Text(
-                      "Total Amount: ${collectionsRegisters?.totalAmount ?? '0'} PKR",
-                      style:
-                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                    ),
+                    SizedBox(height: _height *0.005,),
                   ],
                 ),
               ),
+
               Column(children: [
                 Table(
                   border: TableBorder(
-                    verticalInside: BorderSide(width: 1, color: Colors.black),
+                    verticalInside: BorderSide(width: 1, color: Colors.grey ),
                   ),
                   columnWidths: const {
                     0: FlexColumnWidth(0.85),
-                    1: FlexColumnWidth(2),
-                    2: FlexColumnWidth(0.5),
+                    1: FlexColumnWidth(0.5),
+                    2: FlexColumnWidth(2),
                     3: FlexColumnWidth(0.8),
-                    // 4: FlexColumnWidth(1),
-                    // 5: FlexColumnWidth(1),
-                    // 6: FlexColumnWidth(1),
-                    // 7: FlexColumnWidth(1),
-                    // 8: FlexColumnWidth(1),
-                    // 9: FlexColumnWidth(1),
                   },
                   children: [
                     TableRow(
@@ -198,7 +183,7 @@ class _CollectionRegisterUIState extends State<CollectionRegisterUI> {
                         ),
                         TableCell(
                           child: Center(
-                            child: Text('Description',
+                            child: Text('Trn#',
                                 style: TextStyle(
                                     fontSize: tableFontSize,
                                     color: Colors.white,
@@ -207,7 +192,7 @@ class _CollectionRegisterUIState extends State<CollectionRegisterUI> {
                         ),
                         TableCell(
                           child: Center(
-                            child: Text('Trn#',
+                            child: Text('Description',
                                 style: TextStyle(
                                     fontSize: tableFontSize,
                                     color: Colors.white,
@@ -231,7 +216,7 @@ class _CollectionRegisterUIState extends State<CollectionRegisterUI> {
                       TableRow(
                         // Header row
                         decoration:
-                            BoxDecoration(border: Border.all(width: 0.5)),
+                            BoxDecoration(border: Border.all(width: 0.5,color: Colors.grey)),
                         children: [
                           TableCell(
                             child: Padding(
@@ -242,45 +227,49 @@ class _CollectionRegisterUIState extends State<CollectionRegisterUI> {
                                   textAlign: TextAlign.left,
                                   style: TextStyle(
                                       fontSize: tableFontSize,
-                                      fontWeight: FontWeight.bold)),
+                                      )),
+                            ),
+                          ),
+                          TableCell(
+                            child: Padding(
+                              padding:
+                              const EdgeInsets.only(top: 3.0, right: 1),
+                              child: Text(
+                                  collectionsRegisters!.detail![i].trn
+                                      .toString(),
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    fontSize: tableFontSize,
+                                  )),
                             ),
                           ),
                           TableCell(
                             child: Padding(
                               padding: const EdgeInsets.only(top: 3.0, left: 1),
                               child: Text(
-                                  _filteredDetails![i].customer
-                                      .toString(),
-                                  textAlign: TextAlign.left,
-                                  style: TextStyle(
-                                      fontSize: tableFontSize,
-                                      fontWeight: FontWeight.bold)),
+                                _filteredDetails![i].customer.toString(),
+                                textAlign: TextAlign.left,
+                                style: TextStyle(
+                                  fontSize: tableFontSize,
+                                ),
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                softWrap: false,
+                              ),
                             ),
                           ),
+
+
                           TableCell(
                             child: Padding(
                               padding:
                                   const EdgeInsets.only(top: 3.0, right: 1),
-                              child: Text(
-                                  collectionsRegisters!.detail![i].trn
-                                      .toString(),
+                              child: Text(formatCollection( _filteredDetails![i].collection
+                                  .toString(),),
+
                                   textAlign: TextAlign.right,
                                   style: TextStyle(
-                                      fontSize: tableFontSize,
-                                      fontWeight: FontWeight.bold)),
-                            ),
-                          ),
-                          TableCell(
-                            child: Padding(
-                              padding:
-                                  const EdgeInsets.only(top: 3.0, right: 1),
-                              child: Text(
-                                  _filteredDetails![i].collection
-                                      .toString(),
-                                  textAlign: TextAlign.right,
-                                  style: TextStyle(
-                                      fontSize: tableFontSize,
-                                      fontWeight: FontWeight.bold)),
+                                      fontSize: tableFontSize,)),
                             ),
                           ),
                         ],
@@ -288,6 +277,32 @@ class _CollectionRegisterUIState extends State<CollectionRegisterUI> {
                   ],
                 ),
               ]),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 220.0),
+                    child: DataTable(
+                      headingRowHeight: _height * 0.04,
+                      dataRowHeight: _height * 0.04,
+
+
+                      columns: [
+                        DataColumn(label: Text('Total Amount:',style: TextStyle(
+                            fontSize: tableFontSize,
+                            fontWeight: FontWeight.bold)),),
+                      ],
+
+                      rows: [
+
+                        DataRow(
+                            cells: [
+                          DataCell(Text("${collectionsRegisters?.totalAmount ?? '0'} PKR",
+                            style:
+                            TextStyle(fontSize: tableFontSize,
+                                fontWeight: FontWeight.bold),)),
+                        ]),
+                      ],
+                    ),
+                  ),
+
             ]),
           ),
         ),
@@ -299,6 +314,7 @@ class _CollectionRegisterUIState extends State<CollectionRegisterUI> {
       BuildContext context, StateSetter setState) async {
     final DateTime? picked = await showDatePicker(
       context: context,
+      helpText: 'From Date',
       initialDate: selectedInitialDate,
       firstDate: DateTime(2000),
       lastDate: DateTime(2101),
@@ -314,6 +330,7 @@ class _CollectionRegisterUIState extends State<CollectionRegisterUI> {
       BuildContext context, StateSetter setState) async {
     final DateTime? picked = await showDatePicker(
       context: context,
+      helpText: 'To Date',
       initialDate: selectedFinalDate,
       firstDate: DateTime(2000),
       lastDate: DateTime(2101),
@@ -345,15 +362,15 @@ class _CollectionRegisterUIState extends State<CollectionRegisterUI> {
       throw Exception('Failed to load data');
     }
   }
-  void search(String query) {
-    if (query.isEmpty) {
-      _filteredDetails = collectionsRegisters?.detail;
-    } else {
-      _filteredDetails = collectionsRegisters?.detail?.where((detail) {
-        return detail.customer?.toLowerCase().contains(query.toLowerCase()) ?? false;
-      }).toList();
-    }
-    setState(() {
-    });
-  }
+  // void search(String query) {
+  //   if (query.isEmpty) {
+  //     _filteredDetails = collectionsRegisters?.detail;
+  //   } else {
+  //     _filteredDetails = collectionsRegisters?.detail?.where((detail) {
+  //       return detail.customer?.toLowerCase().contains(query.toLowerCase()) ?? false;
+  //     }).toList();
+  //   }
+  //   setState(() {
+  //   });
+  // }
 }
