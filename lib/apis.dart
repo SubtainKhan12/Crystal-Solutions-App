@@ -1,5 +1,6 @@
 
 
+
 String login = '$baseUrl/login.php';
 
 
@@ -77,3 +78,4 @@ String getCollection = '$baseUrl/getCollection.php';
 String customerLedger = '$baseUrl/customerLedger.php';
 String CollectionRegister = '$baseUrl/CollectionRegister.php';
 String BillRegister = '$baseUrl/BillRegister.php';
+String CustomerReceivable = '$baseUrl/CustomerReceivable.php';

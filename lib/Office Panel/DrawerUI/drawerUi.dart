@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import '../../HHH/Login/loginScreen.dart';
 import '../../cosmos.dart';
 import '../Drawer Pages/BillRegister/billRegister.dart';
+import '../Drawer Pages/CustomerRecievable/customerRecievable.dart';
 
 class OfficeDrawerUI extends StatefulWidget {
   const OfficeDrawerUI({super.key});
@@ -62,6 +63,27 @@ class _OfficeDrawerUIState extends State<OfficeDrawerUI> {
                           ),
                           Text(
                             "Bill Register",
+                            style: TextStyle(fontSize: 18),
+                          ),
+                        ],
+                      )),
+                ),
+                SizedBox(
+                  height: 39,
+                  child: TextButton(
+                      onPressed: () {
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=> CustomerReceivableUi()));
+
+                      },
+                      child: const Row(
+                        children: [
+                          SizedBox(
+                              height: 30, width: 30, child: Icon(Icons.monetization_on_outlined)),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Text(
+                            "Customer Recievable",
                             style: TextStyle(fontSize: 18),
                           ),
                         ],

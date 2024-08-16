@@ -98,7 +98,7 @@ class OfficeCustomerReciept_PDF {
     pdf.addPage(
       pw.MultiPage(
         pageFormat: PdfPageFormat.a4,
-        orientation: pw.PageOrientation.portrait,
+        orientation: pw.PageOrientation.landscape,
         margin:
             const pw.EdgeInsets.only(left: 25, right: 25, bottom: 0, top: 0),
         header: (context) {
@@ -148,6 +148,7 @@ class OfficeCustomerReciept_PDF {
                                 children: [
                                   pw.Text(
                                       filterBillList.customerName.toString()),
+                                  pw.Text(filterBillList.contactPerson.toString()),
                                   pw.Text(filterBillList.mobile.toString()),
                                   pw.Text(filterBillList.email.toString()),
                                   pw.Text(filterBillList.address1.toString()),
@@ -358,10 +359,10 @@ class OfficeCustomerReciept_PDF {
                         style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
                   ),
                   pw.Padding(
-                    padding: pw.EdgeInsets.only(left: 330),
+                    padding: pw.EdgeInsets.only(left: 500),
                     child: pw.Container(
-                        height: 200,
-                        width: 300,
+                        height: 125,
+                        width: 270,
                         child: pw.Column(
                             crossAxisAlignment: pw.CrossAxisAlignment.start,
                             children: [
@@ -381,7 +382,7 @@ class OfficeCustomerReciept_PDF {
                             ])),
                   ),
                 ]),
-                pw.Padding(padding: pw.EdgeInsets.only(left: 30),
+                pw.Padding(padding: pw.EdgeInsets.only(left: 30,top: 20),
                 child: pw.Container(
                   width: 150,
                   height: 40,
@@ -392,7 +393,7 @@ class OfficeCustomerReciept_PDF {
                   padding: pw.EdgeInsets.only(left: 30),
                   child: pw.Container(
                     width: 150,
-                    height: 50,
+                    // height: 50,
                     child: pw.Divider(thickness: 1, height: 5),
                   ),
                 ),
@@ -400,11 +401,11 @@ class OfficeCustomerReciept_PDF {
                     mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
                     children: [
                       pw.Padding(
-                        padding: pw.EdgeInsets.only(left: 100),
+                        padding: pw.EdgeInsets.only(left: 70),
                         child: pw.Text('(Signature)'),
                       ),
                       pw.Container(
-                        width: 370,
+                        width: 600,
                         child: pw.Image(pw.MemoryImage(urduText)),
                       )
                     ])

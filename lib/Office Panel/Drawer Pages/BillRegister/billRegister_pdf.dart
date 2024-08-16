@@ -135,33 +135,6 @@ class BillRegister_Pdf {
               ],
             );
           },
-          // footer: (context) {
-          //   return pw.Container(
-          //     alignment: pw.Alignment.centerRight,
-          //     margin: const pw.EdgeInsets.only(top: 10),
-          //     child: pw.Column(
-          //       crossAxisAlignment: pw.CrossAxisAlignment.end,
-          //       children: [
-          //         pw.Divider(thickness: 2),
-          //         pw.Text(
-          //           '${DateFormat('dd-MM-yyyy HH:mm:ss').format(DateTime.now().toLocal())}',
-          //           style: pw.TextStyle(
-          //             fontSize: 12,
-          //             color: PdfColors.grey,
-          //           ),
-          //         ),
-          //         pw.SizedBox(height: 10),
-          //         pw.Text(
-          //           'Page ${context.pageNumber} of ${context.pagesCount}',
-          //           style: pw.TextStyle(
-          //             fontSize: 12,
-          //             color: PdfColors.grey,
-          //           ),
-          //         ),
-          //       ],
-          //     ),
-          //   );
-          // },
           build: (context) {
             return [
               pw.TableHelper.fromTextArray(

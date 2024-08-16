@@ -278,30 +278,65 @@ class _CollectionRegisterUIState extends State<CollectionRegisterUI> {
                 ),
               ]),
                   Padding(
-                    padding: const EdgeInsets.only(left: 220.0),
-                    child: DataTable(
-                      headingRowHeight: _height * 0.04,
-                      dataRowHeight: _height * 0.04,
+                    padding: const EdgeInsets.only(left: 115.0),
+                    child: Table(
+                      border: TableBorder(
+                        verticalInside: BorderSide(width: 1, color: Colors.grey),
+                      ),
+                      columnWidths: const {
+                        0: FlexColumnWidth(0.25),
+                        1: FlexColumnWidth(0.1),
 
-
-                      columns: [
-                        DataColumn(label: Text('Total Amount:',style: TextStyle(
-                            fontSize: tableFontSize,
-                            fontWeight: FontWeight.bold)),),
-                      ],
-
-                      rows: [
-
-                        DataRow(
-                            cells: [
-                          DataCell(Text("${collectionsRegisters?.totalAmount ?? '0'} PKR",
-                            style:
-                            TextStyle(fontSize: tableFontSize,
-                                fontWeight: FontWeight.bold),)),
-                        ]),
+                      },
+                      children: [
+                        TableRow(
+                            decoration: BoxDecoration(
+                                border: Border.all(width: 0.5,color: Colors.grey)),
+                            children: [
+                              TableCell(
+                                child: Text('Total Amount',
+                                    style: TextStyle(
+                                        fontSize: tableFontSize,
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.bold)),
+                              ),
+                              TableCell(
+                                child: Text(
+                                    collectionsRegisters?.totalAmount ?? '0',
+                                    textAlign: TextAlign.right,
+                                    style: TextStyle(
+                                      fontSize: tableFontSize,
+                                    )),
+                              ),
+                            ])
                       ],
                     ),
-                  ),
+                  )
+                  // Padding(
+                  //   padding: const EdgeInsets.only(left: 220.0),
+                  //   child: DataTable(
+                  //     headingRowHeight: _height * 0.04,
+                  //     dataRowHeight: _height * 0.04,
+                  //
+                  //
+                  //     columns: [
+                  //       DataColumn(label: Text('Total Amount:',style: TextStyle(
+                  //           fontSize: tableFontSize,
+                  //           fontWeight: FontWeight.bold)),),
+                  //     ],
+                  //
+                  //     rows: [
+                  //
+                  //       DataRow(
+                  //           cells: [
+                  //         DataCell(Text("${collectionsRegisters?.totalAmount ?? '0'} PKR",
+                  //           style:
+                  //           TextStyle(fontSize: tableFontSize,
+                  //               fontWeight: FontWeight.bold),)),
+                  //       ]),
+                  //     ],
+                  //   ),
+                  // ),
 
             ]),
           ),
