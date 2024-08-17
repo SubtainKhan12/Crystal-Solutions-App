@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:ui';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:pdf/pdf.dart';
@@ -11,11 +12,8 @@ import '../Add Bill/getBill.dart';
 
 class OfficeCustomerReciept_PDF {
   static Future<File> generate(GetBillModel filterBillList) async {
-
-    DateTime parsedDate = DateTime.parse(
-        filterBillList.date.toString());
-    String formattedDate =
-    DateFormat('dd-MM-yyyy').format(parsedDate);
+    DateTime parsedDate = DateTime.parse(filterBillList.date.toString());
+    String formattedDate = DateFormat('dd-MM-yyyy').format(parsedDate);
     ByteData image = await rootBundle.load('assets/CrystalSolutions.jpg');
 
     Uint8List imageData = (image).buffer.asUint8List();
@@ -26,9 +24,6 @@ class OfficeCustomerReciept_PDF {
     ByteData image3 = await rootBundle.load('assets/UrduText.png');
 
     Uint8List urduText = (image3).buffer.asUint8List();
-
-
-
 
     final pdf = pw.Document(
         // pageMode: PdfPageMode.fullscreen,
@@ -85,15 +80,25 @@ class OfficeCustomerReciept_PDF {
     ];
 
     double arrear = double.tryParse(filterBillList.arrear.toString()) ?? 0.0;
-    double serverChg = double.tryParse(filterBillList.serverChg.toString()) ?? 0.0;
+    double serverChg =
+        double.tryParse(filterBillList.serverChg.toString()) ?? 0.0;
     double sMSChg = double.tryParse(filterBillList.sMSChg.toString()) ?? 0.0;
-    double advacneChg = double.tryParse(filterBillList.advacneChg.toString()) ?? 0.0;
-    double monthlyChg = double.tryParse(filterBillList.monthlyChg.toString()) ?? 0.0;
+    double advacneChg =
+        double.tryParse(filterBillList.advacneChg.toString()) ?? 0.0;
+    double monthlyChg =
+        double.tryParse(filterBillList.monthlyChg.toString()) ?? 0.0;
     double posChg = double.tryParse(filterBillList.pSOChg.toString()) ?? 0.0;
-    double otherChg = double.tryParse(filterBillList.otherChg.toString()) ?? 0.0;
+    double otherChg =
+        double.tryParse(filterBillList.otherChg.toString()) ?? 0.0;
 
     // Calculate the total charges
-    double total = arrear + serverChg + sMSChg + advacneChg + monthlyChg + posChg + otherChg;
+    double total = arrear +
+        serverChg +
+        sMSChg +
+        advacneChg +
+        monthlyChg +
+        posChg +
+        otherChg;
 
     pdf.addPage(
       pw.MultiPage(
@@ -129,92 +134,110 @@ class OfficeCustomerReciept_PDF {
                       style: pw.TextStyle(fontSize: 13)),
                 ),
                 pw.SizedBox(height: 10),
-                pw.Row(
-                    mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
-                    children: [
-                      pw.Container(
-                        height: 90,
-                        width: 300,
-                        decoration: pw.BoxDecoration(
-                            borderRadius: pw.BorderRadius.circular(10),
-                            border: pw.Border.all(
-                              color: PdfColor.fromInt(0xff000000),
-                            )),
-                        child: pw.Padding(
-                            padding: pw.EdgeInsets.symmetric(
-                                horizontal: 5, vertical: 5),
-                            child: pw.Column(
-                                crossAxisAlignment: pw.CrossAxisAlignment.start,
-                                children: [
-                                  pw.Text(
-                                      filterBillList.customerName.toString()),
-                                  pw.Text(filterBillList.contactPerson.toString()),
-                                  pw.Text(filterBillList.mobile.toString()),
-                                  pw.Text(filterBillList.email.toString()),
-                                  pw.Text(filterBillList.address1.toString()),
-                                  pw.Text(filterBillList.address2.toString()),
-                                ])),
+                pw.Stack(children: [
+                  pw.Padding(
+                    padding: pw.EdgeInsets.only(top: 10, left: 630),
+                    child: pw.Container(
+                      height: 16,
+                      width: 120,
+                      alignment: pw.Alignment.center,
+                      decoration: pw.BoxDecoration(
+                        borderRadius: pw.BorderRadius.circular(0),
+                        border: pw.Border.all(color: PdfColors.black)
                       ),
-                      // pw.Padding(
-                      //   padding: pw.EdgeInsets.only(top: 80),
-                      //   child: pw.Container(
-                      //     child: pw.Text(filterBillList.date.toString()),
-                      //   ),
-                      // ),
-                      pw.Align(
-                        alignment: pw.Alignment.topLeft,
-                        child: pw.Padding(
-                          padding: pw.EdgeInsets.only(right: 10, top: 50),
-                          child: pw.Column(children: [
-                            pw.RichText(
-                                text: pw.TextSpan(children: [
-                              pw.TextSpan(
-                                text: 'Invoice:',
-                                style: pw.TextStyle(
-                                    color: PdfColors.black,
-                                    fontWeight: pw.FontWeight.bold),
-                              ),
-                              pw.TextSpan(
-                                text: '${filterBillList.inv.toString()}',
-                                style: const pw.TextStyle(
+                      child: pw.RichText(
+                          text: pw.TextSpan(children: [
+                            pw.TextSpan(
+                              text: 'Due Date: ',
+                              style: pw.TextStyle(
                                   color: PdfColors.black,
-                                ),
+                                  fontWeight: pw.FontWeight.bold),
+                            ),
+                            pw.TextSpan(
+                              text: '10th',
+                              style: const pw.TextStyle(
+                                color: PdfColors.black,
                               ),
-                            ])),
-                            pw.RichText(
-                                text: pw.TextSpan(children: [
-                              pw.TextSpan(
-                                text: 'Date: ',
-                                style: pw.TextStyle(
-                                    color: PdfColors.black,
-                                    fontWeight: pw.FontWeight.bold),
-                              ),
-                              pw.TextSpan(
-                                text: formattedDate,
-                                style: const pw.TextStyle(
-                                  color: PdfColors.black,
-                                ),
-                              ),
-                            ])),
-                            pw.RichText(
-                                text: pw.TextSpan(children: [
-                              pw.TextSpan(
-                                text: 'Time: ',
-                                style: pw.TextStyle(
-                                    color: PdfColors.black,
-                                    fontWeight: pw.FontWeight.bold),
-                              ),
-                              pw.TextSpan(
-                                text: '    14:52:36',
-                                style: const pw.TextStyle(
-                                  color: PdfColors.black,
-                                ),
-                              ),
-                            ])),
-                          ]),
+                            ),
+                          ])),
+                    ),
+                  ),
+                  pw.Row(
+                      mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+                      children: [
+                        pw.Container(
+                          height: 90,
+                          width: 300,
+                          decoration: pw.BoxDecoration(
+                              borderRadius: pw.BorderRadius.circular(0),
+                              border: pw.Border.all(
+                                color: PdfColor.fromInt(0xff000000),
+                              )),
+                          child: pw.Padding(
+                              padding: pw.EdgeInsets.symmetric(
+                                  horizontal: 5, vertical: 5),
+                              child: pw.Column(
+                                  crossAxisAlignment: pw.CrossAxisAlignment.start,
+                                  children: [
+                                    pw.Text(
+                                        filterBillList.customerName.toString()),
+                                    pw.Text(
+                                        filterBillList.contactPerson.toString()),
+                                    pw.Text(filterBillList.mobile.toString()),
+                                    pw.Text(filterBillList.email.toString()),
+                                    pw.Text(filterBillList.address1.toString()),
+                                    pw.Text(filterBillList.address2.toString()),
+                                  ])),
                         ),
-                      ),
-                    ]),
+                        pw.Align(
+                          alignment: pw.Alignment.topLeft,
+                          child: pw.Padding(
+                            padding: pw.EdgeInsets.only(right: 10, top: 50),
+                            child: pw.Container(
+                              child: pw.Column(children: [
+                                pw.Container(
+                                  width: 100,
+                                  child: pw.RichText(
+                                      text: pw.TextSpan(children: [
+                                        pw.TextSpan(
+                                          text: 'Invoice: ',
+                                          style: pw.TextStyle(
+                                              color: PdfColors.black,
+                                              fontWeight: pw.FontWeight.bold),
+                                        ),
+                                        pw.TextSpan(
+                                          text: '${filterBillList.inv.toString()}',
+                                          style: const pw.TextStyle(
+                                            color: PdfColors.black,
+                                          ),
+                                        ),
+                                      ])),
+                                ),
+                                pw.Container(
+                                  child: pw.RichText(
+                                      text: pw.TextSpan(children: [
+                                        pw.TextSpan(
+                                          text: '       Date: ',
+                                          style: pw.TextStyle(
+                                              color: PdfColors.black,
+                                              fontWeight: pw.FontWeight.bold),
+                                        ),
+                                        pw.TextSpan(
+                                          text: formattedDate,
+                                          style: const pw.TextStyle(
+                                            color: PdfColors.black,
+                                          ),
+                                        ),
+                                      ])),
+                                )
+
+                              ]),
+                            ),
+
+                          ),
+                        ),
+                      ]),
+                ]),
                 pw.SizedBox(
                   height: 5,
                 ),
@@ -382,13 +405,14 @@ class OfficeCustomerReciept_PDF {
                             ])),
                   ),
                 ]),
-                pw.Padding(padding: pw.EdgeInsets.only(left: 30,top: 20),
-                child: pw.Container(
-                  width: 150,
-                  height: 40,
-                  child: pw.Image(pw.MemoryImage(imageData2)),
-                ),),
-
+                pw.Padding(
+                  padding: pw.EdgeInsets.only(left: 30, top: 20),
+                  child: pw.Container(
+                    width: 150,
+                    height: 40,
+                    child: pw.Image(pw.MemoryImage(imageData2)),
+                  ),
+                ),
                 pw.Padding(
                   padding: pw.EdgeInsets.only(left: 30),
                   child: pw.Container(
