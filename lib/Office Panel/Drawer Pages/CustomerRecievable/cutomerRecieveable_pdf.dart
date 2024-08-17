@@ -41,6 +41,20 @@ class CustomerRecieveable_Pdf {
           '',
         ],
     ];
+    final totalRow = [
+      '',
+      '',
+      'Total',
+      formatCollection(customerReceivableModel.totalBill.toString()),
+      formatCollection(
+        customerReceivableModel.totalCollection.toString(),
+      ),
+      formatCollection(
+        customerReceivableModel.balance.toString(),
+      ),
+      '',
+    ];
+    tableData.add(totalRow);
 
     pdf.addPage(
       pw.MultiPage(

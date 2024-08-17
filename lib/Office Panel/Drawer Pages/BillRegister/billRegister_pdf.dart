@@ -65,8 +65,24 @@ class BillRegister_Pdf {
               : formatAmount(billRegisterModel.detail![i].amount.toString().trim()),
           '',
         ],
-    ];
 
+    ];
+final totalRow = [
+  '',
+  '',
+  '',
+  'Total',
+  '',
+  '',
+  '',
+  '',
+  '',
+  '',
+  '',
+  billRegisterModel.totalAmount.toString(),
+  '',
+];
+tableData.add(totalRow);
     const int rowsPerPage = 25;
     for (int i = 0; i < tableData.length; i += rowsPerPage) {
       final dataChunk = tableData.sublist(

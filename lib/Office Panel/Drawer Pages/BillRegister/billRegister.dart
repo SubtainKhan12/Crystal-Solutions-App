@@ -310,32 +310,7 @@ class _BillRegisterUiState extends State<BillRegisterUi> {
                             ])
                       ],
                     ),
-                  )
-              // Padding(
-              //   padding: const EdgeInsets.only(left: 220.0),
-              //   child: DataTable(
-              //     headingRowHeight: _height * 0.04,
-              //     dataRowHeight: _height * 0.04,
-              //     columns: [
-              //       DataColumn(
-              //         label: Text('Total Amount:',
-              //             style: TextStyle(
-              //                 fontSize: tableFontSize,
-              //                 fontWeight: FontWeight.bold)),
-              //       ),
-              //     ],
-              //     rows: [
-              //       DataRow(cells: [
-              //         DataCell(Text(
-              //             "${billRegisterModel?.totalAmount.toString() ?? '0'} Pkr",
-              //             textAlign: TextAlign.right,
-              //             style: TextStyle(
-              //                 fontSize: tableFontSize,
-              //                 fontWeight: FontWeight.bold))),
-              //       ]),
-              //     ],
-              //   ),
-              // ),
+                  ),
             ]),
           ),
         ),
