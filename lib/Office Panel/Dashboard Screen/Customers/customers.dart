@@ -123,7 +123,7 @@ class _CustomersUIState extends State<CustomersUI> {
                                                   //     context,
                                                   //     filterActiveCustomerList[
                                                   //         index]);
-                                                  Navigator.push(context, MaterialPageRoute(builder: (context)=> GetBillUI(getActiveCustomersList: _getActiveCustomerList[index])));
+                                                  Navigator.push(context, MaterialPageRoute(builder: (context)=> GetBillUI(getActiveCustomersList: filterActiveCustomerList[index])));
                                                 },
                                                 child: Icon(
                                                     Icons.add_chart_outlined),
@@ -332,29 +332,29 @@ class _CustomersUIState extends State<CustomersUI> {
   }
 
   Future<void> get_ActiveCustomers() async {
-    _getActiveCustomerList.clear();
+    // filterActiveCustomerList.clear();
     var response = await http.get(Uri.parse(getActiveCust));
+    var result = jsonDecode(response.body);
     if (response.statusCode == 200) {
-      var jsonData = jsonDecode(response.body);
-      _getActiveCustomerList = List<GetActiveCustomersModel>.from(
-          jsonData.map((model) => GetActiveCustomersModel.fromJson(model)));
+      _getActiveCustomerList.clear();
+      for(Map i in result){
+        _getActiveCustomerList.add(GetActiveCustomersModel.fromJson(i));
+      }
       setState(() {
-        filterActiveCustomerList = _getActiveCustomerList;
+        filterActiveCustomerList = List.from(_getActiveCustomerList);
       });
     } else {
       throw Exception('Failed to load data');
     }
   }
 
+
   void filterActiveCustomers(String query) {
-    List<GetActiveCustomersModel> filteredList = [];
-    for (var customer in _getActiveCustomerList) {
-      if (customer.tCstDsc!.toLowerCase().contains(query.toLowerCase())) {
-        filteredList.add(customer);
-      }
-    }
     setState(() {
-      filterActiveCustomerList = filteredList;
+      filterActiveCustomerList = _getActiveCustomerList
+          .where((category) =>
+          category.tCstDsc!.toLowerCase().contains(query.toLowerCase()))
+          .toList();
     });
   }
 }

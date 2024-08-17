@@ -119,11 +119,25 @@ class _GetBillUIState extends State<GetBillUI> {
                                             mainAxisAlignment:
                                                 MainAxisAlignment.spaceBetween,
                                             children: [
-                                              Text(formattedDate,
-                                                  style: TextStyle(
-                                                      fontSize: 16,
-                                                      fontWeight:
+                                              Row(
+                                                children: [
+                                                  Text(filterBillList[index]
+                                                      .inv
+                                                      .toString(),
+                                                      style: TextStyle(
+                                                          fontSize: 16,
+                                                          color: Color(0xffF58634),
+                                                          fontWeight:
                                                           FontWeight.bold)),
+                                                  // SizedBox(width: 5,),
+                                                  Text('  -  '),
+                                                  Text(formattedDate,
+                                                      style: TextStyle(
+                                                          fontSize: 16,
+                                                          fontWeight:
+                                                              FontWeight.bold)),
+                                                ],
+                                              ),
                                               Row(
                                                 children: [
                                                   IconButton(
@@ -141,10 +155,6 @@ class _GetBillUIState extends State<GetBillUI> {
                                                                         )));
                                                       },
                                                       icon: Icon(Icons.add)),
-                                                  IconButton(
-                                                      onPressed: () {},
-                                                      icon: Icon(Icons.edit)),
-                                                  // SizedBox(width: 20,),
                                                   IconButton(
                                                       onPressed: () async {
                                                         final pdfFile =

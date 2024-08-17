@@ -3,6 +3,7 @@ import 'package:crystal_solutions/Office%20Panel/Dashboard%20Screen/Expense/expe
 import 'package:crystal_solutions/cosmos.dart';
 import 'package:flutter/material.dart';
 
+import 'Dashboard Screen/Expense/expensePayment.dart';
 import 'DrawerUI/drawerUi.dart';
 
 class OfficeDashboardUI extends StatefulWidget {
@@ -101,37 +102,42 @@ class _OfficeDashboardUIState extends State<OfficeDashboardUI> {
                           ),
                         ),
                       ),
-                      Material(
-                        borderRadius: BorderRadius.circular(5),
-                        elevation: 10,
-                        shadowColor: Color(0xffFFAD60),
-                        child: Container(
-                          height: _height * 0.06,
-                          width: _width * 0.45,
-                          decoration: BoxDecoration(
-                            color: Color(0xffFFAD60),
-                            borderRadius: BorderRadius.circular(5),
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              SizedBox(
-                                width: _width * 0.03,
-                              ),
-                              Image.asset(
-                                'assets/Expense.png',
-                                height: 30,
-                              ),
-                              VerticalDivider(
-                                color: Colors.cyanAccent,
-                                thickness: 1,
-                              ),
-                              // SizedBox(width: 20,),
-                              Text(
-                                'Expense',
-                                style: TextStyle(fontWeight: FontWeight.w500),
-                              ),
-                            ],
+                      InkWell(
+                        onTap: (){
+                          Navigator.push(context, MaterialPageRoute(builder: (context)=> OfficeExpensePaymentUI()));
+                        },
+                        child: Material(
+                          borderRadius: BorderRadius.circular(5),
+                          elevation: 10,
+                          shadowColor: Color(0xffFFAD60),
+                          child: Container(
+                            height: _height * 0.06,
+                            width: _width * 0.45,
+                            decoration: BoxDecoration(
+                              color: Color(0xffFFAD60),
+                              borderRadius: BorderRadius.circular(5),
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                SizedBox(
+                                  width: _width * 0.03,
+                                ),
+                                Image.asset(
+                                  'assets/Expense.png',
+                                  height: 30,
+                                ),
+                                VerticalDivider(
+                                  color: Colors.cyanAccent,
+                                  thickness: 1,
+                                ),
+                                // SizedBox(width: 20,),
+                                Text(
+                                  'Expense',
+                                  style: TextStyle(fontWeight: FontWeight.w500),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ),
