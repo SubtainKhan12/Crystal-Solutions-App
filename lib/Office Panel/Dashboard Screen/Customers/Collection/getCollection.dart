@@ -5,6 +5,7 @@ import '../../../../Model/Collection/GetCollectionModel.dart';
 import '../../../../Model/Customers/GetActiveCustomersModel.dart';
 import '../../../../apis.dart';
 import '../../../../cosmos.dart';
+import 'addCollection.dart';
 
 class GetCollectionUI extends StatefulWidget {
   GetActiveCustomersModel getActiveCustomersList;
@@ -29,12 +30,26 @@ class _GetCollectionUIState extends State<GetCollectionUI> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Collections',
-          style: TextStyle(color: Cosmic.white_color),
+          widget.getActiveCustomersList.tCstDsc.toString(),
+          style: TextStyle(color: Cosmic.white_color,fontSize: 18),
         ),
-        centerTitle: true,
+        // centerTitle: true,
         backgroundColor: Cosmic.app_color,
         iconTheme: IconThemeData(color: Cosmic.white_color),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: (){
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder:
+                      (context) =>
+                      AddCollectionUI(
+                        getActiveCustomersModel:
+                        widget.getActiveCustomersList,
+                      ))).then((value)=>get_GetCollection());
+        },
+        child: Icon(Icons.add),
       ),
       body: RefreshIndicator(
         onRefresh: get_GetCollection,
@@ -117,16 +132,6 @@ class _GetCollectionUIState extends State<GetCollectionUI> {
                                                 ),
                                               ),
                                             ])),
-                                        InkWell(
-                                          onTap: () {
-                                            // _showBottomSheet(
-                                            //     context,
-                                            //     filterActiveCustomerList[
-                                            //     index]);
-                                          },
-                                          child: Icon(Icons
-                                              .add_chart_outlined),
-                                        ),
                                       ],
                                     ),
                                     RichText(

@@ -12,8 +12,8 @@ import '../../../../apis.dart';
 
 class AddCollectionUI extends StatefulWidget {
   GetActiveCustomersModel getActiveCustomersModel;
-  GetBillModel getBillList;
-  AddCollectionUI({super.key,required this.getBillList, required this.getActiveCustomersModel});
+
+  AddCollectionUI({super.key, required this.getActiveCustomersModel});
 
   @override
   State<AddCollectionUI> createState() => _AddCollectionUIState();
@@ -37,39 +37,39 @@ class _AddCollectionUIState extends State<AddCollectionUI> {
     // TODO: implement initState
     super.initState();
     setCustomerData();
-    _updateTotalCharges();
+    // _updateTotalCharges();
 
     // Add listeners to update total charges
-    _arrearChargesController.addListener(_updateTotalCharges);
-    _serverChargesController.addListener(_updateTotalCharges);
-    _monthlyChargesController.addListener(_updateTotalCharges);
-    _posChargesController.addListener(_updateTotalCharges);
-    _smsChargesController.addListener(_updateTotalCharges);
-    _advanceChargesController.addListener(_updateTotalCharges);
-    _otherChargesController.addListener(_updateTotalCharges);
+    // _arrearChargesController.addListener(_updateTotalCharges);
+    // _serverChargesController.addListener(_updateTotalCharges);
+    // _monthlyChargesController.addListener(_updateTotalCharges);
+    // _posChargesController.addListener(_updateTotalCharges);
+    // _smsChargesController.addListener(_updateTotalCharges);
+    // _advanceChargesController.addListener(_updateTotalCharges);
+    // _otherChargesController.addListener(_updateTotalCharges);
   }
-  @override
-  void dispose() {
-    // Remove listeners to prevent memory leaks
-    _arrearChargesController.removeListener(_updateTotalCharges);
-    _serverChargesController.removeListener(_updateTotalCharges);
-    _monthlyChargesController.removeListener(_updateTotalCharges);
-    _posChargesController.removeListener(_updateTotalCharges);
-    _smsChargesController.removeListener(_updateTotalCharges);
-    _advanceChargesController.removeListener(_updateTotalCharges);
-    _otherChargesController.removeListener(_updateTotalCharges);
-
-    _arrearChargesController.dispose();
-    _serverChargesController.dispose();
-    _monthlyChargesController.dispose();
-    _posChargesController.dispose();
-    _smsChargesController.dispose();
-    _advanceChargesController.dispose();
-    _otherChargesController.dispose();
-    _totalChargesController.dispose();
-    _billDescriptionController.dispose();
-    super.dispose();
-  }
+  // @override
+  // void dispose() {
+  //   // Remove listeners to prevent memory leaks
+  //   _arrearChargesController.removeListener(_updateTotalCharges);
+  //   _serverChargesController.removeListener(_updateTotalCharges);
+  //   _monthlyChargesController.removeListener(_updateTotalCharges);
+  //   _posChargesController.removeListener(_updateTotalCharges);
+  //   _smsChargesController.removeListener(_updateTotalCharges);
+  //   _advanceChargesController.removeListener(_updateTotalCharges);
+  //   _otherChargesController.removeListener(_updateTotalCharges);
+  //
+  //   _arrearChargesController.dispose();
+  //   _serverChargesController.dispose();
+  //   _monthlyChargesController.dispose();
+  //   _posChargesController.dispose();
+  //   _smsChargesController.dispose();
+  //   _advanceChargesController.dispose();
+  //   _otherChargesController.dispose();
+  //   _totalChargesController.dispose();
+  //   _billDescriptionController.dispose();
+  //   super.dispose();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -177,131 +177,130 @@ class _AddCollectionUIState extends State<AddCollectionUI> {
                   const SizedBox(
                     height: 5,
                   ),
+                  // Container(
+                  //   width: MediaQuery.of(context).size.width / 0.3,
+                  //   height: MediaQuery.of(context).size.height / 16,
+                  //   child: TextField(
+                  //     controller: _arrearChargesController,
+                  //     keyboardType: TextInputType.number,
+                  //     decoration: InputDecoration(
+                  //       labelText: "Arrear Charges",
+                  //       border: OutlineInputBorder(
+                  //         borderRadius: BorderRadius.circular(3),
+                  //       ),
+                  //     ),
+                  //   ),
+                  // ),
+                  // const SizedBox(
+                  //   height: 5,
+                  // ),
+                  //
+                  // Container(
+                  //   width: MediaQuery.of(context).size.width / 0.3,
+                  //   height: MediaQuery.of(context).size.height / 16,
+                  //   child: TextField(
+                  //     controller: _serverChargesController,
+                  //     keyboardType: TextInputType.number,
+                  //     decoration: InputDecoration(
+                  //       labelText: "Server Charges",
+                  //       border: OutlineInputBorder(
+                  //         borderRadius: BorderRadius.circular(3),
+                  //       ),
+                  //     ),
+                  //   ),
+                  // ),
+                  // const SizedBox(
+                  //   height: 5,
+                  // ),
+                  // Container(
+                  //   width: MediaQuery.of(context).size.width / 0.3,
+                  //   height: MediaQuery.of(context).size.height / 16,
+                  //   child: TextField(
+                  //     controller: _smsChargesController,
+                  //     keyboardType: TextInputType.number,
+                  //     decoration: InputDecoration(
+                  //       labelText: "SMS Charges",
+                  //       border: OutlineInputBorder(
+                  //         borderRadius: BorderRadius.circular(3),
+                  //       ),
+                  //     ),
+                  //   ),
+                  // ),
+                  // const SizedBox(
+                  //   height: 5,
+                  // ),
+                  // Container(
+                  //   width: MediaQuery.of(context).size.width / 0.3,
+                  //   height: MediaQuery.of(context).size.height / 16,
+                  //   child: TextField(
+                  //     controller: _posChargesController,
+                  //     keyboardType: TextInputType.number,
+                  //     decoration: InputDecoration(
+                  //       labelText: "POS Charges",
+                  //       border: OutlineInputBorder(
+                  //         borderRadius: BorderRadius.circular(3),
+                  //       ),
+                  //     ),
+                  //   ),
+                  // ),
+                  // const SizedBox(
+                  //   height: 5,
+                  // ),
+                  // Container(
+                  //   width: MediaQuery.of(context).size.width / 0.3,
+                  //   height: MediaQuery.of(context).size.height / 16,
+                  //   child: TextField(
+                  //     controller: _monthlyChargesController,
+                  //     keyboardType: TextInputType.number,
+                  //     decoration: InputDecoration(
+                  //       labelText: "Monthly Charges",
+                  //       border: OutlineInputBorder(
+                  //         borderRadius: BorderRadius.circular(3),
+                  //       ),
+                  //     ),
+                  //   ),
+                  // ),
+                  // const SizedBox(
+                  //   height: 5,
+                  // ),
+                  // Container(
+                  //   width: MediaQuery.of(context).size.width / 0.3,
+                  //   height: MediaQuery.of(context).size.height / 16,
+                  //   child: TextField(
+                  //     controller: _advanceChargesController,
+                  //     keyboardType: TextInputType.number,
+                  //     decoration: InputDecoration(
+                  //       labelText: "Advance Charges",
+                  //       border: OutlineInputBorder(
+                  //         borderRadius: BorderRadius.circular(3),
+                  //       ),
+                  //     ),
+                  //   ),
+                  // ),
+                  // const SizedBox(
+                  //   height: 5,
+                  // ),
+                  // Container(
+                  //   width: MediaQuery.of(context).size.width / 0.3,
+                  //   height: MediaQuery.of(context).size.height / 16,
+                  //   child: TextField(
+                  //     controller: _otherChargesController,
+                  //     keyboardType: TextInputType.number,
+                  //     decoration: InputDecoration(
+                  //       labelText: "Other Charges",
+                  //       border: OutlineInputBorder(
+                  //         borderRadius: BorderRadius.circular(3),
+                  //       ),
+                  //     ),
+                  //   ),
+                  // ),
+                  // const SizedBox(
+                  //   height: 5,
+                  // ),
                   Container(
                     width: MediaQuery.of(context).size.width / 0.3,
                     height: MediaQuery.of(context).size.height / 16,
                     child: TextField(
-                      controller: _arrearChargesController,
-                      keyboardType: TextInputType.number,
-                      decoration: InputDecoration(
-                        labelText: "Arrear Charges",
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(3),
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 5,
-                  ),
-
-                  Container(
-                    width: MediaQuery.of(context).size.width / 0.3,
-                    height: MediaQuery.of(context).size.height / 16,
-                    child: TextField(
-                      controller: _serverChargesController,
-                      keyboardType: TextInputType.number,
-                      decoration: InputDecoration(
-                        labelText: "Server Charges",
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(3),
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 5,
-                  ),
-                  Container(
-                    width: MediaQuery.of(context).size.width / 0.3,
-                    height: MediaQuery.of(context).size.height / 16,
-                    child: TextField(
-                      controller: _smsChargesController,
-                      keyboardType: TextInputType.number,
-                      decoration: InputDecoration(
-                        labelText: "SMS Charges",
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(3),
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 5,
-                  ),
-                  Container(
-                    width: MediaQuery.of(context).size.width / 0.3,
-                    height: MediaQuery.of(context).size.height / 16,
-                    child: TextField(
-                      controller: _posChargesController,
-                      keyboardType: TextInputType.number,
-                      decoration: InputDecoration(
-                        labelText: "POS Charges",
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(3),
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 5,
-                  ),
-                  Container(
-                    width: MediaQuery.of(context).size.width / 0.3,
-                    height: MediaQuery.of(context).size.height / 16,
-                    child: TextField(
-                      controller: _monthlyChargesController,
-                      keyboardType: TextInputType.number,
-                      decoration: InputDecoration(
-                        labelText: "Monthly Charges",
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(3),
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 5,
-                  ),
-                  Container(
-                    width: MediaQuery.of(context).size.width / 0.3,
-                    height: MediaQuery.of(context).size.height / 16,
-                    child: TextField(
-                      controller: _advanceChargesController,
-                      keyboardType: TextInputType.number,
-                      decoration: InputDecoration(
-                        labelText: "Advance Charges",
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(3),
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 5,
-                  ),
-                  Container(
-                    width: MediaQuery.of(context).size.width / 0.3,
-                    height: MediaQuery.of(context).size.height / 16,
-                    child: TextField(
-                      controller: _otherChargesController,
-                      keyboardType: TextInputType.number,
-                      decoration: InputDecoration(
-                        labelText: "Other Charges",
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(3),
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 5,
-                  ),
-                  Container(
-                    width: MediaQuery.of(context).size.width / 0.3,
-                    height: MediaQuery.of(context).size.height / 16,
-                    child: TextField(
-                      readOnly: true,
                       controller: _totalChargesController,
                       keyboardType: TextInputType.number,
                       decoration: InputDecoration(
@@ -354,31 +353,31 @@ class _AddCollectionUIState extends State<AddCollectionUI> {
       ),
     );
   }
-  void _updateTotalCharges() {
-    double arrearCharges = double.tryParse(_arrearChargesController.text) ?? 0;
-    double serverCharges = double.tryParse(_serverChargesController.text) ?? 0;
-    double monthlyCharges = double.tryParse(_monthlyChargesController.text) ?? 0;
-    double posCharges = double.tryParse(_posChargesController.text) ?? 0;
-    double smsCharges = double.tryParse(_smsChargesController.text) ?? 0;
-    double advanceCharges = double.tryParse(_advanceChargesController.text) ?? 0;
-    double otherCharges = double.tryParse(_otherChargesController.text) ?? 0;
-
-    double totalCharges = arrearCharges + serverCharges + monthlyCharges + posCharges + smsCharges + advanceCharges + otherCharges;
-
-    setState(() {
-      _totalChargesController.text = totalCharges.toStringAsFixed(2);
-    });
-  }
+  // void _updateTotalCharges() {
+  //   double arrearCharges = double.tryParse(_arrearChargesController.text) ?? 0;
+  //   double serverCharges = double.tryParse(_serverChargesController.text) ?? 0;
+  //   double monthlyCharges = double.tryParse(_monthlyChargesController.text) ?? 0;
+  //   double posCharges = double.tryParse(_posChargesController.text) ?? 0;
+  //   double smsCharges = double.tryParse(_smsChargesController.text) ?? 0;
+  //   double advanceCharges = double.tryParse(_advanceChargesController.text) ?? 0;
+  //   double otherCharges = double.tryParse(_otherChargesController.text) ?? 0;
+  //
+  //   double totalCharges = arrearCharges + serverCharges + monthlyCharges + posCharges + smsCharges + advanceCharges + otherCharges;
+  //
+  //   setState(() {
+  //     _totalChargesController.text = totalCharges.toStringAsFixed(2);
+  //   });
+  // }
 
   setCustomerData(){
-    _nameController.text = widget.getBillList.description.toString() ?? '';
-    _serverChargesController.text = widget.getBillList.serverChg.toString() ?? '';
-    _smsChargesController.text = widget.getBillList.sMSChg.toString() ?? '';
-    _posChargesController.text = widget.getBillList.pSOChg.toString() ?? '';
-    _advanceChargesController.text = widget.getBillList.advacneChg.toString() ?? '';
-    _monthlyChargesController.text = widget.getBillList.monthlyChg.toString() ?? '';
-    _arrearChargesController.text = widget.getBillList.arrear.toString() ?? '';
-    _otherChargesController.text = widget.getBillList.otherChg.toString() ?? '';
+    _nameController.text = widget.getActiveCustomersModel.tCstDsc.toString() ?? '';
+    // _serverChargesController.text = widget.getBillList.serverChg.toString() ?? '';
+    // _smsChargesController.text = widget.getBillList.sMSChg.toString() ?? '';
+    // _posChargesController.text = widget.getBillList.pSOChg.toString() ?? '';
+    // _advanceChargesController.text = widget.getBillList.advacneChg.toString() ?? '';
+    // _monthlyChargesController.text = widget.getBillList.monthlyChg.toString() ?? '';
+    // _arrearChargesController.text = widget.getBillList.arrear.toString() ?? '';
+    // _otherChargesController.text = widget.getBillList.otherChg.toString() ?? '';
   }
 
   Future<void> _selectDate(BuildContext context, StateSetter setState) async {
@@ -411,15 +410,15 @@ class _AddCollectionUIState extends State<AddCollectionUI> {
         Uri.parse(addCollection));
     request.fields['FTrnDat'] = selectedDate.toString();
     request.fields['FRefId'] = widget.getActiveCustomersModel.tRefId.toString();
-    request.fields['FCstId'] = widget.getBillList.custId.toString();
+    request.fields['FCstId'] = widget.getActiveCustomersModel.tcstid.toString();
     request.fields['FTrnDsc'] = _billDescriptionController.text;
-    request.fields['FArrChg'] = _arrearChargesController.text.isEmpty? '0.00': _arrearChargesController.text;
-    request.fields['FSrvChg'] = _serverChargesController.text;
-    request.fields['FMthChg'] = _monthlyChargesController.text;
-    request.fields['FSmsChg'] = _smsChargesController.text;
-    request.fields['FPosChg'] = _posChargesController.text;
-    request.fields['FOthChg'] = _otherChargesController.text.isEmpty ? '0.00' : _otherChargesController.text;
-    request.fields['FAdvChg'] = _advanceChargesController.text;
+    // request.fields['FArrChg'] = _arrearChargesController.text.isEmpty? '0.00': _arrearChargesController.text;
+    // request.fields['FSrvChg'] = _serverChargesController.text;
+    // request.fields['FMthChg'] = _monthlyChargesController.text;
+    // request.fields['FSmsChg'] = _smsChargesController.text;
+    // request.fields['FPosChg'] = _posChargesController.text;
+    // request.fields['FOthChg'] = _otherChargesController.text.isEmpty ? '0.00' : _otherChargesController.text;
+    // request.fields['FAdvChg'] = _advanceChargesController.text;
     request.fields['FTrnTot'] = _totalChargesController.text;
     if (_image != null) {
     var picture = await http.MultipartFile.fromPath('FColImg', _image!.path);

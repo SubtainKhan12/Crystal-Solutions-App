@@ -1,11 +1,13 @@
 import 'dart:convert';
 import 'package:crystal_solutions/Office%20Panel/Dashboard%20Screen/Customers/Add%20Bill/getBill.dart';
 import 'package:crystal_solutions/Office%20Panel/Dashboard%20Screen/Customers/Collection/getCollection.dart';
+import 'package:crystal_solutions/Office%20Panel/Dashboard%20Screen/Customers/Customer%20Profile/customerProfile.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import '../../../Model/Customers/GetActiveCustomersModel.dart';
 import '../../../apis.dart';
 import '../../../cosmos.dart';
+import 'Ledger/customerLedger.dart';
 
 class CustomersUI extends StatefulWidget {
   const CustomersUI({super.key});
@@ -64,167 +66,25 @@ class _CustomersUIState extends State<CustomersUI> {
                         itemBuilder: (context, index) {
                           return Padding(
                             padding: const EdgeInsets.symmetric(vertical: 0),
-                            child: Card(
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(5)),
-                              elevation: 2,
-                              shadowColor: Cosmic.app_color,
-                              borderOnForeground: true,
-                              surfaceTintColor: Colors.blue.shade100,
-                              child: Theme(
-                                data: Theme.of(context)
-                                    .copyWith(dividerColor: Colors.transparent),
-                                child: ExpansionTile(
-                                  minTileHeight: 30,
-                                  title: Text(
-                                    filterActiveCustomerList[index]
-                                        .tCstDsc
-                                        .toString(),
-                                    style: const TextStyle(fontSize: 14),
-                                  ),
-                                  children: [
-                                    Divider(
-                                      color: Cosmic.app_color,
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 15, vertical: 10),
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              RichText(
-                                                  text: TextSpan(children: [
-                                                const TextSpan(
-                                                  text: 'Mobile: ',
-                                                  style: TextStyle(
-                                                      color: Colors.black,
-                                                      fontWeight:
-                                                          FontWeight.bold),
-                                                ),
-                                                TextSpan(
-                                                  text:
-                                                      filterActiveCustomerList[
-                                                              index]
-                                                          .tMobNUm
-                                                          .toString(),
-                                                  style: const TextStyle(
-                                                    color: Colors.black,
-                                                  ),
-                                                ),
-                                              ])),
-                                              InkWell(
-                                                onTap: () {
-                                                  // _showBottomSheet(
-                                                  //     context,
-                                                  //     filterActiveCustomerList[
-                                                  //         index]);
-                                                  Navigator.push(context, MaterialPageRoute(builder: (context)=> GetBillUI(getActiveCustomersList: filterActiveCustomerList[index])));
-                                                },
-                                                child: Icon(
-                                                    Icons.add_chart_outlined),
-                                              ),
-                                            ],
-                                          ),
-                                          RichText(
-                                              text: TextSpan(children: [
-                                            const TextSpan(
-                                              text: 'Monthly Charges: ',
-                                              style: TextStyle(
-                                                  color: Colors.black,
-                                                  fontWeight: FontWeight.bold),
-                                            ),
-                                            TextSpan(
-                                              text: filterActiveCustomerList[
-                                                      index]
-                                                  .tmthChg
-                                                  .toString(),
-                                              style: const TextStyle(
-                                                color: Colors.black,
-                                              ),
-                                            ),
-                                          ])),
-                                          RichText(
-                                              text: TextSpan(children: [
-                                            const TextSpan(
-                                              text: 'Address1: ',
-                                              style: TextStyle(
-                                                  color: Colors.black,
-                                                  fontWeight: FontWeight.bold),
-                                            ),
-                                            TextSpan(
-                                              text: filterActiveCustomerList[
-                                                      index]
-                                                  .tAdd001
-                                                  .toString(),
-                                              style: const TextStyle(
-                                                color: Colors.black,
-                                              ),
-                                            ),
-                                          ])),
-                                          RichText(
-                                              text: TextSpan(children: [
-                                            const TextSpan(
-                                              text: 'Email: ',
-                                              style: TextStyle(
-                                                  color: Colors.black,
-                                                  fontWeight: FontWeight.bold),
-                                            ),
-                                            TextSpan(
-                                              text: filterActiveCustomerList[
-                                                      index]
-                                                  .tEmlAdd
-                                                  .toString(),
-                                              style: const TextStyle(
-                                                color: Colors.black,
-                                              ),
-                                            ),
-                                          ])),
-                                          RichText(
-                                              text: TextSpan(children: [
-                                            const TextSpan(
-                                              text: 'IP: ',
-                                              style: TextStyle(
-                                                  color: Colors.black,
-                                                  fontWeight: FontWeight.bold),
-                                            ),
-                                            TextSpan(
-                                              text: filterActiveCustomerList[
-                                                      index]
-                                                  .tSrvIp
-                                                  .toString(),
-                                              style: const TextStyle(
-                                                color: Colors.black,
-                                              ),
-                                            ),
-                                          ])),
-                                          RichText(
-                                              text: TextSpan(children: [
-                                            const TextSpan(
-                                              text: 'Shops: ',
-                                              style: TextStyle(
-                                                  color: Colors.black,
-                                                  fontWeight: FontWeight.bold),
-                                            ),
-                                            TextSpan(
-                                              text: filterActiveCustomerList[
-                                                      index]
-                                                  .tShpNum
-                                                  .toString(),
-                                              style: const TextStyle(
-                                                color: Colors.black,
-                                              ),
-                                            ),
-                                          ])),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
-                                ),
+                            child: InkWell(
+                              onTap: (){
+                                _showBottomSheet(
+                                    context,
+                                    filterActiveCustomerList[
+                                    index]);
+                              },
+                              child: Card(
+
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(5)),
+                                elevation: 2,
+                                shadowColor: Cosmic.app_color,
+                                borderOnForeground: true,
+                                surfaceTintColor: Colors.blue.shade100,
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(horizontal: 10.0,vertical: 10),
+                                  child: Text(filterActiveCustomerList[index].tCstDsc.toString()),
+                                )
                               ),
                             ),
                           );
@@ -241,7 +101,7 @@ class _CustomersUIState extends State<CustomersUI> {
   void _showBottomSheet(
       BuildContext context, GetActiveCustomersModel getActiveCustomersModel) {
     showModalBottomSheet(
-      showDragHandle: true,
+      // showDragHandle: true,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       context: context,
       builder: (context) {
@@ -253,6 +113,25 @@ class _CustomersUIState extends State<CustomersUI> {
               children: [
                 SizedBox(
                   height: 20,
+                ),
+                Center(child: Text(getActiveCustomersModel.tCstDsc.toString(), style: TextStyle(fontSize: 20,fontWeight: FontWeight.w500, color: Colors.red),)),
+                Row(
+                  children: [
+                    Icon(Icons.person_outline_outlined),
+                    TextButton(
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => CustomerProfileUI(
+                                      getActiveCustomersList:
+                                      getActiveCustomersModel)));
+                        },
+                        child: Text(
+                          'Customer Profile',
+                          style: TextStyle(fontSize: 20),
+                        )),
+                  ],
                 ),
                 Row(
                   children: [
@@ -271,21 +150,6 @@ class _CustomersUIState extends State<CustomersUI> {
                         },
                         child: Text(
                           'Bill',
-                          style: TextStyle(fontSize: 20),
-                        )),
-                  ],
-                ),
-                Row(
-                  children: [
-                    Image.asset(
-                      'assets/bill.png',
-                      height: 20,
-                    ),
-                    TextButton(
-                        onPressed: () {
-                        },
-                        child: Text(
-                          'Add Collection',
                           style: TextStyle(fontSize: 20),
                         )),
                   ],
@@ -317,6 +181,7 @@ class _CustomersUIState extends State<CustomersUI> {
                     ),
                     TextButton(
                         onPressed: () {
+                          Navigator.push(context, MaterialPageRoute(builder: (context)=> CustomerLedgerUI(getActiveCustomersList: getActiveCustomersModel,)));
                         },
                         child: Text(
                           'Customer Ledger',

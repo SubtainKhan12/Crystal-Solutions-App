@@ -74,6 +74,15 @@ class _AddCustomersState extends State<AddCustomers> {
     }
     return null;
   }
+  // String? validatePTCL(String? value) {
+  //   if (value == null || value.isEmpty) {
+  //     return 'Please enter a valid PTCL number';
+  //   }
+  //   if (!RegExp(r'^0[2-9][0-9]{2}[-]?[0-9]{5,9}$').hasMatch(value)) {
+  //     return 'Invalid PTCL number format';
+  //   }
+  //   return null;
+  // }
 
   String? validateEmail(String? value) {
     if (value == null || value.isEmpty) {
@@ -232,10 +241,9 @@ class _AddCustomersState extends State<AddCustomers> {
                               borderRadius: BorderRadius.circular(3),
                             ),
                           ),
-                          validator: validateMobile,
+                          // validator: validatePTCL,
                         ),
                       ),
-
                       Container(
                         height: _height / 16,
                         width: _width / 0.3,

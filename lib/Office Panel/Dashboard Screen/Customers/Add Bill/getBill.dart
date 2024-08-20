@@ -140,21 +140,21 @@ class _GetBillUIState extends State<GetBillUI> {
                                               ),
                                               Row(
                                                 children: [
-                                                  IconButton(
-                                                      onPressed: () {
-                                                        Navigator.push(
-                                                            context,
-                                                            MaterialPageRoute(
-                                                                builder:
-                                                                    (context) =>
-                                                                        AddCollectionUI(
-                                                                          getBillList:
-                                                                              getBillList[index],
-                                                                          getActiveCustomersModel:
-                                                                              widget.getActiveCustomersList,
-                                                                        )));
-                                                      },
-                                                      icon: Icon(Icons.add)),
+                                                  // IconButton(
+                                                  //     onPressed: () {
+                                                  //       // Navigator.push(
+                                                  //       //     context,
+                                                  //       //     MaterialPageRoute(
+                                                  //       //         builder:
+                                                  //       //             (context) =>
+                                                  //       //                 AddCollectionUI(
+                                                  //       //                   getBillList:
+                                                  //       //                       getBillList[index],
+                                                  //       //                   getActiveCustomersModel:
+                                                  //       //                       widget.getActiveCustomersList,
+                                                  //       //                 )));
+                                                  //     },
+                                                  //     icon: Icon(Icons.add)),
                                                   IconButton(
                                                       onPressed: () async {
                                                         final pdfFile =
