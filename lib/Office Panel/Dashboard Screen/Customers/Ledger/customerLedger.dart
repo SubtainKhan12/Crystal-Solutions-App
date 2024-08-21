@@ -154,7 +154,7 @@ class _CustomerLedgerUIState extends State<CustomerLedgerUI> {
                                 padding:
                                     const EdgeInsets.only(top: 3.0, left: 1),
                                 child: Text(
-                                    DateFormat('dd-mm-yyyy').format(
+                                    DateFormat('dd-MM-yyyy').format(
                                         DateTime.parse(getCustomerLedger[i]
                                             .date
                                             .toString())),

@@ -6,14 +6,16 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart'as http;
 import 'package:image_picker/image_picker.dart';
+import '../../../../Model/Bank/GetActiveBank.dart';
 import '../../../../Model/Bill/GetBillModel.dart';
 import '../../../../Model/Customers/GetActiveCustomersModel.dart';
 import '../../../../apis.dart';
 
 class AddCollectionUI extends StatefulWidget {
   GetActiveCustomersModel getActiveCustomersModel;
+  List<GetActiveBank> getActiveBankList = [];
 
-  AddCollectionUI({super.key, required this.getActiveCustomersModel});
+  AddCollectionUI({super.key, required this.getActiveCustomersModel, required this.getActiveBankList});
 
   @override
   State<AddCollectionUI> createState() => _AddCollectionUIState();
@@ -32,6 +34,7 @@ class _AddCollectionUIState extends State<AddCollectionUI> {
   TextEditingController _totalChargesController = TextEditingController();
   DateTime selectedDate = DateTime.now();
   File? _image;
+  String? selectBank;
   @override
   void initState() {
     // TODO: implement initState
@@ -108,16 +111,19 @@ class _AddCollectionUIState extends State<AddCollectionUI> {
                             borderRadius: BorderRadius.circular(8)),
                         child: _image == null
                             ? const Center(child: Text(""))
-                            : Image.file(
-                          _image!,
-                          fit: BoxFit.cover,
-                        ),
+                            : ClipRRect(
+                          borderRadius: BorderRadius.circular(8),
+                              child: Image.file(
+                                                        _image!,
+                                                        fit: BoxFit.cover,
+                                                      ),
+                            ),
                       ),
                       const SizedBox(
                         width: 10,
                       ),
                       InkWell(
-                        onTap: _takePicture,
+                        onTap: _showImageSourceDialog,
                         child: Container(
                           height: 100,
                           width: 100,
@@ -317,6 +323,34 @@ class _AddCollectionUIState extends State<AddCollectionUI> {
                   Container(
                     width: MediaQuery.of(context).size.width / 0.3,
                     height: MediaQuery.of(context).size.height / 16,
+                    child: DropdownButtonFormField<String>(
+                      value: selectBank,
+                      onChanged: (newValue) {
+                        setState(() {
+                          selectBank = newValue;
+                        });
+                      },
+                      decoration: InputDecoration(
+                        labelText: "Bank",
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(3),
+                        ),
+                      ),
+                      items: widget.getActiveBankList.map((collector) {
+                        return DropdownMenuItem<String>(
+                          value: collector.tbnkid ?? '',
+                          child: Text(collector.tbnkdsc ?? ''),
+                        );
+                      }).toList() ??
+                          [],
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  Container(
+                    width: MediaQuery.of(context).size.width / 0.3,
+                    height: MediaQuery.of(context).size.height / 16,
                     child: TextField(
                       controller: _billDescriptionController,
                       decoration: InputDecoration(
@@ -393,9 +427,47 @@ class _AddCollectionUIState extends State<AddCollectionUI> {
       });
     }
   }
-  void _takePicture() async {
+  void _showImageSourceDialog() {
+    var _height = MediaQuery.of(context).size.height;
+    var _width = MediaQuery.of(context).size.width;
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Choose an option'),
+          actions: <Widget>[
+            InkWell(
+              onTap: () {
+                _takePicture(ImageSource.camera);
+                Navigator.of(context).pop();
+              },
+              child: Container(
+                height: _height * 0.04,
+                child: Image.asset('assets/camera.png'),
+              ),
+            ),
+            SizedBox(
+              width: 10,
+            ),
+            InkWell(
+              onTap: () {
+                _takePicture(ImageSource.gallery);
+                Navigator.of(context).pop();
+              },
+              child: Container(
+                height: _height * 0.04,
+                child: Image.asset('assets/gallery.png'),
+              ),
+            )
+          ],
+        );
+      },
+    );
+  }
+
+  void _takePicture(ImageSource source) async {
     final picker = ImagePicker();
-    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+    final pickedFile = await picker.pickImage(source: source);
 
     if (pickedFile != null) {
       setState(() {
@@ -404,12 +476,23 @@ class _AddCollectionUIState extends State<AddCollectionUI> {
     }
   }
 
+  // void _takePicture() async {
+  //   final picker = ImagePicker();
+  //   final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+  //
+  //   if (pickedFile != null) {
+  //     setState(() {
+  //       _image = File(pickedFile.path);
+  //     });
+  //   }
+  // }
+
 
   Future post_addCollection() async {
     var request = http.MultipartRequest('POST',
         Uri.parse(addCollection));
     request.fields['FTrnDat'] = selectedDate.toString();
-    request.fields['FRefId'] = widget.getActiveCustomersModel.tRefId.toString();
+    request.fields['FRefId'] = selectBank.toString();
     request.fields['FCstId'] = widget.getActiveCustomersModel.tcstid.toString();
     request.fields['FTrnDsc'] = _billDescriptionController.text;
     // request.fields['FArrChg'] = _arrearChargesController.text.isEmpty? '0.00': _arrearChargesController.text;

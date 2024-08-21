@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
+import '../../../../Model/Bank/GetActiveBank.dart';
 import '../../../../Model/Collection/GetCollectionModel.dart';
 import '../../../../Model/Customers/GetActiveCustomersModel.dart';
 import '../../../../apis.dart';
@@ -19,11 +20,13 @@ class GetCollectionUI extends StatefulWidget {
 class _GetCollectionUIState extends State<GetCollectionUI> {
   List<GetCollectionModel> getCollectionList = [];
   List<GetCollectionModel> filterCollectionList = [];
+  List<GetActiveBank> _getActiveBankList = [];
 
   @override
   void initState() {
     super.initState();
     get_GetCollection();
+    get_ActiveBank();
   }
 
   @override
@@ -46,6 +49,7 @@ class _GetCollectionUIState extends State<GetCollectionUI> {
                   builder:
                       (context) =>
                       AddCollectionUI(
+                        getActiveBankList: _getActiveBankList,
                         getActiveCustomersModel:
                         widget.getActiveCustomersList,
                       ))).then((value)=>get_GetCollection());
@@ -167,6 +171,16 @@ class _GetCollectionUIState extends State<GetCollectionUI> {
     setState(() {
       filterCollectionList = filteredList;
     });
+  }
+  Future<void> get_ActiveBank() async {
+    var response = await http.get(Uri.parse(getActiveBank));
+    if (response.statusCode == 200) {
+      var jsonData = jsonDecode(response.body);
+      _getActiveBankList = List<GetActiveBank>.from(
+          jsonData.map((model) => GetActiveBank.fromJson(model)));
+    } else {
+      throw Exception('Failed to load data');
+    }
   }
 
   double calculateTotalCharges(GetCollectionModel collection) {

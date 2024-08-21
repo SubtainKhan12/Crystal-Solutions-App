@@ -486,7 +486,7 @@ class _CustomerCollectionScreenState extends State<CustomerCollectionScreen> {
       }
     }
 
-    Future<void> _showDialogeCameraAndGallery(
+    void _showDialogeCameraAndGallery(
         BuildContext context, StateSetter setState) async {
       showDialog(
         context: context,
