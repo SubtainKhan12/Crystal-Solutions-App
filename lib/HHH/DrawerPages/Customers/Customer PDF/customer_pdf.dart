@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:intl/intl.dart';
 import 'package:pdf/pdf.dart';
 import 'pdf_file_handle.dart';
 import 'package:pdf/widgets.dart'as pw;
@@ -6,6 +7,11 @@ import '../../../../Model/Customers/GetCustomersModel.dart';
 
 class Customer_PDF {
   static Future<File> generate(List<GetCustomersModel> getCustomersModel) async {
+    final numberFormat = NumberFormat('#,###');
+    String formatAmount(String amount) {
+      final doubleAmount = double.tryParse(amount)?? 0.00;
+      return numberFormat.format(doubleAmount);
+    }
 
     final pdf = pw.Document(
       // pageMode: PdfPageMode.fullscreen,
@@ -46,12 +52,12 @@ class Customer_PDF {
           getCustomersModel[i].tAdd002.toString(),
           getCustomersModel[i].tEmlAdd.toString(),
           getCustomersModel[i].tShpNum.toString(),
-          getCustomersModel[i].tsrvchg.toString(),
-          getCustomersModel[i].tsmschg.toString(),
-          getCustomersModel[i].tadvchg.toString(),
-          getCustomersModel[i].tposchg.toString(),
-          getCustomersModel[i].tmthChg.toString(),
-          getCustomersModel[i].ttotamt.toString(),
+          formatAmount(getCustomersModel[i].tsrvchg.toString()),
+          formatAmount(getCustomersModel[i].tsmschg.toString()),
+          formatAmount(getCustomersModel[i].tadvchg.toString()),
+          formatAmount(getCustomersModel[i].tposchg.toString()),
+          formatAmount(getCustomersModel[i].tmthChg.toString()),
+          formatAmount(getCustomersModel[i].ttotamt.toString()),
           getCustomersModel[i].tRefId.toString(),
           getCustomersModel[i].tTypId.toString(),
           getCustomersModel[i].tColId.toString(),

@@ -1,6 +1,6 @@
-/// Col# : "9"
-/// Date : "2024-08-06"
-/// Description : "FOR AUGUST 2024"
+/// Col# : "137"
+/// Date : "2024-08-20"
+/// Description : "BILL FOR THE MONTH OF JULY"
 /// Cust Id : "9"
 /// Customer Name : "ALI ELECTRONICS SADDAR"
 /// Contact Person : "BABER"
@@ -8,13 +8,15 @@
 /// Address 2. : "Test"
 /// Mobile # : "03024899220"
 /// Email : "Test1234@gmail.com"
-/// Arrear : "0.00"
-/// Server Chg : "0.00"
-/// Advacne Chg : "0.00"
-/// Monthly Chg : "4000.00"
-/// SMS Chg : "0.00"
-/// PSO Chg : "0.00"
-/// Other Chg : "0.00"
+/// Arrear : null
+/// Server Chg : null
+/// Advacne Chg : null
+/// Monthly Chg : null
+/// SMS Chg : null
+/// PSO Chg : null
+/// Other Chg : null
+/// Amount : "100.00"
+/// Image : "20240820111754."
 
 class GetCollectionModel {
   GetCollectionModel({
@@ -28,13 +30,15 @@ class GetCollectionModel {
       String? address2, 
       String? mobile, 
       String? email, 
-      String? arrear, 
-      String? serverChg, 
-      String? advacneChg, 
-      String? monthlyChg, 
-      String? sMSChg, 
-      String? pSOChg, 
-      String? otherChg,}){
+      dynamic arrear, 
+      dynamic serverChg, 
+      dynamic advacneChg, 
+      dynamic monthlyChg, 
+      dynamic sMSChg, 
+      dynamic pSOChg, 
+      dynamic otherChg, 
+      String? amount, 
+      String? image,}){
     _col = col;
     _date = date;
     _description = description;
@@ -52,6 +56,8 @@ class GetCollectionModel {
     _sMSChg = sMSChg;
     _pSOChg = pSOChg;
     _otherChg = otherChg;
+    _amount = amount;
+    _image = image;
 }
 
   GetCollectionModel.fromJson(dynamic json) {
@@ -72,6 +78,8 @@ class GetCollectionModel {
     _sMSChg = json['SMS Chg'];
     _pSOChg = json['PSO Chg'];
     _otherChg = json['Other Chg'];
+    _amount = json['Amount'];
+    _image = json['Image'];
   }
   String? _col;
   String? _date;
@@ -83,13 +91,15 @@ class GetCollectionModel {
   String? _address2;
   String? _mobile;
   String? _email;
-  String? _arrear;
-  String? _serverChg;
-  String? _advacneChg;
-  String? _monthlyChg;
-  String? _sMSChg;
-  String? _pSOChg;
-  String? _otherChg;
+  dynamic _arrear;
+  dynamic _serverChg;
+  dynamic _advacneChg;
+  dynamic _monthlyChg;
+  dynamic _sMSChg;
+  dynamic _pSOChg;
+  dynamic _otherChg;
+  String? _amount;
+  String? _image;
 GetCollectionModel copyWith({  String? col,
   String? date,
   String? description,
@@ -100,13 +110,15 @@ GetCollectionModel copyWith({  String? col,
   String? address2,
   String? mobile,
   String? email,
-  String? arrear,
-  String? serverChg,
-  String? advacneChg,
-  String? monthlyChg,
-  String? sMSChg,
-  String? pSOChg,
-  String? otherChg,
+  dynamic arrear,
+  dynamic serverChg,
+  dynamic advacneChg,
+  dynamic monthlyChg,
+  dynamic sMSChg,
+  dynamic pSOChg,
+  dynamic otherChg,
+  String? amount,
+  String? image,
 }) => GetCollectionModel(  col: col ?? _col,
   date: date ?? _date,
   description: description ?? _description,
@@ -124,6 +136,8 @@ GetCollectionModel copyWith({  String? col,
   sMSChg: sMSChg ?? _sMSChg,
   pSOChg: pSOChg ?? _pSOChg,
   otherChg: otherChg ?? _otherChg,
+  amount: amount ?? _amount,
+  image: image ?? _image,
 );
   String? get col => _col;
   String? get date => _date;
@@ -135,13 +149,15 @@ GetCollectionModel copyWith({  String? col,
   String? get address2 => _address2;
   String? get mobile => _mobile;
   String? get email => _email;
-  String? get arrear => _arrear;
-  String? get serverChg => _serverChg;
-  String? get advacneChg => _advacneChg;
-  String? get monthlyChg => _monthlyChg;
-  String? get sMSChg => _sMSChg;
-  String? get pSOChg => _pSOChg;
-  String? get otherChg => _otherChg;
+  dynamic get arrear => _arrear;
+  dynamic get serverChg => _serverChg;
+  dynamic get advacneChg => _advacneChg;
+  dynamic get monthlyChg => _monthlyChg;
+  dynamic get sMSChg => _sMSChg;
+  dynamic get pSOChg => _pSOChg;
+  dynamic get otherChg => _otherChg;
+  String? get amount => _amount;
+  String? get image => _image;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -162,6 +178,8 @@ GetCollectionModel copyWith({  String? col,
     map['SMS Chg'] = _sMSChg;
     map['PSO Chg'] = _pSOChg;
     map['Other Chg'] = _otherChg;
+    map['Amount'] = _amount;
+    map['Image'] = _image;
     return map;
   }
 

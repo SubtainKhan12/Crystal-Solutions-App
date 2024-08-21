@@ -157,8 +157,9 @@ class _CustomersUIState extends State<CustomersUI> {
                 Row(
                   children: [
                     Image.asset(
-                      'assets/bill.png',
+                      'assets/collection.png',
                       height: 20,
+                        color: Colors.black,
                     ),
                     TextButton(
                         onPressed: () {
@@ -168,7 +169,7 @@ class _CustomersUIState extends State<CustomersUI> {
                                   builder: (context) => GetCollectionUI(getActiveCustomersList: getActiveCustomersModel,)));
                         },
                         child: Text(
-                          'Get Collection',
+                          'Collection',
                           style: TextStyle(fontSize: 20),
                         )),
                   ],
@@ -176,7 +177,8 @@ class _CustomersUIState extends State<CustomersUI> {
                 Row(
                   children: [
                     Image.asset(
-                      'assets/bill.png',
+                      'assets/ledger.png',
+                      color: Colors.black,
                       height: 20,
                     ),
                     TextButton(
@@ -197,7 +199,6 @@ class _CustomersUIState extends State<CustomersUI> {
   }
 
   Future<void> get_ActiveCustomers() async {
-    // filterActiveCustomerList.clear();
     var response = await http.get(Uri.parse(getActiveCust));
     var result = jsonDecode(response.body);
     if (response.statusCode == 200) {

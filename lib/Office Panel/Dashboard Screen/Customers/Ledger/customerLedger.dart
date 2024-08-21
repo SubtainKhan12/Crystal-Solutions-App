@@ -24,6 +24,12 @@ class _CustomerLedgerUIState extends State<CustomerLedgerUI> {
   List<CustomerLedgerModel> getCustomerLedger = [];
   double tableFontSize = 12;
   var f = NumberFormat("###,###.#", "en_US");
+  final numberFormat = NumberFormat('#,###');
+
+  String formatAmount(String amount) {
+    final doubleAmount = double.tryParse(amount) ?? 0.00;
+    return numberFormat.format(doubleAmount);
+  }
 
   @override
   void initState() {
@@ -71,19 +77,14 @@ class _CustomerLedgerUIState extends State<CustomerLedgerUI> {
                 children: [
                   Table(
                     border: TableBorder(
-                      verticalInside: BorderSide(width: 1, color: Colors.black),
+                      verticalInside: BorderSide(width: 1, color: Colors.grey),
                     ),
                     columnWidths: const {
                       0: FlexColumnWidth(1),
-                      1: FlexColumnWidth(2),
-                      2: FlexColumnWidth(0.8),
-                      3: FlexColumnWidth(0.8),
-                      // 4: FlexColumnWidth(1),
-                      // 5: FlexColumnWidth(1),
-                      // 6: FlexColumnWidth(1),
-                      // 7: FlexColumnWidth(1),
-                      // 8: FlexColumnWidth(1),
-                      // 9: FlexColumnWidth(1),
+                      1: FlexColumnWidth(0.4),
+                      2: FlexColumnWidth(2),
+                      3: FlexColumnWidth(0.6),
+                      4: FlexColumnWidth(0.6),
                     },
                     children: [
                       TableRow(
@@ -95,6 +96,16 @@ class _CustomerLedgerUIState extends State<CustomerLedgerUI> {
                           TableCell(
                             child: Center(
                               child: Text('Date',
+                                  textAlign: TextAlign.left,
+                                  style: TextStyle(
+                                      fontSize: tableFontSize,
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold)),
+                            ),
+                          ),
+                          TableCell(
+                            child: Center(
+                              child: Text('Trn#',
                                   textAlign: TextAlign.left,
                                   style: TextStyle(
                                       fontSize: tableFontSize,
@@ -134,19 +145,35 @@ class _CustomerLedgerUIState extends State<CustomerLedgerUI> {
                       for (var i = 0; i < (getCustomerLedger.length ?? 0); i++)
                         TableRow(
                           // Header row
-                          decoration:
-                              BoxDecoration(border: Border.all(width: 0.5)),
+                          decoration: BoxDecoration(
+                              border:
+                                  Border.all(width: 0.5, color: Colors.grey)),
                           children: [
                             TableCell(
                               child: Padding(
                                 padding:
                                     const EdgeInsets.only(top: 3.0, left: 1),
                                 child: Text(
-                                    getCustomerLedger[i].date.toString(),
-                                    textAlign: TextAlign.left,
+                                    DateFormat('dd-mm-yyyy').format(
+                                        DateTime.parse(getCustomerLedger[i]
+                                            .date
+                                            .toString())),
+                                    textAlign: TextAlign.center,
                                     style: TextStyle(
-                                        fontSize: tableFontSize,
-                                        fontWeight: FontWeight.bold)),
+                                      fontSize: tableFontSize,
+                                    )),
+                              ),
+                            ),
+                            TableCell(
+                              child: Padding(
+                                padding:
+                                const EdgeInsets.only(top: 3.0, left: 1),
+                                child: Text(
+                                    getCustomerLedger[i].trn.toString(),
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      fontSize: tableFontSize,
+                                    )),
                               ),
                             ),
                             TableCell(
@@ -157,8 +184,8 @@ class _CustomerLedgerUIState extends State<CustomerLedgerUI> {
                                     getCustomerLedger[i].description.toString(),
                                     textAlign: TextAlign.left,
                                     style: TextStyle(
-                                        fontSize: tableFontSize,
-                                        fontWeight: FontWeight.bold)),
+                                      fontSize: tableFontSize,
+                                    )),
                               ),
                             ),
                             TableCell(
@@ -169,11 +196,13 @@ class _CustomerLedgerUIState extends State<CustomerLedgerUI> {
                                         'null'
                                     ? Container()
                                     : Text(
-                                        getCustomerLedger[i].debit.toString(),
+                                        formatAmount(
+                                          getCustomerLedger[i].debit.toString(),
+                                        ),
                                         textAlign: TextAlign.right,
                                         style: TextStyle(
-                                            fontSize: tableFontSize,
-                                            fontWeight: FontWeight.bold)),
+                                          fontSize: tableFontSize,
+                                        )),
                               ),
                             ),
                             TableCell(
@@ -184,11 +213,15 @@ class _CustomerLedgerUIState extends State<CustomerLedgerUI> {
                                         'null'
                                     ? Container()
                                     : Text(
-                                        getCustomerLedger[i].credit.toString(),
+                                        formatAmount(
+                                          getCustomerLedger[i]
+                                              .credit
+                                              .toString(),
+                                        ),
                                         textAlign: TextAlign.right,
                                         style: TextStyle(
-                                            fontSize: tableFontSize,
-                                            fontWeight: FontWeight.bold)),
+                                          fontSize: tableFontSize,
+                                        )),
                               ),
                             ),
                           ],

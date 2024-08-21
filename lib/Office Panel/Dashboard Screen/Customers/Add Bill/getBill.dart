@@ -44,17 +44,6 @@ class _GetBillUIState extends State<GetBillUI> {
         // centerTitle: true,
         backgroundColor: Cosmic.app_color,
         iconTheme: IconThemeData(color: Cosmic.white_color),
-        actions: [
-          IconButton(
-              onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => CustomerLedgerUI(
-                          getActiveCustomersList: widget.getActiveCustomersList,)));
-              },
-              icon: Icon(Icons.account_tree_sharp))
-        ],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {

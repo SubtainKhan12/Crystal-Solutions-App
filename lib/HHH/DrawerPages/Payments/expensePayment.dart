@@ -23,8 +23,8 @@ class _ExpensePaymentScreenState extends State<ExpensePaymentScreen> {
   List<GetActiveBank> _getActiveBankList = [];
   String? SelectBank;
   DateTime selectedDate = DateTime.now(); // Default date
-   TextEditingController _amountController = TextEditingController();
-   TextEditingController _remarksController = TextEditingController();
+  TextEditingController _amountController = TextEditingController();
+  TextEditingController _remarksController = TextEditingController();
   File? _localImage;
 
   @override
@@ -67,81 +67,46 @@ class _ExpensePaymentScreenState extends State<ExpensePaymentScreen> {
               Expanded(
                 child: filterActiveExpenseList.isEmpty
                     ? const Center(
-                        child: CircularProgressIndicator(),
-                      )
+                  child: CircularProgressIndicator(),
+                )
                     : ListView.builder(
-                        itemCount: filterActiveExpenseList.length,
-                        itemBuilder: (context, index) {
-                          return Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 1),
-                            child: Card(
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(5)),
-                              elevation: 2,
-                              shadowColor: Cosmic.app_color,
-                              borderOnForeground: true,
-                              surfaceTintColor: Colors.blue.shade100,
-                              child: Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 15, vertical: 10),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text(
-                                          filterActiveExpenseList[index]
-                                              .texpdsc
-                                              .toString(),
-                                          style: const TextStyle(fontSize: 14),
-                                        ),
-                                        SizedBox(
-                                          width: 50,
-                                          height: 30,
-                                          child: PopupMenuButton<int>(
-                                            itemBuilder: (context) => [
-                                              PopupMenuItem(
-                                                onTap: () {
-                                                  _showDialog(
-                                                      context,
-                                                      filterActiveExpenseList[
-                                                          index]);
-                                                },
-                                                value: 1,
-                                                child: Text(
-                                                  'Add Expense',
-                                                  style:
-                                                      TextStyle(fontSize: 14),
-                                                ),
-                                              ),
-                                            ],
-                                            offset: const Offset(0, 30),
-                                            color: Colors.white,
-                                            elevation: 2,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    Text(
-                                      filterActiveExpenseList[index]
-                                          .texpsts
-                                          .toString(),
-                                      style: const TextStyle(fontSize: 12),
-                                    ),
-                                    Text(
-                                      filterActiveExpenseList[index]
-                                          .tmthbgt
-                                          .toString(),
-                                      style: const TextStyle(fontSize: 12),
-                                    ),
-                                  ],
-                                ),
+                    itemCount: filterActiveExpenseList.length,
+                    itemBuilder: (context, index) {
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 1),
+                        child: InkWell(
+                          onTap: (){
+                            _showDialog(
+                                context,
+                                filterActiveExpenseList[
+                                index]);
+                          },
+                          child: Card(
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(5)),
+                            elevation: 2,
+                            shadowColor: Cosmic.app_color,
+                            borderOnForeground: true,
+                            surfaceTintColor: Colors.blue.shade100,
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 15, vertical: 10),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    filterActiveExpenseList[index]
+                                        .texpdsc
+                                        .toString(),
+                                    style: const TextStyle(fontSize: 14),
+                                  ),
+                                ],
                               ),
                             ),
-                          );
-                        }),
+                          ),
+                        ),
+                      );
+                    }),
               ),
             ],
           ),
@@ -237,7 +202,7 @@ class _ExpensePaymentScreenState extends State<ExpensePaymentScreen> {
         return StatefulBuilder(
           builder: (context, setState) {
             return AlertDialog(
-              title: Text('Add Expense',
+              title: Text(getActiveExpense.texpdsc.toString(),
                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
               content: Stack(
                 children: [
@@ -260,11 +225,11 @@ class _ExpensePaymentScreenState extends State<ExpensePaymentScreen> {
                                   ? const Center(child: Text(""))
                                   : ClipRRect(
                                 borderRadius: BorderRadius.circular(5),
-                                    child: Image.file(
-                                        _localImage!,
-                                        fit: BoxFit.cover,
-                                      ),
-                                  ),
+                                child: Image.file(
+                                  _localImage!,
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
                             ),
                             const SizedBox(width: 10),
                             InkWell(
@@ -308,20 +273,20 @@ class _ExpensePaymentScreenState extends State<ExpensePaymentScreen> {
                           ),
                         ),
                         SizedBox(height: 10),
-                        RichText(
-                            text: TextSpan(children: [
-                          TextSpan(
-                            text: 'Dsc: ',
-                            style: TextStyle(
-                                color: Colors.black, fontWeight: FontWeight.bold),
-                          ),
-                          TextSpan(
-                            text: getActiveExpense.texpdsc.toString(),
-                            style: const TextStyle(
-                              color: Colors.black,
-                            ),
-                          ),
-                        ])),
+                        // RichText(
+                        //     text: TextSpan(children: [
+                        //   TextSpan(
+                        //     text: 'Dsc: ',
+                        //     style: TextStyle(
+                        //         color: Colors.black, fontWeight: FontWeight.bold),
+                        //   ),
+                        //   TextSpan(
+                        //     text: getActiveExpense.texpdsc.toString(),
+                        //     style: const TextStyle(
+                        //       color: Colors.black,
+                        //     ),
+                        //   ),
+                        // ])),
                         SizedBox(
                           height: 5,
                         ),
@@ -353,11 +318,11 @@ class _ExpensePaymentScreenState extends State<ExpensePaymentScreen> {
                               ),
                             ),
                             items: _getActiveBankList.map((collector) {
-                                  return DropdownMenuItem<String>(
-                                    value: collector.tbnkid ?? '',
-                                    child: Text(collector.tbnkdsc ?? ''),
-                                  );
-                                }).toList() ??
+                              return DropdownMenuItem<String>(
+                                value: collector.tbnkid ?? '',
+                                child: Text(collector.tbnkdsc ?? ''),
+                              );
+                            }).toList() ??
                                 [],
                           ),
                         ),
@@ -480,7 +445,7 @@ class _ExpensePaymentScreenState extends State<ExpensePaymentScreen> {
     setState(() {
       filterActiveExpenseList = _getActiveExpensList
           .where((element) =>
-              element.texpdsc!.toLowerCase().contains(query.toLowerCase()))
+          element.texpdsc!.toLowerCase().contains(query.toLowerCase()))
           .toList();
     });
   }

@@ -12,10 +12,11 @@ class CustomerReciept_PDF {
       GetActiveCustomersModel getActiveCustomersModel) async {
     ByteData image = await rootBundle.load('assets/CrystalSolutions.jpg');
 
-    // DateTime parsedDate = DateTime.parse(
-    //     getActiveCustomersModel.d.toString());
-    // String formattedDate =
-    // DateFormat('dd-MM-yyyy').format(parsedDate);
+    final numberFormat = NumberFormat('#,###');
+    String formatAmount(String amount) {
+      final doubleAmount = double.tryParse(amount)?? 0.00;
+      return numberFormat.format(doubleAmount);
+    }
     ByteData image1 = await rootBundle.load('assets/CrystalSolutions.jpg');
 
     Uint8List imageData = (image1).buffer.asUint8List();
@@ -27,7 +28,9 @@ class CustomerReciept_PDF {
 
     Uint8List urduText = (image3).buffer.asUint8List();
 
+    ByteData image4 = await rootBundle.load('assets/locationQR.png');
 
+    Uint8List locationQR = (image4).buffer.asUint8List();
 
 
     final pdf = pw.Document(
@@ -109,7 +112,18 @@ class CustomerReciept_PDF {
               crossAxisAlignment: pw.CrossAxisAlignment.start,
               children: [
                 pw.SizedBox(height: 25),
-                pw.Image(pw.MemoryImage(imageData)),
+                pw.Row(
+                  mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+                  children: [
+                    pw.Image(pw.MemoryImage(imageData)),
+                    pw.Padding(
+                      padding: pw.EdgeInsets.only(right: 30),
+                      child: pw.Image(pw.MemoryImage(locationQR),height: 80),
+                    ),
+
+                  ],
+                ),
+
                 pw.Align(
                     alignment: pw.Alignment.topRight,
                     child: pw.Padding(
@@ -133,10 +147,9 @@ class CustomerReciept_PDF {
                     mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
                     children: [
                       pw.Container(
-                        height: 90,
                         width: 300,
                         decoration: pw.BoxDecoration(
-                            borderRadius: pw.BorderRadius.circular(10),
+                            borderRadius: pw.BorderRadius.circular(0),
                             border: pw.Border.all(
                               color: PdfColor.fromInt(0xff000000),
                             )),
@@ -304,25 +317,25 @@ class CustomerReciept_PDF {
                         child: pw.Column(
                             crossAxisAlignment: pw.CrossAxisAlignment.end,
                             children: [
-                              pw.Text(getActiveCustomersModel.tarrchg.toString() == 'null' ? '0.00': getActiveCustomersModel.tarrchg.toString(),
+                              pw.Text(formatAmount(getActiveCustomersModel.tarrchg.toString() == 'null' ? '0.00': getActiveCustomersModel.tarrchg.toString()),
                                   style: pw.TextStyle(
                                       fontWeight: pw.FontWeight.bold)),
-                              pw.Text(getActiveCustomersModel.tsrvchg.toString() == 'null' ? '0.00': getActiveCustomersModel.tsrvchg.toString(),
+                              pw.Text(formatAmount(getActiveCustomersModel.tsrvchg.toString() == 'null' ? '0.00': getActiveCustomersModel.tsrvchg.toString()),
                                   style: pw.TextStyle(
                                       fontWeight: pw.FontWeight.bold)),
-                              pw.Text(getActiveCustomersModel.tsmschg.toString() == 'null' ? '0.00':getActiveCustomersModel.tsmschg.toString(),
+                              pw.Text(formatAmount(getActiveCustomersModel.tsmschg.toString() == 'null' ? '0.00':getActiveCustomersModel.tsmschg.toString()),
                                   style: pw.TextStyle(
                                       fontWeight: pw.FontWeight.bold)),
-                              pw.Text(getActiveCustomersModel.tadvchg.toString() == 'null' ? '0.00': getActiveCustomersModel.tadvchg.toString(),
+                              pw.Text(formatAmount(getActiveCustomersModel.tadvchg.toString() == 'null' ? '0.00': getActiveCustomersModel.tadvchg.toString()),
                                   style: pw.TextStyle(
                                       fontWeight: pw.FontWeight.bold)),
-                              pw.Text(getActiveCustomersModel.tmthChg.toString()== 'null' ? '0.00':getActiveCustomersModel.tmthChg.toString(),
+                              pw.Text(formatAmount(getActiveCustomersModel.tmthChg.toString()== 'null' ? '0.00':getActiveCustomersModel.tmthChg.toString()),
                                   style: pw.TextStyle(
                                       fontWeight: pw.FontWeight.bold)),
-                              pw.Text(getActiveCustomersModel.tposchg.toString()== 'null' ? '0.00':getActiveCustomersModel.tposchg.toString(),
+                              pw.Text(formatAmount(getActiveCustomersModel.tposchg.toString()== 'null' ? '0.00':getActiveCustomersModel.tposchg.toString()),
                                   style: pw.TextStyle(
                                       fontWeight: pw.FontWeight.bold)),
-                              pw.Text(getActiveCustomersModel.tothchg.toString()== 'null' ? '0.00':getActiveCustomersModel.tothchg.toString(),
+                              pw.Text(formatAmount(getActiveCustomersModel.tothchg.toString()== 'null' ? '0.00':getActiveCustomersModel.tothchg.toString()),
                                   style: pw.TextStyle(
                                       fontWeight: pw.FontWeight.bold)),
                             ])),
@@ -348,7 +361,7 @@ class CustomerReciept_PDF {
                   ),
                   pw.Padding(
                     padding: pw.EdgeInsets.only(top: 110, left: 240),
-                    child: pw.Text(total.toStringAsFixed(2),
+                    child: pw.Text(formatAmount(total.toString()),
                         textAlign: pw.TextAlign.right,
                         style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
                   ),

@@ -22,6 +22,7 @@ class _CustomerReceivableUiState extends State<CustomerReceivableUi> {
   DateTime selectedInitialDate = DateTime.now();
   DateTime selectedFinalDate = DateTime.now();
   double tableFontSize = 12;
+  String? outstanding;
   var f = NumberFormat("###,###.#", "en_US");
   final numberFormat = NumberFormat('#,###');
 
@@ -83,24 +84,77 @@ class _CustomerReceivableUiState extends State<CustomerReceivableUi> {
                     ),
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: 10),
-                      child: InkWell(
-                        onTap: () => _intSelectDate(context, setState),
-                        child: Row(
-                          children: [
-                            SizedBox(width: 8),
-                            Text('From: ',
-                                style: TextStyle(fontWeight: FontWeight.bold)),
-                            Text(
-                              DateFormat('dd-MM-yyyy')
-                                  .format(selectedInitialDate),
-                              style: TextStyle(
-                                // fontWeight: FontWeight.bold,
-                                fontSize: 16,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          InkWell(
+                            onTap: () => _intSelectDate(context, setState),
+                            child: Row(
+                              children: [
+                                SizedBox(width: 8),
+                                Text('From: ',
+                                    style: TextStyle(fontWeight: FontWeight.bold)),
+                                Text(
+                                  DateFormat('dd-MM-yyyy')
+                                      .format(selectedInitialDate),
+                                  style: TextStyle(
+                                    // fontWeight: FontWeight.bold,
+                                    fontSize: 16,
+                                  ),
+                                ),
+                                Icon(Icons.calendar_today, color: Colors.green),
+                              ],
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 5),
+                            child: Container(
+                              width: MediaQuery.of(context).size.width * 0.35,
+                              height: MediaQuery.of(context).size.height * 0.03,
+                              child: DropdownButtonFormField<String>(
+                                value: outstanding,
+                                onChanged: (newValue) {
+                                  setState(() {
+                                    outstanding = newValue;
+                                  });
+                                },
+                                items: <String>['Office', 'Ghauri'].map<DropdownMenuItem<String>>((String value) {
+                                  return DropdownMenuItem<String>(
+                                    value: value,
+                                    child: Text(
+                                      value,
+                                      style: TextStyle(
+                                        fontSize: MediaQuery.of(context).size.height * 0.018, // Adjust font size based on height
+                                        overflow: TextOverflow.ellipsis,
+                                        color: Colors.black
+                                      ),
+                                      maxLines: 1,
+                                    ),
+                                  );
+                                }).toList(),
+                                isDense: true, // Make the dropdown more compact
+                                decoration: InputDecoration(
+                                  labelText: "Type",
+                                  labelStyle: TextStyle(
+                                    fontSize: MediaQuery.of(context).size.height * 0.018, // Adjust label font size
+                                  ),
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(3),
+                                    borderSide: const BorderSide(
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                  contentPadding: EdgeInsets.symmetric(horizontal: 10), // Add padding inside the text field
+                                ),
+                                style: TextStyle(
+                                  fontSize: MediaQuery.of(context).size.height * 0.018, // Adjust font size for selected value
+                                  overflow: TextOverflow.ellipsis, // Ensure selected value fits within the field
+                                ),
                               ),
                             ),
-                            Icon(Icons.calendar_today, color: Colors.green),
-                          ],
-                        ),
+                          ),
+
+                        ],
                       ),
                     ),
                     Row(
@@ -428,7 +482,7 @@ class _CustomerReceivableUiState extends State<CustomerReceivableUi> {
     var response = await http.post(Uri.parse(CustomerReceivable), body: {
       'FIntDat': selectedInitialDate.toString(),
       'FFnlDat': selectedFinalDate.toString(),
-      'FRepFlg': '',
+      'FRepFlg': outstanding.toString(),
     });
 
     if (response.statusCode == 200) {

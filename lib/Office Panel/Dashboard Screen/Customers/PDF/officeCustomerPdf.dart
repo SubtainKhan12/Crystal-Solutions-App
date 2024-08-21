@@ -5,7 +5,6 @@ import 'package:intl/intl.dart';
 import 'package:pdf/pdf.dart';
 import '../../../../HHH/DrawerPages/Customers/Customer PDF/pdf_file_handle.dart';
 import '../../../../Model/Bill/GetBillModel.dart';
-import '../../../../Model/Customers/GetActiveCustomersModel.dart';
 import 'package:pdf/widgets.dart' as pw;
 
 import '../Add Bill/getBill.dart';
@@ -14,6 +13,11 @@ class OfficeCustomerReciept_PDF {
   static Future<File> generate(GetBillModel filterBillList) async {
     DateTime parsedDate = DateTime.parse(filterBillList.date.toString());
     String formattedDate = DateFormat('dd-MM-yyyy').format(parsedDate);
+    final numberFormat = NumberFormat('#,###');
+    String formatAmount(String amount) {
+      final doubleAmount = double.tryParse(amount)?? 0.00;
+      return numberFormat.format(doubleAmount);
+    }
     ByteData image = await rootBundle.load('assets/CrystalSolutions.jpg');
 
     Uint8List imageData = (image).buffer.asUint8List();
@@ -24,60 +28,63 @@ class OfficeCustomerReciept_PDF {
     ByteData image3 = await rootBundle.load('assets/UrduText.png');
 
     Uint8List urduText = (image3).buffer.asUint8List();
+    ByteData image4 = await rootBundle.load('assets/locationQR.png');
+
+    Uint8List locationQR = (image4).buffer.asUint8List();
 
     final pdf = pw.Document(
         // pageMode: PdfPageMode.fullscreen,
         );
 
-    final tableHeaders = [
-      // 'Sr#',
-      // 'PARTICULARS',
-      // 'Amount Rs',
-      // 'Mobile',
-      // 'Phone',
-      // 'Add 1',
-      // 'Add 2',
-      // 'Email',
-      // 'Shops',
-      // 'Srv',
-      // 'SMS',
-      // 'Adv',
-      // 'POS',
-      // 'Monthly',
-      // 'Total',
-      // 'Ref#',
-      // 'Type',
-      // 'Clctr',
-      // 'City',
-      // 'Srv IP',
-      // 'Status',
-    ];
-    final tableData = [
-      // for (int i = 0; i < getActiveCustomersModel.length; i++)
-      [
-        // i + 1,
-        // getActiveCustomersModel.tCstDsc.toString().trim(),
-        // getActiveCustomersModel.tCntPer.toString().trim(),
-        // getActiveCustomersModel[i].tMobNUm.toString().trim(),
-        // getActiveCustomersModel[i].tPhnNum.toString(),
-        // getActiveCustomersModel[i].tAdd001.toString(),
-        // getActiveCustomersModel[i].tAdd002.toString(),
-        // getActiveCustomersModel[i].tEmlAdd.toString(),
-        // getActiveCustomersModel[i].tShpNum.toString(),
-        // getCustomersModel[i].tsrvchg.toString(),
-        // getCustomersModel[i].tsmschg.toString(),
-        // getCustomersModel[i].tadvchg.toString(),
-        // getCustomersModel[i].tposchg.toString(),
-        // getCustomersModel[i].tmthChg.toString(),
-        // getCustomersModel[i].ttotamt.toString(),
-        // getCustomersModel[i].tRefId.toString(),
-        // getCustomersModel[i].tTypId.toString(),
-        // getCustomersModel[i].tColId.toString(),
-        // getCustomersModel[i].tctyid.toString(),
-        // getCustomersModel[i].tSrvIp.toString(),
-        // getCustomersModel[i].tCstSts.toString(),
-      ],
-    ];
+    // final tableHeaders = [
+    //   // 'Sr#',
+    //   // 'PARTICULARS',
+    //   // 'Amount Rs',
+    //   // 'Mobile',
+    //   // 'Phone',
+    //   // 'Add 1',
+    //   // 'Add 2',
+    //   // 'Email',
+    //   // 'Shops',
+    //   // 'Srv',
+    //   // 'SMS',
+    //   // 'Adv',
+    //   // 'POS',
+    //   // 'Monthly',
+    //   // 'Total',
+    //   // 'Ref#',
+    //   // 'Type',
+    //   // 'Clctr',
+    //   // 'City',
+    //   // 'Srv IP',
+    //   // 'Status',
+    // ];
+    // final tableData = [
+    //   // for (int i = 0; i < getActiveCustomersModel.length; i++)
+    //   [
+    //     // i + 1,
+    //     // getActiveCustomersModel.tCstDsc.toString().trim(),
+    //     // getActiveCustomersModel.tCntPer.toString().trim(),
+    //     // getActiveCustomersModel[i].tMobNUm.toString().trim(),
+    //     // getActiveCustomersModel[i].tPhnNum.toString(),
+    //     // getActiveCustomersModel[i].tAdd001.toString(),
+    //     // getActiveCustomersModel[i].tAdd002.toString(),
+    //     // getActiveCustomersModel[i].tEmlAdd.toString(),
+    //     // getActiveCustomersModel[i].tShpNum.toString(),
+    //     // getCustomersModel[i].tsrvchg.toString(),
+    //     // getCustomersModel[i].tsmschg.toString(),
+    //     // getCustomersModel[i].tadvchg.toString(),
+    //     // getCustomersModel[i].tposchg.toString(),
+    //     // getCustomersModel[i].tmthChg.toString(),
+    //     // getCustomersModel[i].ttotamt.toString(),
+    //     // getCustomersModel[i].tRefId.toString(),
+    //     // getCustomersModel[i].tTypId.toString(),
+    //     // getCustomersModel[i].tColId.toString(),
+    //     // getCustomersModel[i].tctyid.toString(),
+    //     // getCustomersModel[i].tSrvIp.toString(),
+    //     // getCustomersModel[i].tCstSts.toString(),
+    //   ],
+    // ];
 
     double arrear = double.tryParse(filterBillList.arrear.toString()) ?? 0.0;
     double serverChg =
@@ -114,7 +121,15 @@ class OfficeCustomerReciept_PDF {
               crossAxisAlignment: pw.CrossAxisAlignment.start,
               children: [
                 pw.SizedBox(height: 25),
-                pw.Image(pw.MemoryImage(imageData)),
+                pw.Row(
+                  mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+                  children: [
+                    pw.Image(pw.MemoryImage(imageData)),
+                    pw.Padding(padding: pw.EdgeInsets.only(right: 30),
+                    child: pw.Image(pw.MemoryImage(locationQR),height: 80),)
+
+                  ]
+                ),
                 pw.Align(
                     alignment: pw.Alignment.topRight,
                     child: pw.Padding(
@@ -166,7 +181,6 @@ class OfficeCustomerReciept_PDF {
                       mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
                       children: [
                         pw.Container(
-                          height: 90,
                           width: 300,
                           decoration: pw.BoxDecoration(
                               borderRadius: pw.BorderRadius.circular(0),
@@ -333,25 +347,25 @@ class OfficeCustomerReciept_PDF {
                         child: pw.Column(
                             crossAxisAlignment: pw.CrossAxisAlignment.end,
                             children: [
-                              pw.Text(filterBillList.arrear.toString(),
+                              pw.Text(formatAmount(filterBillList.arrear.toString()),
                                   style: pw.TextStyle(
                                       fontWeight: pw.FontWeight.bold)),
-                              pw.Text(filterBillList.serverChg.toString(),
+                              pw.Text(formatAmount(filterBillList.serverChg.toString()),
                                   style: pw.TextStyle(
                                       fontWeight: pw.FontWeight.bold)),
-                              pw.Text(filterBillList.sMSChg.toString(),
+                              pw.Text(formatAmount(filterBillList.sMSChg.toString()),
                                   style: pw.TextStyle(
                                       fontWeight: pw.FontWeight.bold)),
-                              pw.Text(filterBillList.advacneChg.toString(),
+                              pw.Text(formatAmount(filterBillList.advacneChg.toString()),
                                   style: pw.TextStyle(
                                       fontWeight: pw.FontWeight.bold)),
-                              pw.Text(filterBillList.monthlyChg.toString(),
+                              pw.Text(formatAmount(filterBillList.monthlyChg.toString()),
                                   style: pw.TextStyle(
                                       fontWeight: pw.FontWeight.bold)),
-                              pw.Text(filterBillList.pSOChg.toString(),
+                              pw.Text(formatAmount(filterBillList.pSOChg.toString()),
                                   style: pw.TextStyle(
                                       fontWeight: pw.FontWeight.bold)),
-                              pw.Text(filterBillList.otherChg.toString(),
+                              pw.Text(formatAmount(filterBillList.otherChg.toString()),
                                   style: pw.TextStyle(
                                       fontWeight: pw.FontWeight.bold)),
                             ])),
@@ -377,7 +391,7 @@ class OfficeCustomerReciept_PDF {
                   ),
                   pw.Padding(
                     padding: pw.EdgeInsets.only(top: 110, left: 240),
-                    child: pw.Text(total.toStringAsFixed(2),
+                    child: pw.Text(formatAmount(total.toString()),
                         textAlign: pw.TextAlign.right,
                         style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
                   ),

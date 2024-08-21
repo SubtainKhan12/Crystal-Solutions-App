@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:intl/intl.dart';
 import '../../../../Model/Collection/GetCollectionModel.dart';
 import '../../../../Model/Customers/GetActiveCustomersModel.dart';
 import '../../../../apis.dart';
@@ -76,6 +77,15 @@ class _GetCollectionUIState extends State<GetCollectionUI> {
                     : ListView.builder(
                   itemCount: filterCollectionList.length,
                   itemBuilder: (context, index) {
+                    DateTime parsedDate = DateTime.parse(
+                        filterCollectionList[index].date.toString());
+                    String formattedDate =
+                    DateFormat('dd-MM-yyyy').format(parsedDate);
+                    final numberFormat = NumberFormat('#,###');
+                    String formatAmount(String amount) {
+                      final doubleAmount = double.tryParse(amount)?? 0.00;
+                      return numberFormat.format(doubleAmount);
+                    }
                     return Padding(
                       padding: const EdgeInsets.symmetric(vertical: 0),
                       child: Card(
@@ -88,244 +98,35 @@ class _GetCollectionUIState extends State<GetCollectionUI> {
                         child: Theme(
                           data: Theme.of(context)
                               .copyWith(dividerColor: Colors.transparent),
-                          child: ExpansionTile(
+                          child: ListTile(
                             minTileHeight: 30,
-                            title: Text(
-                              filterCollectionList[index]
-                                  .description
-                                  .toString(),
-                              style: const TextStyle(fontSize: 14),
+                            title: Row(
+
+                              children: [
+                                Text(filterCollectionList[index].col.toString(),style: TextStyle(
+                                    fontSize: 16,
+                                    color: Color(0xffF58634),
+                                    fontWeight:
+                                    FontWeight.bold)),
+                                Text(' - '),
+                                Text(formattedDate,style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight:
+                                    FontWeight.bold)),
+                                Text(' - '),
+                                Text(formatAmount(filterCollectionList[index].amount.toString()),style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight:
+                                    FontWeight.bold)),
+                              ],
                             ),
-                            subtitle: Text(filterCollectionList[index].date.toString()),
-                            children: [
-                              Divider(
-                                color: Cosmic.app_color,
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 15, vertical: 10),
-                                child: Column(
-                                  crossAxisAlignment:
-                                  CrossAxisAlignment.start,
-                                  children: [
-                                    Row(
-                                      mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        RichText(
-                                            text: TextSpan(children: [
-                                              const TextSpan(
-                                                text: 'Mobile: ',
-                                                style: TextStyle(
-                                                    color: Colors.black,
-                                                    fontWeight:
-                                                    FontWeight.bold),
-                                              ),
-                                              TextSpan(
-                                                text:
-                                                filterCollectionList[
-                                                index]
-                                                    .mobile
-                                                    .toString(),
-                                                style: const TextStyle(
-                                                  color: Colors.black,
-                                                ),
-                                              ),
-                                            ])),
-                                      ],
-                                    ),
-                                    RichText(
-                                        text: TextSpan(children: [
-                                          const TextSpan(
-                                            text: 'Monthly Charges: ',
-                                            style: TextStyle(
-                                                color: Colors.black,
-                                                fontWeight: FontWeight.bold),
-                                          ),
-                                          TextSpan(
-                                            text: filterCollectionList[index]
-                                                .monthlyChg
-                                                .toString(),
-                                            style: const TextStyle(
-                                              color: Colors.black,
-                                            ),
-                                          ),
-                                        ])),
-                                    RichText(
-                                        text: TextSpan(children: [
-                                          const TextSpan(
-                                            text: 'Address1: ',
-                                            style: TextStyle(
-                                                color: Colors.black,
-                                                fontWeight: FontWeight.bold),
-                                          ),
-                                          TextSpan(
-                                            text: filterCollectionList[index]
-                                                .address1
-                                                .toString(),
-                                            style: const TextStyle(
-                                              color: Colors.black,
-                                            ),
-                                          ),
-                                        ])),
-                                    RichText(
-                                        text: TextSpan(children: [
-                                          const TextSpan(
-                                            text: 'Email: ',
-                                            style: TextStyle(
-                                                color: Colors.black,
-                                                fontWeight: FontWeight.bold),
-                                          ),
-                                          TextSpan(
-                                            text: filterCollectionList[index]
-                                                .email
-                                                .toString(),
-                                            style: const TextStyle(
-                                              color: Colors.black,
-                                            ),
-                                          ),
-                                        ])),
-                                    RichText(
-                                        text: TextSpan(children: [
-                                          const TextSpan(
-                                            text: 'Arrear Charges: ',
-                                            style: TextStyle(
-                                                color: Colors.black,
-                                                fontWeight: FontWeight.bold),
-                                          ),
-                                          TextSpan(
-                                            text: filterCollectionList[index]
-                                                .arrear
-                                                .toString(),
-                                            style: const TextStyle(
-                                              color: Colors.black,
-                                            ),
-                                          ),
-                                        ])),
-                                    RichText(
-                                        text: TextSpan(children: [
-                                          const TextSpan(
-                                            text: 'Server Charges: ',
-                                            style: TextStyle(
-                                                color: Colors.black,
-                                                fontWeight: FontWeight.bold),
-                                          ),
-                                          TextSpan(
-                                            text: filterCollectionList[index]
-                                                .serverChg
-                                                .toString(),
-                                            style: const TextStyle(
-                                              color: Colors.black,
-                                            ),
-                                          ),
-                                        ])),
-                                    RichText(
-                                        text: TextSpan(children: [
-                                          const TextSpan(
-                                            text: 'Sms Charges: ',
-                                            style: TextStyle(
-                                                color: Colors.black,
-                                                fontWeight: FontWeight.bold),
-                                          ),
-                                          TextSpan(
-                                            text: filterCollectionList[index]
-                                                .sMSChg
-                                                .toString(),
-                                            style: const TextStyle(
-                                              color: Colors.black,
-                                            ),
-                                          ),
-                                        ])),
-                                    RichText(
-                                        text: TextSpan(children: [
-                                          const TextSpan(
-                                            text: 'POS Charges: ',
-                                            style: TextStyle(
-                                                color: Colors.black,
-                                                fontWeight: FontWeight.bold),
-                                          ),
-                                          TextSpan(
-                                            text: filterCollectionList[index]
-                                                .pSOChg
-                                                .toString(),
-                                            style: const TextStyle(
-                                              color: Colors.black,
-                                            ),
-                                          ),
-                                        ])),
-                                    RichText(
-                                        text: TextSpan(children: [
-                                          const TextSpan(
-                                            text: 'Monthly Charges: ',
-                                            style: TextStyle(
-                                                color: Colors.black,
-                                                fontWeight: FontWeight.bold),
-                                          ),
-                                          TextSpan(
-                                            text: filterCollectionList[index]
-                                                .monthlyChg
-                                                .toString(),
-                                            style: const TextStyle(
-                                              color: Colors.black,
-                                            ),
-                                          ),
-                                        ])),
-                                    RichText(
-                                        text: TextSpan(children: [
-                                          const TextSpan(
-                                            text: 'Advance Charges: ',
-                                            style: TextStyle(
-                                                color: Colors.black,
-                                                fontWeight: FontWeight.bold),
-                                          ),
-                                          TextSpan(
-                                            text: filterCollectionList[index]
-                                                .advacneChg
-                                                .toString(),
-                                            style: const TextStyle(
-                                              color: Colors.black,
-                                            ),
-                                          ),
-                                        ])),
-                                    RichText(
-                                        text: TextSpan(children: [
-                                          const TextSpan(
-                                            text: 'Other Charges: ',
-                                            style: TextStyle(
-                                                color: Colors.black,
-                                                fontWeight: FontWeight.bold),
-                                          ),
-                                          TextSpan(
-                                            text: filterCollectionList[index]
-                                                .serverChg
-                                                .toString(),
-                                            style: const TextStyle(
-                                              color: Colors.black,
-                                            ),
-                                          ),
-                                        ])),
-                                    RichText(
-                                        text: TextSpan(children: [
-                                          const TextSpan(
-                                            text: 'Total Charges: ',
-                                            style: TextStyle(
-                                                color: Colors.black,
-                                                fontWeight: FontWeight.bold),
-                                          ),
-                                          TextSpan(
-                                            text: calculateTotalCharges(
-                                                filterCollectionList[
-                                                index])
-                                                .toStringAsFixed(2),
-                                            style: const TextStyle(
-                                              color: Colors.black,
-                                            ),
-                                          ),
-                                        ])),
-                                  ],
-                                ),
-                              ),
-                            ],
+                            subtitle: Text(
+                          filterCollectionList[index]
+                              .description
+                              .toString(),
+                          style: const TextStyle(fontSize: 14),
+                        ),
+
                           ),
                         ),
                       ),
