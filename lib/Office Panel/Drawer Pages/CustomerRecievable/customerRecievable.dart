@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:http/http.dart' as http;
 import '../../../HHH/DrawerPages/Customers/Customer PDF/pdf_file_handle.dart';
+import '../../../Model/Reference/GetActiveReference.dart';
 import '../../../apis.dart';
 import '../../../cosmos.dart';
 import 'cutomerRecieveable_pdf.dart';
@@ -19,16 +20,26 @@ class CustomerReceivableUi extends StatefulWidget {
 class _CustomerReceivableUiState extends State<CustomerReceivableUi> {
   CustomerReceivableModel? customerReceivableModel;
   List<Detail>? _filteredDetails = [];
-  DateTime selectedInitialDate = DateTime.now();
+  List<GetActiveReference> _getActiveReferenceList = [];
+  DateTime selectedInitialDate =
+      DateTime(DateTime.now().year, DateTime.now().month, 1);
   DateTime selectedFinalDate = DateTime.now();
   double tableFontSize = 12;
-  String? outstanding;
+  String? type = 'ALL';
+  String? reference ;
   var f = NumberFormat("###,###.#", "en_US");
   final numberFormat = NumberFormat('#,###');
 
   String formatCollection(String amount) {
     final doubleAmount = double.tryParse(amount) ?? 0.00;
     return numberFormat.format(doubleAmount);
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    get_ActiveReference();
   }
 
   @override
@@ -93,7 +104,8 @@ class _CustomerReceivableUiState extends State<CustomerReceivableUi> {
                               children: [
                                 SizedBox(width: 8),
                                 Text('From: ',
-                                    style: TextStyle(fontWeight: FontWeight.bold)),
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.bold)),
                                 Text(
                                   DateFormat('dd-MM-yyyy')
                                       .format(selectedInitialDate),
@@ -112,31 +124,37 @@ class _CustomerReceivableUiState extends State<CustomerReceivableUi> {
                               width: MediaQuery.of(context).size.width * 0.35,
                               height: MediaQuery.of(context).size.height * 0.03,
                               child: DropdownButtonFormField<String>(
-                                value: outstanding,
+                                value: reference,
                                 onChanged: (newValue) {
                                   setState(() {
-                                    outstanding = newValue;
+                                    reference = newValue;
                                   });
                                 },
-                                items: <String>['Office', 'Ghauri'].map<DropdownMenuItem<String>>((String value) {
+                                items: _getActiveReferenceList.map((refernce) {
                                   return DropdownMenuItem<String>(
-                                    value: value,
+                                    value: refernce.trefid ?? '',
                                     child: Text(
-                                      value,
+                                      refernce.trefdsc ?? '',
                                       style: TextStyle(
-                                        fontSize: MediaQuery.of(context).size.height * 0.018, // Adjust font size based on height
-                                        overflow: TextOverflow.ellipsis,
-                                        color: Colors.black
-                                      ),
+                                          fontSize: MediaQuery.of(context)
+                                                  .size
+                                                  .height *
+                                              0.018,
+                                          // Adjust font size based on height
+                                          overflow: TextOverflow.ellipsis,
+                                          color: Colors.black),
                                       maxLines: 1,
                                     ),
                                   );
                                 }).toList(),
-                                isDense: true, // Make the dropdown more compact
+                                isDense: true,
+                                // Make the dropdown more compact
                                 decoration: InputDecoration(
-                                  labelText: "Type",
+                                  labelText: "Reference",
                                   labelStyle: TextStyle(
-                                    fontSize: MediaQuery.of(context).size.height * 0.018, // Adjust label font size
+                                    fontSize:
+                                        MediaQuery.of(context).size.height *
+                                            0.018, // Adjust label font size
                                   ),
                                   border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(3),
@@ -144,16 +162,20 @@ class _CustomerReceivableUiState extends State<CustomerReceivableUi> {
                                       color: Colors.black,
                                     ),
                                   ),
-                                  contentPadding: EdgeInsets.symmetric(horizontal: 10), // Add padding inside the text field
+                                  contentPadding: EdgeInsets.symmetric(
+                                      horizontal:
+                                          10), // Add padding inside the text field
                                 ),
                                 style: TextStyle(
-                                  fontSize: MediaQuery.of(context).size.height * 0.018, // Adjust font size for selected value
-                                  overflow: TextOverflow.ellipsis, // Ensure selected value fits within the field
+                                  fontSize: MediaQuery.of(context).size.height *
+                                      0.018,
+                                  // Adjust font size for selected value
+                                  overflow: TextOverflow
+                                      .ellipsis, // Ensure selected value fits within the field
                                 ),
                               ),
                             ),
                           ),
-
                         ],
                       ),
                     ),
@@ -187,27 +209,86 @@ class _CustomerReceivableUiState extends State<CustomerReceivableUi> {
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                          padding: const EdgeInsets.only(top: 1, right: 10),
                           child: Container(
-                            height: _height * 0.035,
-                            child: ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: Color(0xffF58634),
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(
-                                        5), // Makes the button rectangular
+                            width: MediaQuery.of(context).size.width * 0.35,
+                            height: MediaQuery.of(context).size.height * 0.03,
+                            child: DropdownButtonFormField<String>(
+                              value: type,
+                              onChanged: (newValue) {
+                                setState(() {
+                                  type = newValue;
+                                });
+                              },
+                              items: <String>[
+                                'ALL',
+                                'O/S'
+                              ].map<DropdownMenuItem<String>>((String value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Text(
+                                    value,
+                                    style: TextStyle(
+                                        fontSize:
+                                            MediaQuery.of(context).size.height *
+                                                0.018,
+                                        // Adjust font size based on height
+                                        overflow: TextOverflow.ellipsis,
+                                        color: Colors.black),
+                                    maxLines: 1,
+                                  ),
+                                );
+                              }).toList(),
+                              isDense: true,
+                              // Make the dropdown more compact
+                              decoration: InputDecoration(
+                                labelText: "Type",
+                                labelStyle: TextStyle(
+                                  fontSize: MediaQuery.of(context).size.height *
+                                      0.018, // Adjust label font size
+                                ),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(3),
+                                  borderSide: const BorderSide(
+                                    color: Colors.black,
                                   ),
                                 ),
-                                onPressed: () {
-                                  post_CustomerReceivable();
-                                },
-                                child: Text(
-                                  'Submit',
-                                  style: TextStyle(color: Cosmic.app_color),
-                                )),
+                                contentPadding: EdgeInsets.symmetric(
+                                    horizontal:
+                                        10), // Add padding inside the text field
+                              ),
+                              style: TextStyle(
+                                fontSize:
+                                    MediaQuery.of(context).size.height * 0.018,
+                                // Adjust font size for selected value
+                                overflow: TextOverflow
+                                    .ellipsis, // Ensure selected value fits within the field
+                              ),
+                            ),
                           ),
                         ),
                       ],
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 235.0, top: 5),
+                      child: Container(
+                        height: _height * 0.035,
+                        child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Color(0xffF58634),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(
+                                    5), // Makes the button rectangular
+                              ),
+                            ),
+                            onPressed: () {
+                              post_CustomerReceivable();
+                            },
+                            child: Text(
+                              'Submit',
+                              style: TextStyle(color: Cosmic.app_color),
+                            )),
+                      ),
                     ),
                     SizedBox(
                       height: _height * 0.005,
@@ -482,7 +563,8 @@ class _CustomerReceivableUiState extends State<CustomerReceivableUi> {
     var response = await http.post(Uri.parse(CustomerReceivable), body: {
       'FIntDat': selectedInitialDate.toString(),
       'FFnlDat': selectedFinalDate.toString(),
-      'FRepFlg': outstanding.toString(),
+      'FRefId': reference.toString(),
+      'FRepTyp': type.toString(),
     });
 
     if (response.statusCode == 200) {
@@ -496,6 +578,18 @@ class _CustomerReceivableUiState extends State<CustomerReceivableUi> {
       });
     } else {
       throw Exception('Failed to load data');
+    }
+  }
+
+  Future get_ActiveReference() async {
+    var response = await http.post(Uri.parse(getActiveRef));
+    var result = jsonDecode(response.body);
+    if (response.statusCode == 200) {
+      _getActiveReferenceList.clear();
+      for (Map i in result) {
+        _getActiveReferenceList.add(GetActiveReference.fromJson(i));
+      }
+      setState(() {});
     }
   }
 // void search(String query) {

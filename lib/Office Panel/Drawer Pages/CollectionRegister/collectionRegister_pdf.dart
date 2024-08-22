@@ -4,8 +4,9 @@ import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 
 import '../../../HHH/DrawerPages/Customers/Customer PDF/pdf_file_handle.dart';
+import '../../../Model/RegisterCollection/CollectionsRegistersModel.dart';
 
-import '../../../Model/RegisterCollection/CollectionsRegisters.dart';
+
 
 class CollectionRegister_Pdf {
   static Future<File> generate(CollectionsRegistersModel? collectionsRegisters,

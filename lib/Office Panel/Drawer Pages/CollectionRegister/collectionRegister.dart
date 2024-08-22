@@ -1,10 +1,11 @@
 import 'dart:convert';
-import 'package:crystal_solutions/Model/RegisterCollection/CollectionsRegisters.dart';
+
 import 'package:http/http.dart' as http;
 import 'package:crystal_solutions/cosmos.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import '../../../HHH/DrawerPages/Customers/Customer PDF/pdf_file_handle.dart';
+import '../../../Model/RegisterCollection/CollectionsRegistersModel.dart';
 import '../../../apis.dart';
 import 'collectionRegister_pdf.dart';
 
@@ -21,7 +22,7 @@ class CollectionRegisterUI extends StatefulWidget {
 class _CollectionRegisterUIState extends State<CollectionRegisterUI> {
   CollectionsRegistersModel? collectionsRegisters;
   List<Detail>? _filteredDetails = [];
-  DateTime selectedInitialDate = DateTime.now();
+  DateTime selectedInitialDate = DateTime(DateTime.now().year, DateTime.now().month, 1);
   DateTime selectedFinalDate = DateTime.now();
   double tableFontSize = 12;
   var f = NumberFormat("###,###.#", "en_US");
@@ -160,10 +161,12 @@ class _CollectionRegisterUIState extends State<CollectionRegisterUI> {
                     verticalInside: BorderSide(width: 1, color: Colors.grey ),
                   ),
                   columnWidths: const {
-                    0: FlexColumnWidth(0.85),
-                    1: FlexColumnWidth(0.5),
-                    2: FlexColumnWidth(2),
-                    3: FlexColumnWidth(0.8),
+
+                    0: FlexColumnWidth(0.3),
+                    1: FlexColumnWidth(0.85),
+                    2: FlexColumnWidth(0.5),
+                    3: FlexColumnWidth(2),
+                    4: FlexColumnWidth(0.8),
                   },
                   children: [
                     TableRow(
@@ -172,6 +175,15 @@ class _CollectionRegisterUIState extends State<CollectionRegisterUI> {
                           color: Colors.indigo, border: Border.all(width: 0.5)),
                       children: [
                         TableCell(
+                          child: Center(
+                            child: Text('Sr#',
+                                textAlign: TextAlign.left,
+                                style: TextStyle(
+                                    fontSize: tableFontSize,
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold)),
+                          ),
+                        ),TableCell(
                           child: Center(
                             child: Text('Date',
                                 textAlign: TextAlign.left,
@@ -219,6 +231,17 @@ class _CollectionRegisterUIState extends State<CollectionRegisterUI> {
                             BoxDecoration(border: Border.all(width: 0.5,color: Colors.grey)),
                         children: [
                           TableCell(
+                            child: Padding(
+                              padding: const EdgeInsets.only(top: 3.0, left: 1),
+                              child: Text(
+                                  _filteredDetails![i].sr
+                                      .toString(),
+                                  textAlign: TextAlign.left,
+                                  style: TextStyle(
+                                      fontSize: tableFontSize,
+                                      )),
+                            ),
+                          ),TableCell(
                             child: Padding(
                               padding: const EdgeInsets.only(top: 3.0, left: 1),
                               child: Text(
