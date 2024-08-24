@@ -11,6 +11,7 @@ import 'addCollection.dart';
 
 class GetCollectionUI extends StatefulWidget {
   GetActiveCustomersModel getActiveCustomersList;
+
   GetCollectionUI({super.key, required this.getActiveCustomersList});
 
   @override
@@ -35,24 +36,21 @@ class _GetCollectionUIState extends State<GetCollectionUI> {
       appBar: AppBar(
         title: Text(
           widget.getActiveCustomersList.tCstDsc.toString(),
-          style: TextStyle(color: Cosmic.white_color,fontSize: 18),
+          style: TextStyle(color: Cosmic.white_color, fontSize: 18),
         ),
         // centerTitle: true,
         backgroundColor: Cosmic.app_color,
         iconTheme: IconThemeData(color: Cosmic.white_color),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: (){
+        onPressed: () {
           Navigator.push(
               context,
               MaterialPageRoute(
-                  builder:
-                      (context) =>
-                      AddCollectionUI(
+                  builder: (context) => AddCollectionUI(
                         getActiveBankList: _getActiveBankList,
-                        getActiveCustomersModel:
-                        widget.getActiveCustomersList,
-                      ))).then((value)=>get_GetCollection());
+                        getActiveCustomersModel: widget.getActiveCustomersList,
+                      ))).then((value) => get_GetCollection());
         },
         child: Icon(Icons.add),
       ),
@@ -76,67 +74,82 @@ class _GetCollectionUIState extends State<GetCollectionUI> {
               Expanded(
                 child: filterCollectionList.isEmpty
                     ? const Center(
-                  child: CircularProgressIndicator(),
-                )
+                        child: CircularProgressIndicator(),
+                      )
                     : ListView.builder(
-                  itemCount: filterCollectionList.length,
-                  itemBuilder: (context, index) {
-                    DateTime parsedDate = DateTime.parse(
-                        filterCollectionList[index].date.toString());
-                    String formattedDate =
-                    DateFormat('dd-MM-yyyy').format(parsedDate);
-                    final numberFormat = NumberFormat('#,###');
-                    String formatAmount(String amount) {
-                      final doubleAmount = double.tryParse(amount)?? 0.00;
-                      return numberFormat.format(doubleAmount);
-                    }
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 0),
-                      child: Card(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(5)),
-                        elevation: 2,
-                        shadowColor: Cosmic.app_color,
-                        borderOnForeground: true,
-                        surfaceTintColor: Colors.blue.shade100,
-                        child: Theme(
-                          data: Theme.of(context)
-                              .copyWith(dividerColor: Colors.transparent),
-                          child: ListTile(
-                            minTileHeight: 30,
-                            title: Row(
+                        itemCount: filterCollectionList.length,
+                        itemBuilder: (context, index) {
+                          DateTime parsedDate = DateTime.parse(
+                              filterCollectionList[index].date.toString());
+                          String formattedDate =
+                              DateFormat('dd-MM-yyyy').format(parsedDate);
+                          final numberFormat = NumberFormat('#,###');
+                          String formatAmount(String amount) {
+                            final doubleAmount =
+                                double.tryParse(amount) ?? 0.00;
+                            return numberFormat.format(doubleAmount);
+                          }
 
-                              children: [
-                                Text(filterCollectionList[index].col.toString(),style: TextStyle(
-                                    fontSize: 16,
-                                    color: Color(0xffF58634),
-                                    fontWeight:
-                                    FontWeight.bold)),
-                                Text(' - '),
-                                Text(formattedDate,style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight:
-                                    FontWeight.bold)),
-                                Text(' - '),
-                                Text(formatAmount(filterCollectionList[index].amount.toString()),style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight:
-                                    FontWeight.bold)),
-                              ],
+                          return Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 0),
+                            child: Card(
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(5)),
+                              elevation: 2,
+                              shadowColor: Cosmic.app_color,
+                              borderOnForeground: true,
+                              surfaceTintColor: Colors.blue.shade100,
+                              child: Theme(
+                                data: Theme.of(context)
+                                    .copyWith(dividerColor: Colors.transparent),
+                                child: ListTile(
+                                  minTileHeight: 30,
+                                  title: Row(
+                                    children: [
+                                      Text(
+                                          filterCollectionList[index]
+                                              .col
+                                              .toString(),
+                                          style: TextStyle(
+                                              fontSize: 16,
+                                              color: Color(0xffF58634),
+                                              fontWeight: FontWeight.bold)),
+                                      Text(' - '),
+                                      Text(formattedDate,
+                                          style: TextStyle(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.bold)),
+                                      Text(' - '),
+
+                                    ],
+                                  ),
+                                  subtitle: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Flexible(
+                                        child: Text(
+                                          filterCollectionList[index]
+                                              .description
+                                              .toString(),
+                                          style: const TextStyle(fontSize: 14),
+                                        ),
+                                      ),
+                                      Text(
+                                          formatAmount(
+                                              filterCollectionList[index]
+                                                  .amount
+                                                  .toString()),
+                                          style: TextStyle(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.bold)),
+                                    ],
+                                  ),
+                                ),
+                              ),
                             ),
-                            subtitle: Text(
-                          filterCollectionList[index]
-                              .description
-                              .toString(),
-                          style: const TextStyle(fontSize: 14),
-                        ),
-
-                          ),
-                        ),
+                          );
+                        },
                       ),
-                    );
-                  },
-                ),
               ),
             ],
           ),
@@ -146,7 +159,7 @@ class _GetCollectionUIState extends State<GetCollectionUI> {
   }
 
   Future get_GetCollection() async {
-    var response = await http.post(Uri.parse(getCollection),body: {
+    var response = await http.post(Uri.parse(getCollection), body: {
       'FCstId': widget.getActiveCustomersList.tcstid,
     });
     var result = jsonDecode(response.body);
@@ -172,6 +185,7 @@ class _GetCollectionUIState extends State<GetCollectionUI> {
       filterCollectionList = filteredList;
     });
   }
+
   Future<void> get_ActiveBank() async {
     var response = await http.get(Uri.parse(getActiveBank));
     if (response.statusCode == 200) {
@@ -192,6 +206,12 @@ class _GetCollectionUIState extends State<GetCollectionUI> {
     double advacneChg = double.tryParse(collection.advacneChg.toString()) ?? 0;
     double otherChg = double.tryParse(collection.otherChg.toString()) ?? 0;
 
-    return monthlyChg + arrear + serverChg + sMSChg + pSOChg + advacneChg + otherChg;
+    return monthlyChg +
+        arrear +
+        serverChg +
+        sMSChg +
+        pSOChg +
+        advacneChg +
+        otherChg;
   }
 }

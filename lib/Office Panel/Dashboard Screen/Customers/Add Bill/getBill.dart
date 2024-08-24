@@ -105,7 +105,7 @@ class _GetBillUIState extends State<GetBillUI> {
                                 child: Container(
                                   child: Padding(
                                     padding: const EdgeInsets.symmetric(
-                                        horizontal: 10.0, vertical: 10),
+                                        horizontal: 10.0),
                                     child: Column(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
@@ -157,11 +157,13 @@ class _GetBillUIState extends State<GetBillUI> {
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceBetween,
                                           children: [
-                                            Text(
-                                              filterBillList[index]
-                                                  .description
-                                                  .toString(),
-                                              style: TextStyle(fontSize: 14),
+                                            Flexible(
+                                              child: Text(
+                                                filterBillList[index]
+                                                    .description
+                                                    .toString(),
+                                                style: TextStyle(fontSize: 14),
+                                              ),
                                             ),
                                             Text(
                                               formatCollection(
