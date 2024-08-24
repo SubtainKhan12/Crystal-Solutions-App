@@ -78,3 +78,4 @@ String customerLedger = '$baseUrl/customerLedger.php';
 String CollectionRegister = '$baseUrl/CollectionRegister.php';
 String BillRegister = '$baseUrl/BillRegister.php';
 String CustomerReceivable = '$baseUrl/CustomerReceivable.php';
+String ExpenseRegister = '$baseUrl/ExpenseRegister.php';

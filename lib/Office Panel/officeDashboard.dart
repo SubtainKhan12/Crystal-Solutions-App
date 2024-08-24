@@ -104,7 +104,7 @@ class _OfficeDashboardUIState extends State<OfficeDashboardUI> {
                       ),
                       InkWell(
                         onTap: (){
-                          Navigator.push(context, MaterialPageRoute(builder: (context)=> OfficeExpensePaymentUI()));
+                          Navigator.push(context, MaterialPageRoute(builder: (context)=> ExpenseUI()));
                         },
                         child: Material(
                           borderRadius: BorderRadius.circular(5),

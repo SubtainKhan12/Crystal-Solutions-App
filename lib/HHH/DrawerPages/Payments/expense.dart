@@ -2,20 +2,19 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
-import '../../../HHH/DrawerPages/Payments/expensePayment.dart';
 import '../../../Model/Expense/ExpenseRegisterModel.dart';
 import '../../../apis.dart';
 import '../../../cosmos.dart';
 import 'expensePayment.dart';
 
-class ExpenseUI extends StatefulWidget {
-  const ExpenseUI({super.key});
+class ExpenseRegisterUi extends StatefulWidget {
+  const ExpenseRegisterUi({super.key});
 
   @override
-  State<ExpenseUI> createState() => _ExpenseUIState();
+  State<ExpenseRegisterUi> createState() => _ExpenseRegisterUiState();
 }
 
-class _ExpenseUIState extends State<ExpenseUI> {
+class _ExpenseRegisterUiState extends State<ExpenseRegisterUi> {
   ExpenseRegisterModel? expenseRegisterList;
   List<Detail>? _filteredDetails = [];
   DateTime selectedInitialDate =
@@ -108,7 +107,7 @@ class _ExpenseUIState extends State<ExpenseUI> {
                             children: [
                               SizedBox(width: 8),
                               Text(
-                                '       To: ',
+                                '        To: ',
                                 style: TextStyle(fontWeight: FontWeight.bold),
                               ),
                               Text(

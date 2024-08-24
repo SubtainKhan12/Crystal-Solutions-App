@@ -227,8 +227,8 @@ class _BillRegisterUiState extends State<BillRegisterUi> {
                                   billRegisterModel!.detail![i].date.toString(),
                                   textAlign: TextAlign.left,
                                   style: TextStyle(
-                                      fontSize: tableFontSize,
-                                      )),
+                                    fontSize: tableFontSize,
+                                  )),
                             ),
                           ),
                           TableCell(
@@ -238,8 +238,8 @@ class _BillRegisterUiState extends State<BillRegisterUi> {
                               child: Text(_filteredDetails![i].trn.toString(),
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
-                                      fontSize: tableFontSize,
-                                      )),
+                                    fontSize: tableFontSize,
+                                  )),
                             ),
                           ),
                           TableCell(
@@ -249,8 +249,8 @@ class _BillRegisterUiState extends State<BillRegisterUi> {
                                 _filteredDetails![i].customer.toString(),
                                 textAlign: TextAlign.left,
                                 style: TextStyle(
-                                    fontSize: tableFontSize,
-                                    ),
+                                  fontSize: tableFontSize,
+                                ),
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                                 softWrap: false,
@@ -267,8 +267,8 @@ class _BillRegisterUiState extends State<BillRegisterUi> {
                                   ),
                                   textAlign: TextAlign.right,
                                   style: TextStyle(
-                                      fontSize: tableFontSize,
-                                      )),
+                                    fontSize: tableFontSize,
+                                  )),
                             ),
                           ),
                         ],
@@ -276,41 +276,41 @@ class _BillRegisterUiState extends State<BillRegisterUi> {
                   ],
                 ),
               ]),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 115.0),
-                    child: Table(
-                      border: TableBorder(
-                        verticalInside: BorderSide(width: 1, color: Colors.grey),
-                      ),
-                      columnWidths: const {
-                        0: FlexColumnWidth(0.25),
-                        1: FlexColumnWidth(0.1),
-
-                      },
-                      children: [
-                        TableRow(
-                            decoration: BoxDecoration(
-                                border: Border.all(width: 0.5,color: Colors.grey)),
-                            children: [
-                              TableCell(
-                                child: Text('Total Amount',
-                                    style: TextStyle(
-                                        fontSize: tableFontSize,
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.bold)),
-                              ),
-                              TableCell(
-                                child: Text(
-                                    billRegisterModel?.totalAmount.toString() ?? '0',
-                                    textAlign: TextAlign.right,
-                                    style: TextStyle(
-                                      fontSize: tableFontSize,
-                                    )),
-                              ),
-                            ])
-                      ],
-                    ),
+              Padding(
+                padding: const EdgeInsets.only(left: 115.0),
+                child: Table(
+                  border: TableBorder(
+                    verticalInside: BorderSide(width: 1, color: Colors.grey),
                   ),
+                  columnWidths: const {
+                    0: FlexColumnWidth(0.25),
+                    1: FlexColumnWidth(0.1),
+                  },
+                  children: [
+                    TableRow(
+                        decoration: BoxDecoration(
+                            border: Border.all(width: 0.5, color: Colors.grey)),
+                        children: [
+                          TableCell(
+                            child: Text('Total Amount',
+                                style: TextStyle(
+                                    fontSize: tableFontSize,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold)),
+                          ),
+                          TableCell(
+                            child: Text(
+                                billRegisterModel?.totalAmount.toString() ??
+                                    '0',
+                                textAlign: TextAlign.right,
+                                style: TextStyle(
+                                  fontSize: tableFontSize,
+                                )),
+                          ),
+                        ])
+                  ],
+                ),
+              ),
             ]),
           ),
         ),
@@ -355,8 +355,6 @@ class _BillRegisterUiState extends State<BillRegisterUi> {
       'FIntDat': selectedInitialDate.toString(),
       'FFnlDat': selectedFinalDate.toString(),
     });
-    print(selectedInitialDate.toString());
-    print(selectedFinalDate.toString());
     if (response.statusCode == 200) {
       var result = jsonDecode(response.body);
 

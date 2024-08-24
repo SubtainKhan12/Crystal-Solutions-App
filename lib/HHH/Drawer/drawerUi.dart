@@ -2,7 +2,6 @@ import 'package:crystal_solutions/HHH/DrawerPages/Bank/getBankScreen.dart';
 import 'package:crystal_solutions/HHH/DrawerPages/City/getCity.dart';
 import 'package:crystal_solutions/HHH/DrawerPages/Collectors/getCollectors.dart';
 import 'package:crystal_solutions/HHH/DrawerPages/Designation/getDesignation.dart';
-import 'package:crystal_solutions/HHH/DrawerPages/Payments/expensePayment.dart';
 import 'package:crystal_solutions/HHH/DrawerPages/Reference/getReference.dart';
 import 'package:crystal_solutions/HHH/DrawerPages/Type/getType.dart';
 import 'package:crystal_solutions/HHH/DrawerPages/Employee/getEmployee.dart';
@@ -11,6 +10,7 @@ import 'package:crystal_solutions/cosmos.dart';
 import 'package:flutter/material.dart';
 import '../DrawerPages/Customers/customersScreen.dart';
 import '../DrawerPages/Expense/getExpenseScreen.dart';
+import '../DrawerPages/Payments/expense.dart';
 import '../DrawerPages/Recipt/getActiveCustomers.dart';
 import '../DrawerPages/User Manegment/usersScreen.dart';
 
@@ -65,7 +65,6 @@ class _DrawerUiState extends State<DrawerUi> {
                         .copyWith(dense: true, minVerticalPadding: 16),
                   ),
                   child: ExpansionTile(
-
                     leading: Icon(
                       Icons.person,
                       color: Cosmic.app_color,
@@ -80,7 +79,11 @@ class _DrawerUiState extends State<DrawerUi> {
                         height: 39,
                         child: TextButton(
                             onPressed: () {
-                              Navigator.push(context, MaterialPageRoute(builder: (context)=> GetDesignationScreen()));
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          GetDesignationScreen()));
                             },
                             child: const Row(
                               children: [
@@ -102,7 +105,11 @@ class _DrawerUiState extends State<DrawerUi> {
                         height: 39,
                         child: TextButton(
                             onPressed: () {
-                              Navigator.push(context, MaterialPageRoute(builder: (context)=> GetEmployeeScreen()));
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          GetEmployeeScreen()));
                             },
                             child: const Row(
                               children: [
@@ -380,7 +387,11 @@ class _DrawerUiState extends State<DrawerUi> {
                         height: 39,
                         child: TextButton(
                             onPressed: () {
-                              Navigator.push(context, MaterialPageRoute(builder: (context)=> CustomerCollectionScreen()));
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          CustomerCollectionScreen()));
                             },
                             child: const Row(
                               children: [
@@ -422,7 +433,11 @@ class _DrawerUiState extends State<DrawerUi> {
                         height: 39,
                         child: TextButton(
                             onPressed: () {
-                              Navigator.push(context, MaterialPageRoute(builder: (context)=> ExpensePaymentScreen()));
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          ExpenseRegisterUi()));
                             },
                             child: const Row(
                               children: [
